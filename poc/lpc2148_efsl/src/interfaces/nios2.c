@@ -55,7 +55,7 @@ esint8 if_initInterface(hwInterface* file, eint8* opts)
 	DBG((TXT("Init done...\n")));
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
 esint8 if_readBuf(hwInterface* file,euint32 address,euint8* buf)
 {
@@ -67,18 +67,18 @@ esint8 if_writeBuf(hwInterface* file,euint32 address,euint8* buf)
 {
 	return(sd_writeSector(file,address, buf));
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
 esint8 if_setPos(hwInterface* file,euint32 address)
 {
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
 void if_spiInit(hwInterface *iface)
 {
 	euint8 i;
-	
+
 	printf("\n spi ini");
 }
 /*****************************************************************************/
@@ -87,7 +87,7 @@ euint8 if_spiSend(hwInterface *iface, euint8 outgoing)
 {
 	euint8 incoming=0;
 	alt_u8  SD_Data=0,status;
-  
+
 	IOWR_ALTERA_AVALON_SPI_SLAVE_SEL(SD_SPI_BASE, 1 );
 	/* Set the SSO bit (force chipselect) */
 	IOWR_ALTERA_AVALON_SPI_CONTROL(SD_SPI_BASE, 0x400);
@@ -99,7 +99,7 @@ euint8 if_spiSend(hwInterface *iface, euint8 outgoing)
 	/* wait till transmit and ready ok */
 
 	IOWR_ALTERA_AVALON_SPI_TXDATA(SD_SPI_BASE, outgoing);
-    
+
 	/* Wait until the interface has finished transmitting */
 	do{status = IORD_ALTERA_AVALON_SPI_STATUS(SD_SPI_BASE);}
 	while ((status & ALTERA_AVALON_SPI_STATUS_TMT_MSK) == 0);
@@ -111,13 +111,13 @@ euint8 if_spiSend(hwInterface *iface, euint8 outgoing)
 	else{
 		printf("\n no recive after transmit");
 	}
- 
+
 	IOWR_ALTERA_AVALON_SPI_SLAVE_SEL(SD_SPI_BASE, 1);
 	IOWR_ALTERA_AVALON_SPI_CONTROL(SD_SPI_BASE, 0);
- 
+
 	if( (status & 0x100) !=0)
     	printf("\n error in spi error in spi");
-  
+
 	return (SD_Data);
 }
 /*****************************************************************************/

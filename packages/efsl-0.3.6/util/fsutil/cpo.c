@@ -41,17 +41,17 @@ int main(int argc, char** argv)
 {
 	linuxFileInterface *lfi=Malloc(sizeof(*lfi));
 	File *file=Malloc(sizeof(*file));
-		
+
 	efsl_storage_conf *sconf=Malloc(sizeof(*sconf));
 	efsl_fs_conf *fconf=Malloc(sizeof(fconf));
 	efsl_storage *storage=Malloc(sizeof(*storage));
 	efsl_fs *filesystem=Malloc(sizeof(*filesystem));
-	
+
 	unsigned short e;
 	unsigned short bufsize;
 	char *buf;
 	FILE *localfile;
-	
+
 	if(argc<4){
 		fprintf(stderr,"Argument error : cpo <fs> <file_read> <local_write> [bufsize]\n");
 		exit(-1);
@@ -64,17 +64,17 @@ int main(int argc, char** argv)
 	buf=malloc(bufsize);
 
 	lfi->fileName=argv[1];
-	
+
 	sconf->hwObject=lfi;
 	sconf->if_init_fptr=lf_init;
 	sconf->if_read_fptr=lf_readBuf;
 	sconf->if_write_fptr=lf_writeBuf;
 	sconf->if_ioctl_fptr=lf_ioctl;
 	sconf->ioman_bufmem=buf;
-	
+
 	fconf->no_partitions=1;
 	fconf->storage=storage;
-	
+
 	if(efsl_initStorage(storage,sconf)){
 		printf("Error initialising storage\n");
 		exit(-1);
@@ -83,7 +83,7 @@ int main(int argc, char** argv)
 		printf("Unable to mount filesystem\n");
 		exit(-1);
 	}
-		
+
 	if(file_fopen(file,&(filesystem->filesystem),argv[2],'r')!=0){
 		printf("Could not open file.\n");
 		return(-2);
@@ -93,7 +93,7 @@ int main(int argc, char** argv)
 		printf("Could not open local file.\n");
 		return(-3);
 	}
-	
+
 	while((e=file_read(file,bufsize,buf))){
 		fwrite(buf,1,e,localfile);
 	}

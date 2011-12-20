@@ -5,7 +5,7 @@
 #define CMD_NONE        0xff
 
 /*
- * Memory Map 
+ * Memory Map
  */
 #define MMIO_CMD        0x3010
 #define MMIO_SECTOR01   0x3011

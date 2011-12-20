@@ -57,7 +57,7 @@
 #define SHARED_IRQ_LOC_HI                   0x00ffff
 
 /*
- * Use COP IRQ LOC for hooked IRQ handler 
+ * Use COP IRQ LOC for hooked IRQ handler
  */
 #define SHARED_IRQ_HANDLER_LO               0x0ffe4
 #define SHARED_IRQ_HANDLER_HI               0x0ffe5

@@ -10,7 +10,7 @@ here in the 'usage` section of the utilities.
 All utilities take an image, or a device as their first argument. If the image/device
 is a partition, and hence does not contain a partition table, it will be recognised and treated
 as such.
-If a partition table is found, the first partition with a FAT signature will be used. 
+If a partition table is found, the first partition with a FAT signature will be used.
 
 Arguments between $<>$ brackets are mandatory, arguments between $[]$ brackets are optional.
 
@@ -24,11 +24,11 @@ Arguments between $<>$ brackets are mandatory, arguments between $[]$ brackets a
 	filesystem resides. The second argument (\code{file\_read} is the path and filename
 	of the sourcefile in \code{fs}. The third argument (\code{local\_write}) is the
 	local file to which you want to write the contents.
-	
+
 	The fourth, optional, arguments (\code{bufsize}) says cpo what size of copy buffers
 	to use. This operates the same as dd. This is used in testing the library, the
 	default value is 4096 bytes.
-    
+
 \subsection{cpi}
     \subsubsection*{Usage}
 	cpi $<$fs$>$ $<$local\_read$>$ $<$file\_write$>$ [bufsize]
@@ -43,8 +43,8 @@ Arguments between $<>$ brackets are mandatory, arguments between $[]$ brackets a
 
         The fourth, optional, arguments (\code{bufsize}) says cpi what size of copy buffers
         to use. This operates the same as dd. This is used in testing the library, the
-        default value is 4096 bytes.                                                
-	
+        default value is 4096 bytes.
+
 \subsection{cpa}
     \subsubsection*{Usage}
 	cpa $<$fs$>$ $<$local\_read$>$ $<$file\_append$>$ [bufsize]
@@ -59,8 +59,8 @@ Arguments between $<>$ brackets are mandatory, arguments between $[]$ brackets a
 
         The fourth, optional, arguments (\code{bufsize}) says cpi what size of copy buffers
         to use. This operates the same as dd. This is used in testing the library, the
-        default value is 4096 bytes.                                                
-    
+        default value is 4096 bytes.
+
 \subsection{list}
     \subsubsection*{Usage}
 	list $<$fs$>$ $<$directory$>$
@@ -68,17 +68,17 @@ Arguments between $<>$ brackets are mandatory, arguments between $[]$ brackets a
 	List will give a listing of existing files on a given filesystem \code{fs}, that
 	reside in the directory \code{directory}. To get the contents of the root directory,
 	give a forward slash (/) as the directory argument.
-    
+
 \subsection{mkdir}
     \subsubsection*{Usage}
 	mkdir $<$fs$>$ $<$dirname$>$
     \subsubsection*{Operation}
 	Mkdir will create a new directory in the filesystem \code{fs}. You must provide the full path
 	of the new directory as an argument.
-    
+
 \subsection{rmfile}
     \subsubsection*{Usage}
 	rmfile $<$fs$>$ $<$filename$>$
     \subsubsection*{Operation}
 	Rmfile will delete a file from a filesystem \code{fs}.
-    
+

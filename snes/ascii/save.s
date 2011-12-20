@@ -1,20 +1,20 @@
 .EMPTYFILL 0
 .LOROM
-		  
+
 
 .MEMORYMAP
 SLOTSIZE 	$8000
 DEFAULTSLOT 0
-SLOT 		0 $0000	; ram , direct page   
-SLOT 		1 $2000 ; PPU1, APU 
+SLOT 		0 $0000	; ram , direct page
+SLOT 		1 $2000 ; PPU1, APU
 SLOT 		2 $3000 ; SFX, DSP
 SLOT		3 $4000 ; Controller
-SLOT		4 $4200 ; PPU2, DMA 
+SLOT		4 $4200 ; PPU2, DMA
 SLOT		5 $6000 ; RESERVED
-SLOT		6 $8000 ; code segment 
+SLOT		6 $8000 ; code segment
 .ENDME
 
-;.ROMBANKSIZE $8000 
+;.ROMBANKSIZE $8000
 ;.ROMBANKS $80
 
 .ROMBANKMAP
@@ -27,14 +27,14 @@ BANKS $80
 .NAME "optixx"
 
 .BANK $00 SLOT 6
-.ORG	$0000 
+.ORG	$0000
 .ORGA	$8000
 
 
 
-.SECTION "MAIN" 
+.SECTION "MAIN"
 
-.define	dp			$0000 
+.define	dp			$0000
 
 .define	xstorage1	$0001
 .define	xstorage2	$0002
@@ -43,17 +43,17 @@ BANKS $80
 .define	col_reg		$0007
 .define hdma_table0	$0010
 .define	plane_0		$0400
-.define	plane_1 	$0800 
-.define	tile 		$2000 
+.define	plane_1 	$0800
+.define	tile 		$2000
 
 
-init:   
+init:
 		sei         	;stop interrupts
 		phk             ;get the current bank and store on stack
 		plb             ;get value off stack and make it the current
 						;programming bank
 		clc             ;clear carry bit
-		xce             ;native 16 bit mode (no 6502 emulation!) 
+		xce             ;native 16 bit mode (no 6502 emulation!)
 
 		jsr				init_hdma_table0
 ;==========================================================================
@@ -62,8 +62,8 @@ init:
 
 	   sep #$30     ; x,y,a are 8 bit numbers
 	   lda #$8f     ; screen off, full brightness
-	   sta $2100    ; brightness + screen enable register 
-	   lda #$00     ; 
+	   sta $2100    ; brightness + screen enable register
+	   lda #$00     ;
 	   sta $2101    ; sprite register (size + address in vram)
 	   lda #$00
 	   sta $2102    ; sprite registers (address of sprite memory [oam])
@@ -72,7 +72,7 @@ init:
 	   sta $2105    ; graphic mode register
 	   lda #$00     ; no planes, no mosaic
 	   sta $2106    ; mosaic register
-	   lda #$00     ; 
+	   lda #$00     ;
 	   sta $2107    ; plane 0 map vram location
 	   lda #$00
 	   sta $2108    ; plane 1 map vram location
@@ -171,26 +171,26 @@ init:
 	rep     #$30    ; x,y,a fixed -> 16 bit mode
 	sep     #$20    ; accumulator ->  8 bit mode
 
-	lda		#(dp+0) ;load direct page 
-	tcd 			;store & and assign 
+	lda		#(dp+0) ;load direct page
+	tcd 			;store & and assign
 
-	
-	
+
+
 	lda     #(plane_0>>8)   ; screen map data @ vram location $1000
 	sta     $2107           ; plane 0 map location register
 	lda     #(plane_1>>8)  	; screen map data @ vram location $1000
 	sta     $2108           ; plane 1 map location register
-	
-	lda     #$22            ; plane 0 and plane 1 tile graphics @ $2000  
+
+	lda     #$22            ; plane 0 and plane 1 tile graphics @ $2000
 	sta     $210b           ; plane 0 tile graphics register
 	lda     #$00            ; mode 0 value / tile mode
 	sta     $2105           ; graphics mode register
-	
-	lda     #%00000011      ; 
+
+	lda     #%00000011      ;
 	sta     $212c           ; plane enable register
-	
-	
-	
+
+
+
 	lda     #$00
 	sta     $2121           ; set color number to 0 (background)
 	lda     #$46            ; blue color, lower 8 bits
@@ -201,25 +201,25 @@ init:
 	sta     $2122           ; write to next color number (01)
 	sta     $2122           ; enter same value to color number (01)
 
-	ldx		#$00 
+	ldx		#$00
 
 
 
 col_loop:
-	txa	
+	txa
 	sta     $2121
 	lda		#$00
 	sta		$2122
-	lda		#$7f 
-	sta		$2122 
-	txa		
+	lda		#$7f
+	sta		$2122
+	txa
 	ina
 	tax
 	cmp		#$ff
-	beq 	col_loop 	
+	beq 	col_loop
 
-	
-	
+
+
 	lda     #$01
 	sta     $4200           ; enable joypad read (bit one)
 
@@ -229,7 +229,7 @@ col_loop:
 ;==========================================================================
 
 
-	ldx		#(tile+0)		; assign vram location 
+	ldx		#(tile+0)		; assign vram location
 	stx     $2116           ; writing to $2118/9 will store data here!
 	ldx     #$0000
 
@@ -258,7 +258,7 @@ init_plane_0_loop:
 	inx
 	cpx     #$0400          ; transfer entire screen
 							; $20*$20=$0400  (1024 bytes)
-	bne    init_plane_0_loop 
+	bne    init_plane_0_loop
 
 
 init_plane_1:
@@ -276,25 +276,25 @@ init_plane_1_loop:
 	inx
 	cpx     #$0400          ; transfer entire screen
 							; $20*$20=$0400  (1024 bytes)
-	bne    	init_plane_1_loop 
+	bne    	init_plane_1_loop
 
 
 
 init_screen:
 	lda     #$0f            ; screen enabled, full brightness
-	sta     $2100           ; 
+	sta     $2100           ;
 	cli                     ; clear interrupt bit
 
 
 
 init_scroll:
 	lda		#$00
-	sta.w	scrollval		
+	sta.w	scrollval
 
 
 init_col_reg:
 	lda 	#$00
-	sta.w 	col_reg 
+	sta.w 	col_reg
 
 
 init_sineoffset:
@@ -303,38 +303,38 @@ init_sineoffset:
 
 
 call_hmda_setup:
-	jsr 	init_hdma_table0 
+	jsr 	init_hdma_table0
 
 
 
-	jmp  intro 
+	jmp  intro
 
 main:
 	jsr 	wait_vbl
-	jsr		sine_plane 
+	jsr		sine_plane
 	jsr		scroll_plane
-	jsr		cycle_color 
+	jsr		cycle_color
 	jsr		joypad
-	jmp 	main 
-
-	
+	jmp 	main
 
 
-; test vertical interrupt 
 
 
-wait_vbl: 
+; test vertical interrupt
+
+
+wait_vbl:
 	lda     $4210           ; check for vertical blank
 	and     #$80
-	beq   	wait_vbl 
+	beq   	wait_vbl
 	rts
 
-; joypad poll 
+; joypad poll
 
 joypad:
 	lda     $4212           ; is joypad ready to be read?
 	and     #$0001
-	bne     joypad          ; no? go back until it is! 
+	bne     joypad          ; no? go back until it is!
 	lda     $4219           ; read joypad high byte
 	and     #$10            ; leave only "start" bit
 	bne     reset           ; "start" pressed? go to reset
@@ -351,15 +351,15 @@ reset:
 
 ; gfx routine
 
-; intro stuff 
+; intro stuff
 
 intro:
 	rep		#$30
-	sep		#$20 
+	sep		#$20
 	ldx 	#$f1
 mosaic_l:
-	jsr		wait_vbl 
-	txa		
+	jsr		wait_vbl
+	txa
 	sta 	$2106
 	sbc 	#$10
 	tax
@@ -373,41 +373,41 @@ fade_dark:
 	jsr		wait_vbl
 	tya
 	sta		$2100
-	dey		
+	dey
 	cpy		#$0000
 	bne		fade_dark
 
 	ldy		#$0000
 fade_light:
-	jsr		wait_vbl 
+	jsr		wait_vbl
 	tya
 	sta		$2100
-	iny		
+	iny
 	cpy		#$000f
-	bne		fade_light 
+	bne		fade_light
 
-	jmp 	main 
+	jmp 	main
 
-; scroll loop 
+; scroll loop
 
 scroll_plane:
 	lda.w	scrollval
-	sta    	$210e  
+	sta    	$210e
 	stz    	$210e
-	
+
 
 	adc		#$01
-	
+
 	sta.w 	scrollval
 	cmp    	#$ff
-	beq    	restore_scroll	
+	beq    	restore_scroll
 	rts
 restore_scroll:
 	lda 	#$00
-	sta.w	scrollval 
-	rts 	 
+	sta.w	scrollval
+	rts
 
-; cycle loop 
+; cycle loop
 
 cycle_color:
 	ldx		#$0000
@@ -420,15 +420,15 @@ cycle_color:
 	cmp		#$7f
 	bne		cycle_c
 	lda		#$0000
-	sta		col_reg 
-cycle_c:			
-	rts 
+	sta		col_reg
+cycle_c:
+	rts
 
 
 sine_plane:
 	rep		#$10
 	sep		#$20
-	
+
 	lda		sineoffset
 	ina
 	sta		sineoffset
@@ -436,14 +436,14 @@ sine_plane:
 	bne		sine_plane_c
 	lda		#$00
 	sta		sineoffset
-	
+
 
 
 sine_plane_c:
-	tay 	
-	ldx		#$0000 
-	
-sine_plane_l:	
+	tay
+	ldx		#$0000
+
+sine_plane_l:
 	iny
 	cpy		#$ff
 	bne		sine_plane_l_c
@@ -451,74 +451,74 @@ sine_plane_l:
 	tay
 
 sine_plane_l_c:
-	inx	
+	inx
 	lda.w	vsine,y
-	sta		hdma_table0+3,x	
+	sta		hdma_table0+3,x
 	inx
 	inx
 	cpx		#$0180
-	bne		sine_plane_l 
-	
+	bne		sine_plane_l
+
 	rep		#$30
 	sep		#$20
-	rts 
-	
+	rts
 
 
 
-; init hdma list 
+
+; init hdma list
 
 
 init_hdma_table0:
-	
-	rep 	#$10    	
-	sep 	#$20    
-	
-	ldy		#$0000			
+
+	rep 	#$10
+	sep 	#$20
+
+	ldy		#$0000
 	ldx		#$0000
 
 	;lda		#$00
 	;sta		sineoffset
-	
-	lda		#$30	
+
+	lda		#$30
 	sta		hdma_table0,x
 	inx
-	lda 	#$00	
+	lda 	#$00
 	sta		hdma_table0,x
-	inx			
+	inx
 	sta		hdma_table0,x
 	inx
 
 init_hdma_table0_loop:
-	
-	lda		#$01	
+
+	lda		#$01
 	sta		hdma_table0,x
 	inx
-	
+
 	lda		vsine,y
 	sta		hdma_table0,x
 	inx
-	
+
 	lda		#$00
 	sta		hdma_table0,x
-	inx	
-	iny 
+	inx
+	iny
 	cpx		#$0183 ; (128 + 1) * 3 = 387 = 0x0183
 	bne 	init_hdma_table0_loop
-	
+
 	lda		#$20
 	sta		hdma_table0,x
-	inx		
-	lda		#$00	
-	sta		hdma_table0,x
-	inx 
-	sta		hdma_table0,x 
-	inx	
+	inx
+	lda		#$00
 	sta		hdma_table0,x
 	inx
 	sta		hdma_table0,x
-	
-	
+	inx
+	sta		hdma_table0,x
+	inx
+	sta		hdma_table0,x
+
+
 	lda     #$02
 	sta     $4300
 	lda     #$0f
@@ -526,16 +526,16 @@ init_hdma_table0_loop:
 	ldx.w	#hdma_table0
 	;ldx.w  #test_hmda_table
 	stx     $4302
-	lda 	#$00	
+	lda 	#$00
 	sta     $4304
 
     lda 	#%00000001
 	sta 	$420c
-		  
-	rep		#$30
-	sep		#$20 
 
-	rts	
+	rep		#$30
+	sep		#$20
+
+	rts
 
 
 charset:
@@ -604,7 +604,7 @@ charset:
 	.db    $00,$00,$7e,$00,$7e,$00,$00,$00 ;'='
 	.db    $18,$18,$0c,$0c,$0c,$0c,$18,$18 ;'>'
 	.db    $00,$7c,$06,$0c,$18,$00,$18,$00 ;'?'
-	  
+
 		  ; 12345678901234567890123456789012
 text_0:
  	.db		"|             _   _            |"
@@ -653,7 +653,7 @@ text_1:
  	.db		"| \___/| .__/ \__|_/_/\_\/_/\_\|"
  	.db		"|      |_|                     |"
  	.db		"|                              |"
- 
+
 .ENDR
 
 vsine:
@@ -681,7 +681,7 @@ vsine_end:
 long_label:
 	nop
 	nop
-	rts 
+	rts
 
 
 
@@ -689,17 +689,17 @@ long_label:
 .BANK $01 SLOT 6
 .ORGA $8000
 .BASE $01
-.INCLUDE "music.s" 
+.INCLUDE "music.s"
 
 .BANK $02 SLOT 6
-.ORG $0000 
+.ORG $0000
 music_data_1:
 .INCBIN "music1.bin"
 
-.BANk $03 SLOT 6 
-.ORG $0000 
+.BANk $03 SLOT 6
+.ORG $0000
 music_data_2:
-.INCBIN "music2.bin" 
+.INCBIN "music2.bin"
 
 
 

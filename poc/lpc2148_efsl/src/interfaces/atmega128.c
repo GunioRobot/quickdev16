@@ -51,7 +51,7 @@ esint8 if_initInterface(hwInterface* file, eint8* opts)
 	DBG((TXT("Init done...\n")));
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
 esint8 if_readBuf(hwInterface* file,euint32 address,euint8* buf)
 {
@@ -63,26 +63,26 @@ esint8 if_writeBuf(hwInterface* file,euint32 address,euint8* buf)
 {
 	return(sd_writeSector(file,address, buf));
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
 esint8 if_setPos(hwInterface* file,euint32 address)
 {
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
 void if_spiInit(hwInterface *iface)
 {
 	euint8 i;
-	
+
 	/* Unselect card */
 	PORTB |= 0x01;
-	
+
 	/* Set as master, clock and chip select output */
 	DDR_SPI = (1<<DD_MOSI) | (1<<DD_SCK) | 1;
 
 	/* Enable SPI, master, set clock rate to fck/2 */
-	SPCR = (1<<SPE) | (1<<MSTR); /* fsck / 4 */ 
+	SPCR = (1<<SPE) | (1<<MSTR); /* fsck / 4 */
 	SPSR = 1; /* fsck / 2 */
 
 	/* Send 10 spi commands with card not selected */
@@ -97,7 +97,7 @@ void if_spiInit(hwInterface *iface)
 euint8 if_spiSend(hwInterface *iface, euint8 outgoing)
 {
 	euint8 incoming=0;
-	
+
 	PORTB &= 0xFE;
 	SPDR = outgoing;
 	while(!(SPSR & (1<<SPIF)));

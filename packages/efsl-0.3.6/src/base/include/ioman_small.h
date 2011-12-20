@@ -61,11 +61,11 @@ typedef struct _IOManStack IOManStack;
 
 struct _IOManager{
 	Interface *iface;
-	
+
 	euint8 bufptr[512];
-		
+
 	IOMAN_ERR_EUINT8
-		
+
 	euint32 sector;
 	euint8  status;
 	euint8  itptr;

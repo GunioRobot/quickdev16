@@ -13,7 +13,7 @@ export TMP_FILE="$TODO_DIR/todo.tmp"
 [ -f VERSION-FILE ] && . VERSION-FILE || VERSION="@DEV_VERSION@"
 version() { sed -e 's/^    //' <<EndVersion
         TODO.TXT Command Line Interface v$VERSION
-        
+
         First release: 5/11/2006
         Original conception by: Gina Trapani (http://ginatrapani.org)
         Contributors: http://github.com/ginatrapani/todo.txt-cli/network
@@ -705,10 +705,10 @@ case $action in
 
 		# Split multiple do's, if comma seperated change to whitespace sepereated
 		# Loop the 'do' function for each item
-		for item in `echo $* | tr ',' ' '`; do 
+		for item in `echo $* | tr ',' ' '`; do
     	[ -z "$item" ] && die "$errmsg"
     	[[ "$item" = +([0-9]) ]] || die "$errmsg"
-		
+
     	todo=$(sed "$item!d" "$TODO_FILE")
     	[ -z "$todo" ] && die "$item: No such todo."
 
@@ -720,7 +720,7 @@ case $action in
     	[ $TODOTXT_VERBOSE -gt 0 ] && echo "$item: $newtodo"
     	[ $TODOTXT_VERBOSE -gt 0 ] && echo "TODO: $item marked as done."
 		done
-	
+
     if [ $TODOTXT_AUTO_ARCHIVE = 1 ]; then
         archive
     fi
@@ -849,14 +849,14 @@ case $action in
     else
         input=$*
     fi
-		
+
 		# Test for then set priority
 		if [ `sed "$item!d" "$TODO_FILE"|grep -c "^(\\w)"` -eq 1 ]; then
 			priority=$(sed "$item!d" "$TODO_FILE" | awk -F '\\(|\\)' '{print $2}')
 		fi
 
 		# If priority isn't set prepend
-		if [ -z $priority ]; then 
+		if [ -z $priority ]; then
     	if sed -i.bak $item" s|^.*|$input &|" "$TODO_FILE"; then
        	newtodo=$(sed "$item!d" "$TODO_FILE")
         [ $TODOTXT_VERBOSE -gt 0 ] && echo "$item: $newtodo"

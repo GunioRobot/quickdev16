@@ -42,7 +42,7 @@
 #include "dir.h"
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void dir_getFileStructure(FileSystem *fs,FileRecord *filerec,FileLocation *loc)
  * Description: This function stores the filerecord located at loc in filerec.
  * It fetches the required sector for this.
@@ -55,31 +55,31 @@ void dir_getFileStructure(FileSystem *fs,FileRecord *filerec,FileLocation *loc)
 	buf=part_getSect(fs->part,loc->Sector,IOM_MODE_READONLY);
 	*filerec=*(((FileRecord*)buf)+loc->Offset);
 	part_relSect(fs->part,buf);
-}	
+}
 
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void dir_createDirectoryEntry(FileSystem *fs,FileRecord *filerec,FileLocation *loc)
  * Description: This function writes the filerecord stored in filerec to disc at
- * location loc. 
+ * location loc.
  * Return value: void
 */
 void dir_createDirectoryEntry(FileSystem *fs,FileRecord *filerec,FileLocation *loc)
 {
 	euint8 *buf;
-	
+
 	buf = part_getSect(fs->part,loc->Sector,IOM_MODE_READWRITE);
 	memCpy(filerec,buf+(loc->Offset*sizeof(*filerec)),sizeof(*filerec));
 	part_relSect(fs->part,buf);
 }
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void dir_createDefaultEntry(FileSystem *fs,FileRecord *filerec,eint8* fatfilename)
  * Description: This function fills in a filerecord with safe default values, and
- * a given fatfilename. If your system has a means of knowing time, here is an 
- * excellent place to apply it to the filerecord.  
+ * a given fatfilename. If your system has a means of knowing time, here is an
+ * excellent place to apply it to the filerecord.
  * Return value: void
 */
 void dir_createDefaultEntry(FileSystem *fs,FileRecord *filerec,eint8* fatfilename)
@@ -89,7 +89,7 @@ void dir_createDefaultEntry(FileSystem *fs,FileRecord *filerec,eint8* fatfilenam
 	filerec->NTReserved=0x00;
 	filerec->MilliSecTimeStamp=0x00;
 	filerec->CreatedTime=time_getTime();
-	filerec->CreatedDate=time_getDate(); 
+	filerec->CreatedDate=time_getDate();
 	filerec->AccessDate=filerec->CreatedDate;
 	filerec->FirstClusterHigh=0x0000;
 	filerec->WriteTime=filerec->CreatedTime;
@@ -99,7 +99,7 @@ void dir_createDefaultEntry(FileSystem *fs,FileRecord *filerec,eint8* fatfilenam
 }
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void dir_setFirstCluster(File *file,euint32 cluster_addr)
  * Description: This function requires modification to release it from
  * depending on the file object.
@@ -108,15 +108,15 @@ void dir_createDefaultEntry(FileSystem *fs,FileRecord *filerec,eint8* fatfilenam
 void dir_setFirstCluster(FileSystem *fs,FileLocation *loc,euint32 cluster_addr)
 {
 	euint8 *buf;
- 	
+
  	buf = part_getSect(fs->part,loc->Sector,IOM_MODE_READWRITE);
 	(((FileRecord*)buf)+loc->Offset)->FirstClusterHigh=cluster_addr>>16;
-	(((FileRecord*)buf)+loc->Offset)->FirstClusterLow=cluster_addr&0xFFFF;	
+	(((FileRecord*)buf)+loc->Offset)->FirstClusterLow=cluster_addr&0xFFFF;
 	part_relSect(fs->part,buf);
 }
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void dir_setFileSize(FileSystem *fs, FileLocation *loc,euint32 numbytes)
  * Description: This function changes the filesize recorded at loc->Sector
  * to 'numbytes'.
@@ -125,14 +125,14 @@ void dir_setFirstCluster(FileSystem *fs,FileLocation *loc,euint32 cluster_addr)
 void dir_setFileSize(FileSystem *fs, FileLocation *loc,euint32 numbytes)
 {
 	euint8 *buf;
-	
+
 	buf = part_getSect(fs->part,loc->Sector,IOM_MODE_READWRITE);
 	(((FileRecord*)buf)+loc->Offset)->FileSize=numbytes;
 	part_relSect(fs->part,buf);
 }
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * esint8 dir_updateDirectoryEntry(FileSystem *fs,FileRecord *entry,FileLocation *loc))
  * This function changes the entire entity stores at loc to the data recorded
  * in entry. This is for custom updates to the directoryentry.
@@ -141,14 +141,14 @@ void dir_setFileSize(FileSystem *fs, FileLocation *loc,euint32 numbytes)
 esint8 dir_updateDirectoryEntry(FileSystem *fs,FileRecord *entry,FileLocation *loc)
 {
 	euint8 *buf;
-	
+
 	buf = part_getSect(fs->part,loc->Sector,IOM_MODE_READWRITE);
 	memCpy(entry,buf+(loc->Offset*sizeof(*entry)),sizeof(*entry));
 	part_relSect(fs->part,buf);
 	return(0);
 }
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * euint32 dir_findFileinBuf(euint8 *buf, eint8 *fatname, FileLocation *loc)
  * This function searches for a given fatfilename in the buffer provided.
  * It will iterate through the 16 direntry's in the buffer and searches
@@ -162,7 +162,7 @@ euint32 dir_findFileinBuf(euint8 *buf, eint8 *fatname, FileLocation *loc)
 {
 	FileRecord fileEntry;
 	euint8 c;
-	
+
 	for(c=0; c<16; c++)
 	{
 		fileEntry = *(((FileRecord*)buf) + c);
@@ -189,7 +189,7 @@ euint32 dir_findFileinBuf(euint8 *buf, eint8 *fatname, FileLocation *loc)
 	return(0);
 }
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * euint32 dir_findFreeEntryinBuf(euint8* buf, FileLocation *loc)
  * This function searches for a free entry in a given sector 'buf'.
  * It will put the offset into the loc->Offset field, given that loc is not 0.
@@ -199,7 +199,7 @@ euint32 dir_findFreeEntryinBuf(euint8* buf, FileLocation *loc)
 {
 	FileRecord fileEntry;
 	euint8 c;
-	
+
 	for(c=0;c<16;c++){
 		fileEntry = *(((FileRecord*)buf) + c);
 		if( !( (fileEntry.Attribute & 0x0F) == 0x0F ) ){
@@ -213,7 +213,7 @@ euint32 dir_findFreeEntryinBuf(euint8* buf, FileLocation *loc)
 	return(0);
 }
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * euint32  dir_findinBuf(euint8 *buf, eint8 *fatname, FileLocation *loc)
  * Description: This function searches for a given fatfilename in a buffer.
  * Return value: Returns 0 on not found, and the firstcluster when the name is found.
@@ -235,7 +235,7 @@ euint32  dir_findinBuf(euint8 *buf, eint8 *fatname, FileLocation *loc, euint8 mo
 }
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * euint32 dir_findinCluster(FileSystem *fs,euint32 cluster,eint8 *fatname, FileLocation *loc, euint8 mode)
  * This function will search for an existing (fatname) or free directory entry
  * in a full cluster.
@@ -245,7 +245,7 @@ euint32 dir_findinCluster(FileSystem *fs,euint32 cluster,eint8 *fatname, FileLoc
 {
 	euint8 c,*buf=0;
 	euint32 fclus;
-	
+
 	for(c=0;c<fs->volumeId.SectorsPerCluster;c++){
 		buf = part_getSect(fs->part,fs_clusterToSector(fs,cluster)+c,IOM_MODE_READONLY);
 		if((fclus=dir_findinBuf(buf,fatname,loc,mode))){
@@ -258,7 +258,7 @@ euint32 dir_findinCluster(FileSystem *fs,euint32 cluster,eint8 *fatname, FileLoc
 	return(0);
 }
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * euint32 dir_findinDir(FileSystem *fs, eint8* fatname,euint32 firstcluster, FileLocation *loc, euint8 mode)
  * This function will search for an existing (fatname) or free directory entry
  * in a directory, following the clusterchains.
@@ -268,14 +268,14 @@ euint32 dir_findinDir(FileSystem *fs, eint8* fatname,euint32 firstcluster, FileL
 {
 	euint32 c=0,cluster;
 	ClusterChain Cache;
-	
+
 	Cache.DiscCluster = Cache.FirstCluster = firstcluster;
 	Cache.LogicCluster = Cache.LastCluster = Cache.Linear = 0;
-	
+
 	if(firstcluster <= 1){
-		return(dir_findinRootArea(fs,fatname,loc,mode));	
+		return(dir_findinRootArea(fs,fatname,loc,mode));
 	}
-	
+
 	while(!fat_LogicToDiscCluster(fs,&Cache,c++)){
 		if((cluster=dir_findinCluster(fs,Cache.DiscCluster,fatname,loc,mode))){
 			return(cluster);
@@ -284,7 +284,7 @@ euint32 dir_findinDir(FileSystem *fs, eint8* fatname,euint32 firstcluster, FileL
 	return(0);
 }
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * euint32 dir_findinDir(FileSystem *fs, eint8* fatname,euint32 firstcluster, FileLocation *loc, euint8 mode)
  * This function will search for an existing (fatname) or free directory entry
  * in the rootdirectory-area of a FAT12/FAT16 filesystem.
@@ -294,7 +294,7 @@ euint32 dir_findinRootArea(FileSystem *fs,eint8* fatname, FileLocation *loc, eui
 {
 	euint32 c,fclus;
 	euint8 *buf=0;
-	
+
 	if((fs->type != FAT12) && (fs->type != FAT16))return(0);
 
 #warning "inofficial find in root patch included"
@@ -305,14 +305,14 @@ euint32 dir_findinRootArea(FileSystem *fs,eint8* fatname, FileLocation *loc, eui
 			if(loc)loc->Sector=c;
 			part_relSect(fs->part,buf);
 			return(fclus);
-		}	
-		part_relSect(fs->part,buf);	
+		}
+		part_relSect(fs->part,buf);
 	}
 	part_relSect(fs->part,buf);
 	return(0);
 }
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * esint8 dir_getFatFileName(eint8* filename, eint8* fatfilename)
  * This function will take a full directory path, and strip off all leading
  * dirs and characters, leaving you with the MS-DOS notation of the actual filename.
@@ -321,21 +321,21 @@ euint32 dir_findinRootArea(FileSystem *fs,eint8* fatname, FileLocation *loc, eui
 esint8 dir_getFatFileName(eint8* filename, eint8* fatfilename)
 {
 	eint8 ffnamec[11],*next,nn=0;
-	
+
 	memClr(ffnamec,11); memClr(fatfilename,11);
 	next = filename;
-	
+
 	if(*filename=='/')next++;
-	
+
 	while((next=file_normalToFatName(next,ffnamec))){
-		memCpy(ffnamec,fatfilename,11);	
+		memCpy(ffnamec,fatfilename,11);
 		nn++;
 	}
 	if(nn)return(1);
 	return(0);
 }
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * esint8 dir_addCluster(FileSystem *fs,euint32 firstCluster)
  * This function extends a directory by 1 cluster + optional the number of
  * clusters you want pre-allocated. It will also delete the contents of that
@@ -346,7 +346,7 @@ esint8 dir_addCluster(FileSystem *fs,euint32 firstCluster)
 {
 	euint32 lastc,logicalc;
 	ClusterChain cache;
-		
+
 	fs_initClusterChain(fs,&cache,firstCluster);
 	if(fat_allocClusterChain(fs,&cache,1)){
 		return(-1);

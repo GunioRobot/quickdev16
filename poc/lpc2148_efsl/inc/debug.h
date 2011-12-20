@@ -51,7 +51,7 @@
 
 #ifdef DEBUG
 	#if defined(HW_ENDPOINT_LINUX) || defined(HW_ENDPOINT_LINUX64)
-	    #define HW_ENDPOINT_LINUX_ALL	
+	    #define HW_ENDPOINT_LINUX_ALL
 	#endif
 
 	#ifdef HW_ENDPOINT_ATMEGA128_SD
@@ -69,7 +69,7 @@
 	#ifdef HW_ENDPOINT_LINUX_ALL
 		#include <stdio.h>
 		#include <stdarg.h>
-	
+
 		#define TXT(x) x
 		#define DBG(x) debug x
 		#define FUNC_IN(x) debug_funcin(x)
@@ -96,7 +96,7 @@
 	#endif
 	#if defined(HW_ENDPOINT_LPC2000_SD) || defined (HW_ENDPOINT_AT91_SD)
 		#include "interfaces/efsl_dbg_printf_arm.h"
-		
+
 		#define TXT(x) x
 		#define DBG(x) debug x
 		#define FUNC_IN(x) ;

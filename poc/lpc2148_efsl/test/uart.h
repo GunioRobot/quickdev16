@@ -4,7 +4,7 @@
  * No guarantees, warrantees, or promises, implied or otherwise.
  * May be used for hobby or commercial purposes provided copyright
  * notice remains intact.
- * 
+ *
  * reduced to learn what has to be done to enable and use UART0
  *****************************************************************************/
 #ifndef INC_UART_H

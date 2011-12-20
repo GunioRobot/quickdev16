@@ -80,7 +80,7 @@
 	#define ex_lth32(buf) ex_getb32(buf)
 	#define ex_bth16(buf) end_conv16(ex_getb16(buf))
 	#define ex_bth32(buf) end_conv32(ex_getb32(buf))
-	
+
 	#define ex_htl16(buf) ex_setb16(buf)
 	#define ex_htl32(buf) ex_setb32(buf)
 	#define ex_htb16(buf) ex_setb16(end_conv16(buf))
@@ -90,7 +90,7 @@
 	#define ex_lth32(buf) end_conv32(ex_getb32(buf))
 	#define ex_bth16(buf) ex_getb16(buf)
 	#define ex_bth32(buf) ex_getb32(buf)
-	
+
 	#define ex_htl16(buf) ex_setb16(end_conv16(buf))
 	#define ex_htl32(buf) ex_setb32(end_conv32(buf))
 	#define ex_htb16(buf) ex_setb16(buf)

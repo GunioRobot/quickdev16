@@ -30,9 +30,9 @@ void initInternalRegisters(void)
 void preInit(void)
 {
 
-    // For testing purpose ... 
+    // For testing purpose ...
     // Insert code here to be executed before register init
-} 
+}
 
 void halt(void)
 {
@@ -58,7 +58,7 @@ void boot(DWORD addr)
     fn = (FUNC) addr;
     fn();
 
-} 
+}
 void main(void)
 {
     unsigned char i,j;
@@ -70,7 +70,7 @@ void main(void)
     *(byte *) 0x2100 = 0x0f;    // enable background
 
     debug_enable();
-#if 0    
+#if 0
     addr = 0x008000;
     for (i=0;i<28;i++){
         printfs(i,"ROW %02i %02X %08li %06lX",i,i,addr,addr);
@@ -109,8 +109,8 @@ void main(void)
         printfs(j,"DUMP %06lX ",addr);
         printc_packet(addr,16,(byte *) (addr));
     }
-    
-    
+
+
     while (1) {
         wait();
     }

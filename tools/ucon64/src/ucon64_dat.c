@@ -336,7 +336,7 @@ fname_to_console (const char *fname, st_ucon64_dat_t *dat)
       {"NGP", custom_strnicmp, UCON64_NGP, ngp_usage},
       {"GoodVBOY", custom_strnicmp, UCON64_VBOY, vboy_usage},
       {"VBOY", custom_strnicmp, UCON64_VBOY, vboy_usage},
-      
+
       {"Neo-Geo", custom_strnicmp, UCON64_NG, neogeo_usage},
       {"MAME", custom_stristr, UCON64_MAME, mame_usage},
       {"Dreamcast", custom_stristr, UCON64_DC, dc_usage},

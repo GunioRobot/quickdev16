@@ -32,8 +32,8 @@
 *                                                    (c)2006 Michael De Nil   *
 \*****************************************************************************/
 
-#ifndef __ATMEGA_SPI_H__ 
-#define __ATMEGA_SPI_H__ 
+#ifndef __ATMEGA_SPI_H__
+#define __ATMEGA_SPI_H__
 
 #define __AVR_ATmega128__ 1
 #define FALSE	0X00
@@ -53,13 +53,13 @@
               hwInterface
                ----------
 * long		sectorCount		Number of sectors on the file.
-* 
-* Remark: Configuration of the spi-port should become part of 
+*
+* Remark: Configuration of the spi-port should become part of
 * this configuration.
 \*************************************************************/
 struct _atmegaSpiInterface{
 	/*euint8 portSelect;*/ /* TODO */
-	euint8 pinSelect;	
+	euint8 pinSelect;
 };
 typedef struct _atmegaSpiInterface atmegaSpiInterface;
 

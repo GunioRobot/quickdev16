@@ -16,7 +16,7 @@ Summary:   Header files and static libraries for libftdi
 Group:     Development/Libraries
 Requires:  libftdi = %{version}, libusb-devel
 
-%description 
+%description
 Library to program and control the FTDI USB controller
 
 %description devel

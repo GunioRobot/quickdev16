@@ -15,7 +15,7 @@ linkfile := linkobjs.lst
 
 all: $(objects)
 	$(LD) $(LDFLAGS) $(linkfile) $(ROMFILE)
-	
+
 $(objects): $(sources)
 	$(AC) $(AFLAGS) $(patsubst %.o,%.asm,$@) $@
 

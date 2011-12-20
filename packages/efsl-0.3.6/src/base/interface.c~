@@ -41,7 +41,7 @@ esint8 if_init(Interface *iface, void* hwData,
 					      esint8 (*ioctl) (void*,euint16,void*))
 {
 	esint8 r;
-	
+
 	iface->flags=0;
 	iface->sectorCount=0;
 	iface->interface_data=hwData;
@@ -66,7 +66,7 @@ esint8 if_init(Interface *iface, void* hwData,
 esint8 if_readBuf(Interface *iface, euint32 address, euint8* buf)
 {
 #ifdef MULTIPLE_INTERFACE_SUPPORT
-	return(iface->readBuf(iface->interface_data,address,buf)); 
+	return(iface->readBuf(iface->interface_data,address,buf));
 #else
 	return(HWIFUNC_READ(iface->interface_data,address,buf));
 #endif

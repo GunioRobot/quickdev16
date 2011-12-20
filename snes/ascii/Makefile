@@ -2,18 +2,18 @@
 CC = wla-65816
 CFLAGS = -o
 LD = wlalink
-LDFLAGS = -v 
+LDFLAGS = -v
 
 SFILES = main.asm
-IFILES = 
+IFILES =
 OFILES = main.o
 GFXDATA = optixx_logo.bmp
 
-all: $(OFILES) Makefile  
+all: $(OFILES) Makefile
 	$(LD) $(LDFLAGS) linkfile ascii.smc
 	ucon64 -chk -swc ascii.smc
 
-zsnes: 
+zsnes:
 	/Applications/ZSNES.app/Contents/MacOS/ZSNES ascii.swc
 bsnes:
 	open /Applications/BSNES.app  ascii.swc
@@ -21,7 +21,7 @@ bsnes:
 main.o: colorlist sine gfx main.asm
 	$(CC) $(CFLAGS) main.asm main.o
 
-gfx: bmp2bitplane.py optixx_logo.bmp 	
+gfx: bmp2bitplane.py optixx_logo.bmp
 	python bmp2bitplane.py optixx_logo.bmp
 
 sine: sinegen.py
@@ -32,14 +32,14 @@ sine: sinegen.py
 
 colorlist:	bmp2col.py
 	python bmp2col.py	backcolors.bmp list
-	python bmp2col.py	colbar_1.bmp 
-	python bmp2col.py	colbar_2.bmp 
-	python bmp2col.py	colbar_3.bmp 
-		
-	
+	python bmp2col.py	colbar_1.bmp
+	python bmp2col.py	colbar_2.bmp
+	python bmp2col.py	colbar_3.bmp
+
+
 
 $(OFILES): $(HFILES)
 
 
 clean:
-	rm -f $(OFILES) core *~ result.rom optixx_logo.s 
+	rm -f $(OFILES) core *~ result.rom optixx_logo.s

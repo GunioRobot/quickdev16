@@ -77,12 +77,12 @@ uint32_t rle_decode(PGM_VOID_P in_addr, int32_t in_len, uint32_t out_addr)
             INBYTE(in_repeat);
             if (in_repeat == 0) {
                 /*
-                 * Just an escaped RUNCHAR value 
+                 * Just an escaped RUNCHAR value
                  */
                 OUTBYTE(RUNCHAR);
             } else {
                 /*
-                 * Pick up value and output a sequence of it 
+                 * Pick up value and output a sequence of it
                  */
                 in_byte = last_byte;    // ;out_data[-1];
                 while (--in_repeat > 0)
@@ -90,7 +90,7 @@ uint32_t rle_decode(PGM_VOID_P in_addr, int32_t in_len, uint32_t out_addr)
             }
         } else {
             /*
-             * Normal byte 
+             * Normal byte
              */
             OUTBYTE(in_byte);
         }

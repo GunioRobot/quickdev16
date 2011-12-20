@@ -4,14 +4,14 @@
 PLATFORM=$(shell uname)
 
 ifeq ($(PLATFORM),Linux)
-    # Linux Wine 
+    # Linux Wine
     SDK=/home/david/.wine/drive_c/65xx_FreeSDK
     WINE=wine
     EMU=../../tools/bsnes/bsnes
     DISASM=/home/david/Devel/arch/snes/devkit/bin/disasm
     UCON=ucon64
 else
-    # Mac Wine 
+    # Mac Wine
     SDK=/Users/david/.wine/drive_c/65xx_FreeSDK
     WINE=wine
     EMU=zsnes
@@ -27,7 +27,7 @@ LD=$(WINE) $(SDK)/bin/WDCLN.exe
 # Project
 
 INC=$(SDK)/include
-LIBS=-L$(SDK)/lib/cl 
+LIBS=-L$(SDK)/lib/cl
 #-L$(SDK)/lib/c134
 
 
@@ -58,7 +58,7 @@ ressource.obj: ressource.asm
 %.obj: %.c
 	$(CC)  -wl -wp -sop -ML -I $(INC) $?
 
-$(APP): $(OBJS) 
+$(APP): $(OBJS)
 	$(LD) -B -HB -M21 -V -T -Pff \
         -C008000,0000 -U0000,0000 \
         -Avectors=FFE4,7FE4 \

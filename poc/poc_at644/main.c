@@ -36,7 +36,7 @@ void SPI_MasterTransmit(unsigned char cData)
 {
 	/* Start transmission */
 	SPDR = cData;
-	
+
 	/* Wait for transmission complete */
 	while(!(SPSR & (1<<SPIF)));
 }
@@ -47,15 +47,15 @@ uint8_t SRAM_Read(uint32_t addr)
 
 	DDRD=0x00;
 	PORTD=0xff;
-	
+
 	PORTB |= (1<<R_RD);
 	PORTB |= (1<<R_WR);
 
-	SPI_MasterTransmit((uint8_t)(addr>>16));	
+	SPI_MasterTransmit((uint8_t)(addr>>16));
 	SPI_MasterTransmit((uint8_t)(addr>>8));
 	SPI_MasterTransmit((uint8_t)(addr>>0));
 
-	PORTB |= (1<<S_LATCH);  
+	PORTB |= (1<<S_LATCH);
     	PORTB &= ~(1<<S_LATCH);
 
 	PORTB &= ~(1<<R_RD);
@@ -63,9 +63,9 @@ uint8_t SRAM_Read(uint32_t addr)
 	asm volatile ("nop");
 	asm volatile ("nop");
 	asm volatile ("nop");
-	
+
 	byte = PIND;
-	
+
 	PORTB |= (1<<R_RD);
 
 	DDRD=0x00;
@@ -81,20 +81,20 @@ void SRAM_Write(uint32_t addr, uint8_t data)
 	PORTB |= (1<<R_RD);
 	PORTB |= (1<<R_WR);
 
-	SPI_MasterTransmit((uint8_t)(addr>>16));	
+	SPI_MasterTransmit((uint8_t)(addr>>16));
 	SPI_MasterTransmit((uint8_t)(addr>>8));
 	SPI_MasterTransmit((uint8_t)(addr>>0));
 
-	PORTB |= (1<<S_LATCH);  
+	PORTB |= (1<<S_LATCH);
 	PORTB &= ~(1<<S_LATCH);
 
 	PORTB &= ~(1<<R_WR);
-	
+
 	PORTD=data;
 
 	PORTB |= (1<<R_WR);
 
-	DDRD=0x00;	
+	DDRD=0x00;
 	PORTD=0x00;
 }
 

@@ -3089,4 +3089,3 @@ ObjectProcessGravObjNoDel:
 	inc.w GravObjectCounter
 	plp
 	rts	
-	

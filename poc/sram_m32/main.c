@@ -1,7 +1,7 @@
- 
-#include <avr/io.h>  
+
+#include <avr/io.h>
 #include <util/delay.h>
-#include <avr/eeprom.h> 
+#include <avr/eeprom.h>
 
 #include <stdio.h>
 
@@ -31,9 +31,9 @@ uint16_t ee_data04 __attribute__((section(".eeprom"))) = 0x04;
 #define SRAM_WE_PIN     6
 
 
-// LE high -> forward imput 
+// LE high -> forward imput
 // LE low  -> latch input
-#define LATCH_LEHI      CRTLPORT != _BV(LATCH_LE_PIN);     
+#define LATCH_LEHI      CRTLPORT != _BV(LATCH_LE_PIN);
 #define LATCH_LELO      CRTLPORT &=~_BV(LATCH_LE_PIN);
 // OE high -> normal logic level
 // OE low  -> high impendance
@@ -60,12 +60,12 @@ int sram_write(uint16_t addr, uint8_t data)
 
     uint8_t addr_lo = addr &  8;
     uint8_t addr_hi = addr >> 8;
-    
+
     SRAM_OEHI;
     SRAM_CELO;
     SRAM_WELO;
 
-    LATCH_OEHI; 
+    LATCH_OEHI;
     LATCH_LEHI
     DATAPORT = data;
     LATCH_LELO
@@ -74,7 +74,7 @@ int sram_write(uint16_t addr, uint8_t data)
     ADDRPORTHI = addr_hi;
 
     SRAM_CEHI;
-    
+
     SRAM_CELO;
 
     return 0;
@@ -86,12 +86,12 @@ int sram_read(uint16_t addr, uint8_t * data)
 
     uint8_t addr_lo = addr &  8;
     uint8_t addr_hi = addr >> 8;
-    
+
     SRAM_OELO;
     SRAM_CELO;
     SRAM_WEHI;
 
-    
+
     LATCH_OEHI;
     LATCH_LELO;
 
@@ -99,7 +99,7 @@ int sram_read(uint16_t addr, uint8_t * data)
     ADDRPORTHI = addr_hi;
 
     SRAM_CEHI;
-    
+
     SRAM_CELO;
 
     LATCH_LEHI;
@@ -112,28 +112,28 @@ int sram_read(uint16_t addr, uint8_t * data)
 
 
 int main (void) {            // (2)
- 
+
     DDRB  = 0xff;             // (3)
     PORTB = 0xff;             // (4)
-    uint8_t i = 0; 
-    uint8_t j = 7; 
+    uint8_t i = 0;
+    uint8_t j = 7;
     uart_init();
     stdout = &uart_stdout;
-    
+
     while(1) {                // (5a)
         PORTB  |=  (1<< j);
         j++;
-        if ( j == 8 ) j = 0; 
+        if ( j == 8 ) j = 0;
         PORTB  &= ~(1 << j );  // Toggle PB0 z.B. angeschlossene LED
-        /* 
-           Die maximale Zeit pro Funktionsaufruf ist begrenzt auf 
-           262.14 ms / F_CPU in MHz (im Beispiel: 
-           262.1 / 3.6864 = max. 71 ms) 
+        /*
+           Die maximale Zeit pro Funktionsaufruf ist begrenzt auf
+           262.14 ms / F_CPU in MHz (im Beispiel:
+           262.1 / 3.6864 = max. 71 ms)
            16 * 62.5ms (+ Zeit für Schleife) = ca. eine Sekunde warten
         */
-        debug(j,"%x \n"); 
-        for (i=1; i<=70; i++)         
-            _delay_ms(15);    
+        debug(j,"%x \n");
+        for (i=1; i<=70; i++)
+            _delay_ms(15);
     }
     return 0;                 // (6)
 }

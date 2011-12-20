@@ -11,7 +11,7 @@
  * example device. It searches the USB for the LEDControl device and sends the
  * requests understood by this device. This program must be linked with libusb
  * on Unix and libusb-win32 on Windows. See http://libusb.sourceforge.net/ or
- * http://libusb-win32.sourceforge.net/ respectively. 
+ * http://libusb-win32.sourceforge.net/ respectively.
  */
 
 
@@ -143,7 +143,7 @@ int main(int argc, char **argv)
     vid = rawVid[1] * 256 + rawVid[0];
     pid = rawPid[1] * 256 + rawPid[0];
     /*
-     * The following function is in opendevice.c: 
+     * The following function is in opendevice.c:
      */
     if (usbOpenDevice(&handle, vid, vendor, pid, product, NULL, NULL, NULL) !=
         0) {
@@ -187,7 +187,7 @@ int main(int argc, char **argv)
                 if (cnt < 0) {
                     fprintf(stderr, "USB error: %s\n", usb_strerror());
                     exit(-1);
-                } 
+                }
 #if 0
                 dump_packet(addr, SEND_BUFFER_SIZE, read_buffer + step);
 #endif
@@ -221,7 +221,7 @@ int main(int argc, char **argv)
         }
     } else if (strcasecmp(argv[1], "crc") == 0) {
         /*
-         * if(argc < 2){ usage(argv[0]); exit(1); } 
+         * if(argc < 2){ usage(argv[0]); exit(1); }
          */
         addr = 0x000000;
         addr_lo = addr & 0xffff;

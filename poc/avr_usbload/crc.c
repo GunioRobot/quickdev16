@@ -26,7 +26,7 @@ uint16_t do_crc(uint8_t * data, uint16_t size)
     uint16_t i;
     for (i = 0; i < size; i++) {
         crc = crc_xmodem_update(crc, data[i]);
-        // printf("%x : %x\n",crc,data[i]); 
+        // printf("%x : %x\n",crc,data[i]);
     }
     return crc;
 }

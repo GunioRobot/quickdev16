@@ -31,7 +31,7 @@
 	@todo some requests have to return a request error if device not configured:
 	@todo GET_INTERFACE, GET_STATUS, SET_INTERFACE, SYNCH_FRAME
 	@todo this applies to the following if endpoint != 0:
-	@todo SET_FEATURE, GET_FEATURE 
+	@todo SET_FEATURE, GET_FEATURE
 */
 
 #include "type.h"
@@ -292,7 +292,7 @@ static BOOL HandleStdInterfaceReq(TSetupPacket	*pSetup, int *piLen, U8 **ppbData
 	case REQ_SET_FEATURE:
 		// not defined for interface
 		return FALSE;
-	
+
 	case REQ_GET_INTERFACE:	// TODO use bNumInterfaces
         // there is only one interface, return n-1 (= 0)
 		pbData[0] = 0;
@@ -370,7 +370,7 @@ static BOOL HandleStdEndPointReq(TSetupPacket	*pSetup, int *piLen, U8 **ppbData)
 
 /**
 	Default handler for standard ('chapter 9') requests
-	
+
 	If a custom request handler was installed, this handler is called first.
 		
 	@param [in]		pSetup		The setup packet
@@ -397,11 +397,11 @@ BOOL USBHandleStandardRequest(TSetupPacket	*pSetup, int *piLen, U8 **ppbData)
 
 /**
 	Registers a callback for custom device requests
-	
+
 	In USBHandleStandardRequest, the custom request handler gets a first
 	chance at handling the request before it is handed over to the 'chapter 9'
 	request handler.
-	
+
 	This can be used for example in HID devices, where a REQ_GET_DESCRIPTOR
 	request is sent to an interface, which is not covered by the 'chapter 9'
 	specification.

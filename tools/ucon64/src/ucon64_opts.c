@@ -2051,7 +2051,7 @@ ucon64_options (st_ucon64_t *p)
         smc_write_rts (ucon64.rom, ucon64.parport);
       fputc ('\n', stdout);
       break;
-    
+
 
     case UCON64_XSMD:
       if (access (ucon64.rom, F_OK) != 0)       // file does not exist -> dump cartridge

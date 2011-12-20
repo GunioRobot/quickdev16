@@ -40,7 +40,7 @@
 
 /* VARIABLE SIZES
    ==============
-   
+
    * eint8   -> 1 byte
    * eint16  -> 2 bytes
    * eint32  -> 4 bytes
@@ -60,10 +60,10 @@
 	typedef unsigned char euint8;
 	typedef short eint16;
 	typedef signed short esint16;
-	typedef unsigned short euint16; 
-	typedef long eint32; 
+	typedef unsigned short euint16;
+	typedef long eint32;
 	typedef signed long esint32;
-	typedef unsigned long euint32; 
+	typedef unsigned long euint32;
 #elif defined(VARSIZE_LINUX64)
 	typedef char eint8;
 	typedef signed char esint8;
@@ -80,20 +80,20 @@
 	typedef unsigned char euint8;
 	typedef short eint16;
 	typedef signed short esint16;
-	typedef unsigned short euint16; 
-	typedef long eint32; 
+	typedef unsigned short euint16;
+	typedef long eint32;
 	typedef signed long esint32;
-	typedef unsigned long euint32; 
+	typedef unsigned long euint32;
 #elif defined(VARSIZE_TMS67XX)
 	typedef char eint8;
 	typedef signed char esint8;
 	typedef unsigned char euint8;
 	typedef short eint16;
 	typedef signed short esint16;
-	typedef unsigned short euint16; 
-	typedef int eint32; 
+	typedef unsigned short euint16;
+	typedef int eint32;
 	typedef signed int esint32;
-	typedef unsigned int euint32; 
+	typedef unsigned int euint32;
 #else
 #warning "No VARSIZE selection has been made, beware!"
 	typedef char eint8;
@@ -101,10 +101,10 @@
 	typedef unsigned char euint8;
 	typedef short eint16;
 	typedef signed short esint16;
-	typedef unsigned short euint16; 
-	typedef long eint32; 
+	typedef unsigned short euint16;
+	typedef long eint32;
 	typedef signed long esint32;
-	typedef unsigned long euint32; 
+	typedef unsigned long euint32;
 #endif
 
 #endif

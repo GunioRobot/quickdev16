@@ -79,7 +79,7 @@ void NMIHandler(void)
   nmi_triggered = 1;
 
 }
-    
+
 void initInternalRegisters(void)
 {
     characterLocation[0] = 0x0000;
@@ -92,7 +92,7 @@ void initInternalRegisters(void)
 void preInit(void)
 {
 
-    // For testing purpose ... 
+    // For testing purpose ...
     // Insert code here to be executed before register init
 }
 
@@ -212,11 +212,11 @@ void boot(DWORD addr)
 #if 1
     printfs(0, "FATFS OPTIXX.ORG ");
     printfc("SNES::main: Try to get free\n");
-    
+
     res = f_getfree("", &p2, &fs);
     if (res)
         put_rc(res);
-    
+
     printfc("SNES::main: printf fs results\n");
     printfs(1,
             "FAT TYPE = %u\nBYTES/CLUSTER = %lu\nNUMBER OF FATS = %u\n"
@@ -226,7 +226,7 @@ void boot(DWORD addr)
             (WORD) fs->n_fats, fs->n_rootdir, (DWORD) fs->sects_fat,
             (DWORD) fs->max_clust - 2, fs->fatbase, fs->dirbase, fs->database);
     acc_size = acc_files = acc_dirs = 0;
-    
+
     printfc("SNES::main: scan files\n");
     res = scan_files("");
     if (res)
@@ -238,7 +238,7 @@ void boot(DWORD addr)
     res = f_opendir(&dir, "");
     if (res)
         put_rc(res);
-    
+
     p1 = s1 = s2 = 0;
     cnt = 0;
     wait();
@@ -272,7 +272,7 @@ void boot(DWORD addr)
 
         /*
          *  printfs(cnt,"%u/%02u/%02u %02u:%02u %9lu\n%s\n", (finfo.fdate >> 9) + 1980, (finfo.fdate >> 5) & 15, finfo.fdate & 31,
-         * (finfo.ftime >> 11), (finfo.ftime >> 5) & 63, finfo.fsize, &(finfo.fname[0])); 
+         * (finfo.ftime >> 11), (finfo.ftime >> 5) & 63, finfo.fsize, &(finfo.fname[0]));
          */
         if (cnt && cnt == 20) {
             cnt = 0;
@@ -286,7 +286,7 @@ void boot(DWORD addr)
     wait();
     clears();
 
-#endif                          
+#endif
 
     p1 = BANK_SIZE * BANK_COUNT;
     p2 = 0;
@@ -298,11 +298,11 @@ void boot(DWORD addr)
     printfc("SNES::main: open %s \n", rom_name);
     printfs(0, "OPEN %s", rom_name);
     put_rc(f_open(&file1, rom_name, (BYTE) FA_READ));
-    
+
     while (p1) {
         cnt = BLOCK_SIZE;
         p1 -= BLOCK_SIZE;
-        
+
         res = f_read(&file1, buffer, cnt, &s2);
 
         if (res != FR_OK) {
@@ -310,13 +310,13 @@ void boot(DWORD addr)
             put_rc(res);
             break;
         }
-        
+
         p2 += s2;
         if (cnt != s2) {
             printfc("SNES::main: read cnt=%i s2=%i\n", cnt, s2);
             break;
         }
-        
+
         for (i=0;i<BLOCK_SIZE;i++)
             *(byte*)(addr++) = buffer[i];
 
@@ -327,7 +327,7 @@ void boot(DWORD addr)
 
         //addr += s2;
         if (addr % 0x10000 == 0) {
-            //printfc("SNES::main: read p1=%li p2=%li cnt=%i s2=%i\n", 
+            //printfc("SNES::main: read p1=%li p2=%li cnt=%i s2=%i\n",
             //        p1, p2, cnt, s2);
 
 #if 0
@@ -335,14 +335,14 @@ void boot(DWORD addr)
             printfc("SNES::main: crc_addr=%lx crc=%x\n", crc_addr, crc);
             crc_addr += 0x8000;
 #endif
-            
-            
+
+
             printfs(bank+1, "BANK 0X%X ADDR 0X%lX", bank, addr);
             addr += 0x8000;
             bank++;
         }
     }
-    
+
     put_rc(f_close(&file1));
     addr = *(byte *) 0xFFFD;
     addr = addr << 8;

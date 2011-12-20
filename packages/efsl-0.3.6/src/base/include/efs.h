@@ -51,7 +51,7 @@
 #include "fs.h"
 #include "file.h"
 #include "time.h"
-#include "ui.h" 
+#include "ui.h"
 
 /*****************************************************************************/
 #define LINUX_FILE_CONFIG	0x00
@@ -67,7 +67,7 @@ struct _efsl_storage {
 typedef struct _efsl_storage efsl_storage;
 
 struct _efsl_storage_conf {
-	
+
 	void *hwObject;
 	esint8 (*if_init_fptr)(void*);
 	esint8 (*if_read_fptr)(void*,euint32,euint8*);

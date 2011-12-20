@@ -25,7 +25,7 @@ GNROM: LS161 mapper, PRG ROM, CHR ROM
 HKROM: MMC6B, PRG-ROM, CHR-ROM, Battery
 MHROM: LS161 mapper, black blob chips. Mario Bros / Duck Hunt multi
 NES-B4: Same as TLROM
-NES-BTR: Sunsoft FME7 mapper, PRG ROM, CHR ROM, 8k optionnal RAM 
+NES-BTR: Sunsoft FME7 mapper, PRG ROM, CHR ROM, 8k optionnal RAM
 NES-QJ:
 NES-RROM: Same as NROM (Only used in Clu Clu land)
 NROM: No mapper, PRG-ROM, CHR-ROM
@@ -47,7 +47,7 @@ SL3ROM
 SLROM: MMC1A, PRG ROM, CHR ROM
 SLRROM
 SN1-ROM AW (Overlord only)
-SNROM: MMC1A, PRG ROM, CHR ROM/RAM ?, 8k optional RAM (battery)  
+SNROM: MMC1A, PRG ROM, CHR ROM/RAM ?, 8k optional RAM (battery)
 SOROM: MMC1B2, PRG ROM, VRAM, 16K of WRAM (Battery) Only 8K battery-backed
 SVROM: MMC1B2, PRG ROM, VRAM, WRAM (Battery)
 SUROM: MMC1B2, PRG ROM, CHR RAM/(ROM?), 8k battery-backed RAM (DW4???)

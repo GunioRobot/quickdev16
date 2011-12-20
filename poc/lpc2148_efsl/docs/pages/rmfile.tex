@@ -35,7 +35,7 @@ close all instances of that file. If you do not, you may corrupt the filesystem.
 		/* Delete some files */
 		rmfile(&efsl.myFs,"file0.txt");
 		rmfile(&efsl.myFs,"dir0/file0.txt");
-		
+
 		/* Close filesystem */
 		fs_umount(&efsl.myFs);
 	}

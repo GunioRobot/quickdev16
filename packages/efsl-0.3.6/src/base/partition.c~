@@ -36,7 +36,7 @@
 #include "partition.h"
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void part_initPartition(Partition *part,Disc* refDisc)
  * Description: This function searches the 4 partitions for a FAT class partition
  * and marks the first one found as the active to be used partition.
@@ -44,13 +44,13 @@
 void part_initPartition(Partition *part,Disc* refDisc)
 {
 	eint16 c;
-	
+
 	part->disc=refDisc;
 	part->LBA_offset=0;
 	part->LBA_sectorcount=0;
 	part_setError(part,PART_NOERROR);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
 euint8 part_openPartitionType(Partition *part,euint8 type)
 {
@@ -59,7 +59,7 @@ euint8 part_openPartitionType(Partition *part,euint8 type)
 	);
 }
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * euint8* part_getSect(Partition *part, euint32 address, euint8 mode)
  * Description: This function calls ioman_getSector, but recalculates the sector
  * address to be partition relative.
@@ -70,7 +70,7 @@ euint8* part_getSect(Partition *part, euint32 address, euint8 mode)
 	return(ioman_getSector(part->disc->ioman,part_getRealLBA(part,address),mode));
 }
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * esint8 part_relSect(Partition *part, euint8* buf)
  * Description: This function calls ioman_releaseSector.
  * Return value: Whatever releaseSector returns.
@@ -82,9 +82,9 @@ esint8 part_relSect(Partition *part, euint8* buf)
 
 esint8 part_flushPart(Partition *part,euint32 addr_l, euint32 addr_h)
 {
-	return( 
-		ioman_flushRange(part->disc->ioman,part_getRealLBA(part,addr_l),part_getRealLBA(part,addr_h)) 
-	);	
+	return(
+		ioman_flushRange(part->disc->ioman,part_getRealLBA(part,addr_l),part_getRealLBA(part,addr_h))
+	);
 }
 
 esint8 part_directSectorRead(Partition *part,euint32 address, euint8* buf)

@@ -57,13 +57,13 @@ typedef struct IOManStack IOManStack;
 
 struct IOManager{
 	hwInterface *iface;
-	
+
 	euint8 *bufptr;
 	euint16 numbuf;
 	euint16 numit;
-		
+
 	IOManStack stack[IOMAN_NUMBUFFER][IOMAN_NUMITERATIONS];
-	
+
 	euint32 sector[IOMAN_NUMBUFFER];
 	euint8  status[IOMAN_NUMBUFFER];
 	euint8  usage[IOMAN_NUMBUFFER];

@@ -1,5 +1,5 @@
 /*
-	LPCUSB, an USB device driver for LPC microcontrollers	
+	LPCUSB, an USB device driver for LPC microcontrollers
 	Copyright (C) 2006 Bertrik Sikken (bertrik@sikken.nl)
 
 	This library is free software; you can redistribute it and/or
@@ -19,7 +19,7 @@
 
 /*
 	Simple benchmarking application.
-	
+
 	It talks with the 'custom' device application on the LPC214x through
 	libusb.
 
@@ -60,11 +60,11 @@ typedef struct {
 static struct usb_device * find_device(int iVendor, int iProduct)
 {
 	struct usb_bus	*usb_bus;
-	struct usb_device *dev;	
-	
+	struct usb_device *dev;
+
 	for (usb_bus = usb_get_busses(); usb_bus; usb_bus = usb_bus->next) {
 		for (dev = usb_bus->devices; dev; dev = dev->next) {
-			if ((dev->descriptor.idVendor == iVendor) && 
+			if ((dev->descriptor.idVendor == iVendor) &&
 				(dev->descriptor.idProduct == iProduct)) {
 				return dev;
 			}
@@ -84,7 +84,7 @@ static void starttimer(void)
 static int stoptimer(void)
 {
 	struct timeb now;
-	
+
 	ftime(&now);
 	return 1000 * (now.time - start.time) + now.millitm - start.millitm;
 }
@@ -92,7 +92,7 @@ static int stoptimer(void)
 
 int main(int argc, char *argv[])
 {
-	struct usb_device *dev;	
+	struct usb_device *dev;
 	struct usb_dev_handle *hdl;
 	int i, j;
 	U32 dwBlockSize, dwChunk, dwBytes;
@@ -102,20 +102,20 @@ int main(int argc, char *argv[])
 	usb_init();
 	usb_find_busses();
 	usb_find_devices();
-	
+
 	dev = find_device(VENDOR_ID, PRODUCT_ID);
 	if (dev == NULL) {
 		fprintf(stderr, "device not found\n");
 		return -1;
 	}
-	
+
 	hdl = usb_open(dev);
-	
+
 	i = usb_set_configuration(hdl, 1);
 	if (i < 0) {
 		fprintf(stderr, "usb_set_configuration failed\n");
 	}
-	
+
 	i = usb_claim_interface(hdl, 0);
 	if (i < 0) {
 		fprintf(stderr, "usb_claim_interface failed %d\n", i);

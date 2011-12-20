@@ -37,7 +37,7 @@
 #include "linuxfile.h"
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * short if_initInterface(hwInterface* file, char* fileName)
  * Description: This function should bring the hardware described in file in a
  * ready state to receive and retrieve data.
@@ -46,17 +46,17 @@
 esint8 lf_init(void* LFI)
 {
 	eint32 sc;
-	
+
 	Fopen(&(((linuxFileInterface*)LFI)->imageFile),(eint8*)((linuxFileInterface*)LFI)->fileName);
 	sc=getFileSize(((linuxFileInterface*)LFI)->imageFile);
 	((linuxFileInterface*)LFI)->sectorCount=sc/512;
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * short if_readBuf(hwInterface* file,unsigned long address,unsigned char* buf)
- * Description: This function should fill the characterpointer buf with 512 
+ * Description: This function should fill the characterpointer buf with 512
  * bytes, offset by address*512 bytes. Adress is thus a LBA address.
  * Return value: Return 0 on success and -1 on failure.
 */
@@ -67,9 +67,9 @@ esint8 lf_readBuf(void* LFI,euint32 address,euint8* buf)
 	if( fread((void*)buf,512,1,((linuxFileInterface*)LFI)->imageFile) != 1) return(-1);
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * short if_writeBuf(hwInterface* file,unsigned long address,unsigned char* buf)
  * Description: This function writes 512 bytes from uchar* buf to the hardware
  * disc described in file. The write offset should be address sectors of 512 bytes.
@@ -86,7 +86,7 @@ esint8 lf_writeBuf(void* LFI,euint32 address,euint8* buf)
 	fflush(((linuxFileInterface*)LFI)->imageFile);
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
 esint8 lf_ioctl(void* LFI,euint16 ctl,void* data)
 {
@@ -104,7 +104,7 @@ esint8 lf_ioctl(void* LFI,euint16 ctl,void* data)
 	}
 }
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * short if_setPos(hwInterface* file,unsigned long address)
  * Description: This function may or may not be required. It would set the write
  * or read buffer offset by 512*address bytes from the beginning of the disc.
@@ -122,5 +122,5 @@ esint8 lf_setPos(void* LFI,euint32 address)
 	}
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 

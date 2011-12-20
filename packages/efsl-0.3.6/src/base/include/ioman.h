@@ -64,15 +64,15 @@ typedef struct _IOManStack IOManStack;
 
 struct _IOManager{
 	Interface *iface;
-	
+
 	euint8 *bufptr;
 	euint16 numbuf;
 	euint16 numit;
-		
+
 	IOMAN_ERR_EUINT8
-		
+
 	IOManStack stack[IOMAN_NUMBUFFER][IOMAN_NUMITERATIONS];
-	
+
 	euint32 sector[IOMAN_NUMBUFFER];
 	euint8  status[IOMAN_NUMBUFFER];
 	euint8  usage[IOMAN_NUMBUFFER];

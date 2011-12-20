@@ -32,10 +32,10 @@ note that they are unsorted.
 			DBG((TXT("Could not initialize filesystem (err \%d).\n"),ret));
 			exit(-1);
 }
-		
+
 		/* Open the directory */
 		ls_openDir(list,&(efsl.myFs),"/usr/bin/");
-		
+
 		/* Print a list of all files and their filesize */
 		while(ls_getNext(list)==0){
 			DBG((TXT("%s (%li bytes)\n"),

@@ -1,5 +1,5 @@
 /*
- * File: %s Time: %s 
+ * File: %s Time: %s
  */
 #include <avr/pgmspace.h>
 #include <loader.h>

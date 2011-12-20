@@ -29,8 +29,8 @@
 *                                                    (c)2005 Marcio Troccoli  *
 \*****************************************************************************/
 
-#ifndef __NIOS_2_SD_H_ 
-#define __NIOS_2_SD_H_ 
+#ifndef __NIOS_2_SD_H_
+#define __NIOS_2_SD_H_
 
 #define FALSE	0X00
 #define TRUE	0x01

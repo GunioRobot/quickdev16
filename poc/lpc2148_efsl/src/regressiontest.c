@@ -58,18 +58,18 @@ int main(int argc, char** argv)
 	File *fw=0;
 	FILE *out=0;
 	unsigned char buf[4096];
-	
+
 	int c,r,ir;
-	
+
 	/*debug_init();*/
-	
+
 	switch(argv[1][0]){
 		case '0':
 			lfile = malloc(sizeof(*lfile));
 			ioman = malloc(sizeof(*ioman));
 			disc = malloc(sizeof(*disc));
 			part = malloc(sizeof(*part));
-			
+
 			if_initInterface(lfile,"regtest.16");
 			ioman_init(ioman,lfile,0);
 			disc_initDisc(disc,ioman);
@@ -84,15 +84,15 @@ int main(int argc, char** argv)
 				 printf("Unable to init the filesystem\n");
 				 return(-1);
 			}
-			
+
 			fr = malloc(sizeof(*fr));
 			if ( (file_fopen(fr,fs,"file.r",MODE_READ)) != 0){
 				printf("Unable to open the file file.r\n");
 				return(-1);
 			}
-			
+
 			out=fopen("REG_FILE_16_OUT","w");
-			
+
 			c=0;
 			while( (r=file_fread(fr,c,4096,buf)) != 0){
 				c+=r;
@@ -102,14 +102,14 @@ int main(int argc, char** argv)
 			fclose(out);
 			fs_umount(fs);
 			break;
-		
+
 		case '1':
-			
+
 			lfile = malloc(sizeof(*lfile));
 			ioman = malloc(sizeof(*ioman));
 			disc = malloc(sizeof(*disc));
 			part = malloc(sizeof(*part));
-			
+
 			if_initInterface(lfile,"regtest.32");
 			ioman_init(ioman,lfile,0);
 			disc_initDisc(disc,ioman);
@@ -129,9 +129,9 @@ int main(int argc, char** argv)
 				printf("Unable to open the file file.r\n");
 				return(-1);
 			}
-			
+
 			out=fopen("REG_FILE_32_OUT","w");
-			
+
 			c=0;
 			while( (r=file_fread(fr,c,4096,buf)) != 0){
 				c+=r;
@@ -140,11 +140,11 @@ int main(int argc, char** argv)
 			file_fclose(fr);
 			fclose(out);
 			fs_umount(fs);
-			
+
 			break;
-		
+
 		case '2':
-				
+
 			lfile = malloc(sizeof(*lfile));
 			ioman = malloc(sizeof(*ioman));
 			disc = malloc(sizeof(*disc));
@@ -152,7 +152,7 @@ int main(int argc, char** argv)
 			fs = malloc(sizeof(*fs));
 			fr = malloc(sizeof(*fr));
 			fw = malloc(sizeof(*fw));
-			
+
 			if_initInterface(lfile,"regtestrw.32");
 			ioman_init(ioman,lfile,0);
 			disc_initDisc(disc,ioman);
@@ -167,7 +167,7 @@ int main(int argc, char** argv)
 				 printf("Unable to init the filesystem\n");
 				 return(-1);
 			}
-						
+
 			if((file_fopen(fr,fs,"file.r",'r'))!=0){
 				printf("Unable to open %s for reading...\n","file.r");
 				exit(0);
@@ -176,31 +176,31 @@ int main(int argc, char** argv)
 				printf("Unable to open %s for writing...\n","file.w");
 				exit(0);
 			}
-			
+
 			ir = atoi(argv[2]);
-						
+
 			while((r = file_read(fr,ir,buf))>0){
 				file_write(fw,r,buf);
 			}
 
 			file_fclose(fr);
 			file_fclose(fw);
-			
+
 			if((file_fopen(fr,fs,"file.w",'r'))!=0){
 				printf("Unable to open %s for reading...\n","file.w");
 				exit(0);
 			}
-			
+
 			out=fopen("REG_FILE_RW32_OUT","w");
 
 			while((r = file_read(fr,ir/2+3,buf))>0){
 				fwrite(buf,1,r,out);
 			}
-			
+
 			fclose(out);
 			file_fclose(fr);
 			fs_umount(fs);
-			
+
 			break;
 
 		case '3':
@@ -208,7 +208,7 @@ int main(int argc, char** argv)
 			ioman = malloc(sizeof(*ioman));
 			disc = malloc(sizeof(*disc));
 			part = malloc(sizeof(*part));
-			
+
 			if_initInterface(lfile,"regtest.12");
 			ioman_init(ioman,lfile,0);
 			disc_initDisc(disc,ioman);
@@ -223,15 +223,15 @@ int main(int argc, char** argv)
 				 printf("Unable to init the filesystem\n");
 				 return(-1);
 			}
-			
+
 			fr = malloc(sizeof(*fr));
 			if ( (file_fopen(fr,fs,"file.r",MODE_READ)) != 0){
 				printf("Unable to open the file file.r\n");
 				return(-1);
 			}
-			
+
 			out=fopen("REG_FILE_12_OUT","w");
-			
+
 			c=0;
 			while( (r=file_fread(fr,c,4096,buf)) != 0){
 				c+=r;
@@ -240,11 +240,11 @@ int main(int argc, char** argv)
 			file_fclose(fr);
 			fclose(out);
 			fs_umount(fs);
-			
+
 			break;
 
 		case '4':
-				
+
 			lfile = malloc(sizeof(*lfile));
 			ioman = malloc(sizeof(*ioman));
 			disc = malloc(sizeof(*disc));
@@ -252,7 +252,7 @@ int main(int argc, char** argv)
 			fs = malloc(sizeof(*fs));
 			fr = malloc(sizeof(*fr));
 			fw = malloc(sizeof(*fw));
-			
+
 			if_initInterface(lfile,"regtestrw.12");
 			ioman_init(ioman,lfile,0);
 			disc_initDisc(disc,ioman);
@@ -267,7 +267,7 @@ int main(int argc, char** argv)
 				 printf("Unable to init the filesystem\n");
 				 return(-1);
 			}
-						
+
 			if((file_fopen(fr,fs,"file.r",'r'))!=0){
 				printf("Unable to open %s for reading...\n","file.r");
 				exit(0);
@@ -276,35 +276,35 @@ int main(int argc, char** argv)
 				printf("Unable to open %s for writing...\n","file.w");
 				exit(0);
 			}
-			
+
 			ir = atoi(argv[2]);
-						
+
 			while((r = file_read(fr,ir,buf))>0){
 				file_write(fw,r,buf);
 			}
 
 			fflush(stdout);
-			
+
 			file_fclose(fr);
 			file_fclose(fw);
-			
+
 			if((file_fopen(fr,fs,"file.w",'r'))!=0){
 				printf("Unable to open %s for reading...\n","file.w");
 				exit(0);
 			}
-			
+
 			out=fopen("REG_FILE_RW12_OUT","w");
 
 			while((r = file_read(fr,ir/2+3,buf))>0){
 				fwrite(buf,1,r,out);
 			}
-			
+
 			fclose(out);
 			file_fclose(fr);
 			fs_umount(fs);
 
 			break;
-		
+
 			default:
 				printf("Unknown test\n");
 

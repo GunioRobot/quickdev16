@@ -9,15 +9,15 @@
 
 /*
  * Interface ** Scratch Buffer addr 3 byte size 1 byte
- * 
+ *
  * ** Call Interface cmd 1 byte sector 4 bytes count 1 byte return 1 byte
- * 
- * ** Commands * disk_init * disk_read * disk_write 
+ *
+ * ** Commands * disk_init * disk_read * disk_write
  */
 
 /*-----------------------------------------------------------------------*/
 /*
- * Initialize Disk Drive 
+ * Initialize Disk Drive
  */
 /*-----------------------------------------------------------------------*/
 
@@ -58,7 +58,7 @@ DSTATUS disk_initialize(BYTE drv)
 
 /*-----------------------------------------------------------------------*/
 /*
- * Return Disk Status 
+ * Return Disk Status
  */
 /*-----------------------------------------------------------------------*/
 
@@ -72,7 +72,7 @@ DSTATUS disk_status(BYTE drv)
 
 /*-----------------------------------------------------------------------*/
 /*
- * Read Sector(s) 
+ * Read Sector(s)
  */
 /*-----------------------------------------------------------------------*/
 
@@ -137,7 +137,7 @@ DRESULT disk_read(BYTE drv,     /* Physical drive nmuber (0) */
 
 /*-----------------------------------------------------------------------*/
 /*
- * Write Sector(s) 
+ * Write Sector(s)
  */
 /*-----------------------------------------------------------------------*/
 
@@ -164,7 +164,7 @@ DRESULT disk_write(BYTE drv,    /* Physical drive nmuber (0) */
 
 /*-----------------------------------------------------------------------*/
 /*
- * Miscellaneous Functions 
+ * Miscellaneous Functions
  */
 /*-----------------------------------------------------------------------*/
 

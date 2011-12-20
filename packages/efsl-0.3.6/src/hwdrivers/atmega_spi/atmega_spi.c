@@ -39,10 +39,10 @@
 euint8 atmega_spi_init(atmegaSpiInterface *iface)
 {
 	euint8 i;
-	
+
 	/* Unselect card */
 	PORTB |= iface->pinSelect;
-	
+
 	/* Set as master, clock and chip select output */
 	DDR_SPI = (1<<DD_MOSI) | (1<<DD_SCK) | 1;
 
@@ -64,9 +64,9 @@ euint8 atmega_spi_init(atmegaSpiInterface *iface)
 euint8 atmega_spi_send(atmegaSpiInterface *iface, euint8 data)
 {
 	euint8 incoming=0;
-	
+
 	PORTB &= ~(iface->pinSelect);
-	
+
 	SPDR = data;
 	while(!(SPSR & (1<<SPIF)))
 		incoming = SPDR;

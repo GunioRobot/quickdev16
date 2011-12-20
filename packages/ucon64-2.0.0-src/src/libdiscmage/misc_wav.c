@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #endif
 // TODO: replace ceil(), floor() and sin()
 
-unsigned char wav_header[3][80] = { 
+unsigned char wav_header[3][80] = {
   {
     'R', 'I', 'F', 'F', 0x80, 0x80, 0x80, 0x80,    // RIFF TAG
     'W', 'A', 'V', 'E',                            // WAV TAG
@@ -80,7 +80,7 @@ typedef struct
   uint16_t format;        // identifies WAVE_FORMAT_PCM
   uint16_t channels;
   uint32_t freq;          // samples per second per channel
-  uint32_t bytespersecond;       
+  uint32_t bytespersecond;
   uint16_t blockalign;    // basic block size
   uint16_t bitspersample;
 

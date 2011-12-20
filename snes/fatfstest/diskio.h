@@ -16,12 +16,12 @@ extern "C" {
 
 
     /*
-     * Status of Disk Functions 
+     * Status of Disk Functions
      */
     typedef BYTE DSTATUS;
 
     /*
-     * Results of Disk Functions 
+     * Results of Disk Functions
      */
     typedef enum {
         RES_OK = 0,             /* 0: Successful */
@@ -34,7 +34,7 @@ extern "C" {
 
 /*---------------------------------------*/
     /*
-     * Prototypes for disk control functions 
+     * Prototypes for disk control functions
      */
 
     DSTATUS disk_initialize(BYTE);
@@ -50,7 +50,7 @@ extern "C" {
 
 
     /*
-     * Disk Status Bits (DSTATUS) 
+     * Disk Status Bits (DSTATUS)
      */
 
 #define STA_NOINIT		0x01    /* Drive not initialized */
@@ -60,11 +60,11 @@ extern "C" {
 
 
     /*
-     * Command code for disk_ioctrl() 
+     * Command code for disk_ioctrl()
      */
 
     /*
-     * Generic command 
+     * Generic command
      */
 #define CTRL_SYNC			0       /* Mandatory for write functions */
 #define GET_SECTOR_COUNT	1       /* Mandatory for only f_mkfs() */

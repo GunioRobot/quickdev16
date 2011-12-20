@@ -30,8 +30,8 @@
 *                                                    (c)2006 Michael De Nil   *
 \*****************************************************************************/
 
-#ifndef __ATMEGA128_SD_H_ 
-#define __ATMEGA128_SD_H_ 
+#ifndef __ATMEGA128_SD_H_
+#define __ATMEGA128_SD_H_
 
 #define __AVR_ATmega128__ 1
 #define FALSE	0X00

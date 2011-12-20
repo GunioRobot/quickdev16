@@ -36,7 +36,7 @@
 #include "disc.h"
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void disc_initDisc(Disc *disc,hcInterface* source)
  * Description: This initialises the disc by loading the MBR and setting the
  * pointer to the hardware object.
@@ -47,10 +47,10 @@ void disc_initDisc(Disc *disc,IOManager* ioman)
 	disc_setError(disc,DISC_NOERROR);
 
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * euint8 disc_findPartition(Disc *disc, euint8 partitionType, euint8 partitionIndex, euint32* startSector, euint32* sectorCount)
  * Description: Locates partition of type partitionType w/ index partitionIndex on the disc and returns
  * the startsector and the size to the caller.
@@ -65,7 +65,7 @@ euint8 disc_findPartition(Disc *disc, euint8 partitionType, euint8 partitionInde
 	PartitionField pf;
 
 	/* Get the MBR */
-	
+
 	buf = ioman_getSector(disc->ioman,LBA_ADDR_MBR,IOM_MODE_READONLY|IOM_MODE_EXP_REQ);
 
 	for(c=0;c<4;c++){
@@ -80,9 +80,9 @@ euint8 disc_findPartition(Disc *disc, euint8 partitionType, euint8 partitionInde
 				currentIndex++;
 			}
 		}
-	}	
-	
-	ioman_releaseSector(disc->ioman,buf);	
+	}
+
+	ioman_releaseSector(disc->ioman,buf);
 	return(1); /* Nothing found */
 }
 

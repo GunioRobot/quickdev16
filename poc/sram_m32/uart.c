@@ -15,7 +15,7 @@ intflags;
 
 /*
  *  * Last character read from the UART.
- *   
+ *
  */
 volatile char rxbuff;
 

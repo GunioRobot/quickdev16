@@ -38,14 +38,14 @@
 void* Malloc(eint32 size)
 {
 	void*x;
-	
+
 	if((x=malloc(size))==NULL){
 		perror("Malloc: ");
 		exit(-1);
 	}
 	return(x);
 }
- 
+
 void Fopen(FILE **f,eint8* filename)
 {
 	*f=fopen(filename,"r+");
@@ -59,7 +59,7 @@ void MMap(eint8* filename,void**x,eint32 *size)
 {
 	FILE *tmp;
 	eint32 filesize,c;
-	
+
 	Fopen(&tmp,filename);
 	filesize=getFileSize(tmp);
 	*x=Malloc(filesize);
@@ -71,7 +71,7 @@ void MMap(eint8* filename,void**x,eint32 *size)
 int getFileSize(FILE* file)
 {
 	eint32 c=0;
-	
+
 	fseek(file,0,SEEK_END);
 	c=ftell(file);
 	return(c);
@@ -80,7 +80,7 @@ int getFileSize(FILE* file)
 void PrintBuf(euint8* buf)
 {
 	euint16 c,cc;
-	
+
 	for(c=0 ; c<32 ; c++){
 			printf("\n%4x : ",c*16);
 		for(cc=0;cc<16;cc++){

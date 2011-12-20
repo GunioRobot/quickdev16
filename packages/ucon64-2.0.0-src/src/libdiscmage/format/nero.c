@@ -130,13 +130,13 @@ static uint32_t header_start = 0;//, version = 0, position = 0;
 static int
 nrg_chunk_offset (const dm_image_t *image, const char *chunk_id)
 {
-  FILE *fh = NULL; 
+  FILE *fh = NULL;
   int pos = 0;
   char value_s[32];
-  
+
   if (!(fh = fopen (image->fname, "rb")))
     return FALSE;
-    
+
   fseek (fh, image->header_start, SEEK_SET);
 
 // find
@@ -148,7 +148,7 @@ nrg_chunk_offset (const dm_image_t *image, const char *chunk_id)
         return pos;
       }
   fclose (fh);
-  
+
   return 0;
 }
 
@@ -158,7 +158,7 @@ nrg_chunk_size (const dm_image_t *image, const char *chunk_id)
 // returns chunk length
 {
   int pos = 0;
-  FILE *fh = NULL; 
+  FILE *fh = NULL;
   int value_32 = 0;
 
   pos = nrg_chunk_offset (image, chunk_id);
@@ -167,7 +167,7 @@ nrg_chunk_size (const dm_image_t *image, const char *chunk_id)
 
   if (!(fh = fopen (image->fname, "rb")))
     return 0;
-    
+
   fseek (fh, pos, SEEK_SET);
 
   fread (&value_32, 4, 1, fh);
@@ -180,7 +180,7 @@ nrg_chunk_size (const dm_image_t *image, const char *chunk_id)
 static int
 nrg_ident_chunk (const char *chunk_id)
 {
-  static const char *chunk[] = 
+  static const char *chunk[] =
     {
       NRG_CUEX,
       NRG_CUES,
@@ -212,7 +212,7 @@ nrg_track_init (dm_track_t *track, FILE *fh)
   uint32_t value32;
 
   fread (&value8, 1, 1, fh);
-  if (value8 == 42) 
+  if (value8 == 42)
     track->mode = 2;
   else if (value8 == 01)
     track->mode = 0;
@@ -225,7 +225,7 @@ nrg_track_init (dm_track_t *track, FILE *fh)
 
   fread (&value32, 4, 1, fh); // start_lba
   track->start_lba = be2me_32 (value32);
-  
+
   return 0;
 }
 
@@ -318,7 +318,7 @@ nrg_init (dm_image_t * image)
 
   for (s = 0; s < image->sessions; s++)
     for (t = 0; t < image->tracks; t++)
-      { 
+      {
         if (!nrg_track_init (&image->track[t], fh))
           {
             image->session[s]++; // # of tracks for this session
@@ -328,7 +328,7 @@ nrg_init (dm_image_t * image)
             fclose (fh);
             return -1;
           }
-      }  
+      }
 
   fclose (fh);
 

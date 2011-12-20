@@ -271,9 +271,9 @@ void USBHwNakIntEnable(U8 bIntBits)
 
 /**
 	Gets the stalled property of an endpoint
-		
+
 	@param [in]	bEP		Endpoint number
-			
+
 	@return TRUE if stalled, FALSE if not stalled
  */
 BOOL USBHwEPIsStalled(U8 bEP)

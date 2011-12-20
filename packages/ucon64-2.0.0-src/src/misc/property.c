@@ -123,7 +123,7 @@ int
 get_property_int (const char *filename, const char *propname)
 {
   char buf[MAXBUFSIZE];                         // MAXBUFSIZE is enough for a *very* large number
-                                                // and people who might not get the idea that 
+                                                // and people who might not get the idea that
                                                 // get_property_int() is ONLY about numbers
   int value = 0;
 

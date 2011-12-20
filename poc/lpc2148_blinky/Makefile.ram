@@ -8,8 +8,8 @@ OBJCOPY=$(TOOLCHAIN)objcopy
 
 #flags
 
-CFLAGS = -mcpu=arm7tdmi -g -nostartfiles -nostdlib 
-ASFLAGS = 
+CFLAGS = -mcpu=arm7tdmi -g -nostartfiles -nostdlib
+ASFLAGS =
 #ASFLAGS = --D_ASSEMBLY_
 
 BASENAME = main
@@ -20,13 +20,13 @@ SREC = $(BASENAME).srec
 HEX = $(BASENAME).hex
 
 #LSCRIPT = lpc2103.ld
-LSCRIPT = lpc2148-ram.ld 
+LSCRIPT = lpc2148-ram.ld
 
 
 #target
 TARGETS = $(ELFFILE) $(BINARY) $(SREC) $(HEX)
 
-OBJS = crt.o main.o startup.o console.o 
+OBJS = crt.o main.o startup.o console.o
 
 all:$(TARGETS)
 
@@ -48,12 +48,12 @@ $(HEX): $(ELFFILE)
 
 
 upload:
-	lpc21isp  $(HEX) /dev/ttyUSB0 115200 12000 
+	lpc21isp  $(HEX) /dev/ttyUSB0 115200 12000
 
 clean:
 	rm -f *.o $(TARGETS)
 
-#arm-elf-gcc -c main.c -o main.o   
+#arm-elf-gcc -c main.c -o main.o
 #sh-2.05b$ ls
 #lpc2103.h  main.c  main.elf  main.o
 #sh-2.05b$ arm-elf-ld -o main.elf main.o -Map main.map

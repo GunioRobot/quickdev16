@@ -29,17 +29,17 @@
     NSPipe *pipe=[[NSPipe alloc] init];
     NSFileHandle *handle;
     NSString *string;
-    
+
     [ls setLaunchPath:@"/usr/local/bin/ucon64"];
     [ls setArguments:[NSArray arrayWithObjects:@"/Users/david/Devel/arch/avr/code/quickdev16/roms/super01.smc",nil]];
     [ls setStandardOutput:pipe];
     handle=[pipe fileHandleForReading];
-    
+
     [ls launch];
-    
+
     string=[[NSString alloc] initWithData:[handle readDataToEndOfFile]
 								 encoding:NSASCIIStringEncoding]; // convert NSData -> NSString
-   
+
  	NSLog(@"doPipedCommand: %@", string);
     //[string retain];
     [pipe release];

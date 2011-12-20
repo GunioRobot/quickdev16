@@ -5,13 +5,13 @@ PLATFORM=mac
 
 ifeq ($(PLATFORM),linux)
 
-    # Linux Wine 
+    # Linux Wine
     SDK=/home/david/.wine/drive_c/65xx_FreeSDK
     WINE=wine
     EMU=zsnes
-    EMU_DEBUG=/home/david/Devel/arch/snes/tools/zsnes_linux_debug151/src/zsnesd -d 
+    EMU_DEBUG=/home/david/Devel/arch/snes/tools/zsnes_linux_debug151/src/zsnesd -d
 else
-    # Mac Wine 
+    # Mac Wine
     SDK=/Users/david/.wine/drive_c/65xx_FreeSDK
     WINE=wine
     EMU=zsnes
@@ -36,10 +36,10 @@ GFX=kungfu debugfont
 
 all:  $(APP)
 
-run:  
+run:
 	$(EMU) $(APP)
 
-debugger:  
+debugger:
 	$(EMU_DEBUG) $(APP)
 
 upload:

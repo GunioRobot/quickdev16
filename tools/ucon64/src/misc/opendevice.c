@@ -3,12 +3,12 @@
  * Starkjohann Creation Date: 2008-04-10 Tabsize: 4 Copyright: (c) 2008 by
  * OBJECTIVE DEVELOPMENT Software GmbH License: GNU GPL v2 (see License.txt),
  * GNU GPL v3 or proprietary (CommercialLicense.txt) This Revision: $Id:
- * opendevice.c 740 2009-04-13 18:23:31Z cs $ 
+ * opendevice.c 740 2009-04-13 18:23:31Z cs $
  */
 
 /*
  * General Description: The functions in this module can be used to find and
- * open a device based on libusb or libusb-win32. 
+ * open a device based on libusb or libusb-win32.
  */
 
 
@@ -16,7 +16,7 @@
 #include "opendevice.h"
 
 /*
- * ------------------------------------------------------------------------- 
+ * -------------------------------------------------------------------------
  */
 
 #define MATCH_SUCCESS			1
@@ -25,7 +25,7 @@
 
 /*
  * private interface: match text and p, return MATCH_SUCCESS, MATCH_FAILED, or
- * MATCH_ABORT. 
+ * MATCH_ABORT.
  */
 static int _shellStyleMatch(char *text, char *p)
 {
@@ -39,11 +39,11 @@ static int _shellStyleMatch(char *text, char *p)
         switch (*p) {
         case '\\':
             /*
-             * Literal match with following character. 
+             * Literal match with following character.
              */
             p++;
             /*
-             * FALLTHROUGH 
+             * FALLTHROUGH
              */
         default:
             if (*text != *p)
@@ -51,18 +51,18 @@ static int _shellStyleMatch(char *text, char *p)
             continue;
         case '?':
             /*
-             * Match anything. 
+             * Match anything.
              */
             continue;
         case '*':
             while (*++p == '*')
                 /*
-                 * Consecutive stars act just like one. 
+                 * Consecutive stars act just like one.
                  */
                 continue;
             if (*p == 0)
                 /*
-                 * Trailing star matches everything. 
+                 * Trailing star matches everything.
                  */
                 return MATCH_SUCCESS;
             while (*text)
@@ -90,7 +90,7 @@ static int _shellStyleMatch(char *text, char *p)
 }
 
 /*
- * public interface for shell style matching: returns 0 if fails, 1 if matches 
+ * public interface for shell style matching: returns 0 if fails, 1 if matches
  */
 static int shellStyleMatch(char *text, char *pattern)
 {
@@ -100,7 +100,7 @@ static int shellStyleMatch(char *text, char *pattern)
 }
 
 /*
- * ------------------------------------------------------------------------- 
+ * -------------------------------------------------------------------------
  */
 
 int usbGetStringAscii(usb_dev_handle * dev, int index, char *buf, int buflen)
@@ -110,11 +110,11 @@ int usbGetStringAscii(usb_dev_handle * dev, int index, char *buf, int buflen)
      i;
 
     if ((rval = usb_get_string_simple(dev, index, buf, buflen)) >= 0)   /* use
-                                                                         * libusb 
-                                                                         * version 
+                                                                         * libusb
+                                                                         * version
                                                                          * if
                                                                          * it
-                                                                         * works 
+                                                                         * works
                                                                          */
         return rval;
     if ((rval =
@@ -130,7 +130,7 @@ int usbGetStringAscii(usb_dev_handle * dev, int index, char *buf, int buflen)
         rval = (unsigned char) buffer[0];
     rval /= 2;
     /*
-     * lossy conversion to ISO Latin1: 
+     * lossy conversion to ISO Latin1:
      */
     for (i = 1; i < rval; i++) {
         if (i > buflen)         /* destination buffer overflow */
@@ -144,7 +144,7 @@ int usbGetStringAscii(usb_dev_handle * dev, int index, char *buf, int buflen)
 }
 
 /*
- * ------------------------------------------------------------------------- 
+ * -------------------------------------------------------------------------
  */
 
 int usbOpenDevice(usb_dev_handle ** device, int vendorID,
@@ -160,7 +160,7 @@ int usbOpenDevice(usb_dev_handle ** device, int vendorID,
     usb_find_busses();
     usb_find_devices();
     for (bus = usb_get_busses(); bus; bus = bus->next) {
-        for (dev = bus->devices; dev; dev = dev->next) {        /* iterate over 
+        for (dev = bus->devices; dev; dev = dev->next) {        /* iterate over
                                                                  * all devices
                                                                  * on all
                                                                  * busses */
@@ -182,7 +182,7 @@ int usbOpenDevice(usb_dev_handle ** device, int vendorID,
                     continue;
                 }
                 /*
-                 * now check whether the names match: 
+                 * now check whether the names match:
                  */
                 len = vendor[0] = 0;
                 if (dev->descriptor.iManufacturer > 0) {
@@ -200,7 +200,7 @@ int usbOpenDevice(usb_dev_handle ** device, int vendorID,
                 } else {
                     errorCode = USBOPEN_ERR_NOTFOUND;
                     /*
-                     * printf("seen device from vendor ->%s<-\n", vendor); 
+                     * printf("seen device from vendor ->%s<-\n", vendor);
                      */
                     if (shellStyleMatch(vendor, vendorNamePattern)) {
                         len = product[0] = 0;
@@ -221,7 +221,7 @@ int usbOpenDevice(usb_dev_handle ** device, int vendorID,
                         } else {
                             errorCode = USBOPEN_ERR_NOTFOUND;
                             /*
-                             * printf("seen product ->%s<-\n", product); 
+                             * printf("seen product ->%s<-\n", product);
                              */
                             if (shellStyleMatch(product, productNamePattern)) {
                                 len = serial[0] = 0;
@@ -282,5 +282,5 @@ int usbOpenDevice(usb_dev_handle ** device, int vendorID,
 }
 
 /*
- * ------------------------------------------------------------------------- 
+ * -------------------------------------------------------------------------
  */

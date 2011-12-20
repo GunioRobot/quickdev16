@@ -42,8 +42,8 @@
 #include "config.h"
 /*****************************************************************************/
 
-#define _LARGEFILE_SOURCE 
-#define _GNU_SOURCE 
+#define _LARGEFILE_SOURCE
+#define _GNU_SOURCE
 #define _FILE_OFFSET_BITS 64
 
 /*************************************************************\
@@ -53,7 +53,7 @@
 * long		sectorCount		Number of sectors on the file.
 \*************************************************************/
 struct hwInterface{
-	FILE 	*imageFile; 
+	FILE 	*imageFile;
 	eint32 	sectorCount;
 	euint32 readCount,writeCount;
 };

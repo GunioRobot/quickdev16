@@ -12,8 +12,8 @@
 #        Version:  1.0
 #        Created:  07/21/2009 03:32:16 PM
 #         Author:  david@optixx.org
-#       Based on:  custom-class, a basic USB example 
-#         Author:  Christian Starkjohann 
+#       Based on:  custom-class, a basic USB example
+#         Author:  Christian Starkjohann
 # =====================================================================================
 
 DEBUG   = 1
@@ -31,13 +31,13 @@ CONVERT_ZIP = ../../scripts/conv_zip.py
 
 
 ifeq ($(DEBUG),1)
-    LDFLAGS =-Wl,-u,vfprintf  
-    CFLAGS  =-Iusbdrv -I. -DDEBUG_LEVEL=0 
+    LDFLAGS =-Wl,-u,vfprintf
+    CFLAGS  =-Iusbdrv -I. -DDEBUG_LEVEL=0
     OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o \
                main.o usb_bulk.o uart.o fifo.o sram.o crc.o debug.o \
                dump.o timer.o watchdog.o rle.c loader.o info.o shared_memory.o \
                system.o pwm.o util.o shell.o irq.o command.o testing.o
-else 
+else
     LDFLAGS =-Wl,-u
     CFLAGS  =-Iusbdrv -I. -DDEBUG_LEVEL=0 -DNO_DEBUG -DNO_INFO
     OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o  main.o usb_bulk.o \
@@ -100,7 +100,7 @@ usbdrv:
 	cp -r ../../../usbdrv .
 
 main.elf: usbdrv $(OBJECTS)	# usbdrv dependency only needed because we copy it
-	$(COMPILE) -o main.elf $(OBJECTS) $(LDFLAGS) 
+	$(COMPILE) -o main.elf $(OBJECTS) $(LDFLAGS)
 
 main.hex: main.elf
 	rm -f main.hex main.eep.hex

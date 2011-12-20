@@ -9,7 +9,7 @@
 void spi_init(void)
 {
     /*
-     * Set MOSI and SCK output, all others input 
+     * Set MOSI and SCK output, all others input
      */
     SPI_DIR |= ((1 << S_MOSI) | (1 << S_SCK) | (1 << S_LATCH));
     SPI_DIR &= ~(1 << S_MISO);
@@ -23,12 +23,12 @@ void spi_init(void)
 void spi_master_transmit(unsigned char cData)
 {
     /*
-     * Start transmission 
+     * Start transmission
      */
     SPDR = cData;
 
     /*
-     * Wait for transmission complete 
+     * Wait for transmission complete
      */
     while (!(SPSR & (1 << SPIF)));
 }

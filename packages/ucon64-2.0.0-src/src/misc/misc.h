@@ -222,7 +222,7 @@ extern long int strtol2 (const char *str, char **tail);
 
 /*
   Portability (conio.h, etc...)
-  
+
   init_conio()         init console I/O
   deinit_conio()       stop console I/O
   getch()

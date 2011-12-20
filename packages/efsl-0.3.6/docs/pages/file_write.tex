@@ -44,7 +44,7 @@ Returns the amount of bytes written.
 			DBG((TXT("File written.\n")));
 		else
 			DBG((TXT("Could not write file.\n")));
-		
+
 		/* Close file & filesystem */
 		fclose(&file);
 		fs_umount(&efs.myFs);

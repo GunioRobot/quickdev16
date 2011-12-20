@@ -1,7 +1,7 @@
 This section describes how to implement Efsl on a AVR $\mu C$ connected to
-an SD-Card (SPI). For getting efsl to compile, the avr-gcc compiler and 
-avr-libc library are required. On Windows you should install WinAVR 
-(http://winavr.sourceforge.net/), on Linux you can install the packages 
+an SD-Card (SPI). For getting efsl to compile, the avr-gcc compiler and
+avr-libc library are required. On Windows you should install WinAVR
+(http://winavr.sourceforge.net/), on Linux you can install the packages
 separately (see http://www.nongnu.org/avr-libc/user-manual/install\_tools.html
 for a nice howto).
 \subsubsection{Hardware}
@@ -48,11 +48,11 @@ Let's get started:
 \end{enumerate}
 Now you should have \filename{libefsl.a} in the efsl directory.
 \subsubsection{Example}
-Since Efsl itself is only a library, it's not supposed to do anything out of 
+Since Efsl itself is only a library, it's not supposed to do anything out of
 the box, than just compile. To get started, we'll show here a small example
 program that opens an existing file and writes the content to a new file.
 \newline\newline
-First, create a new directory in which you put the compiled efsl-library 
+First, create a new directory in which you put the compiled efsl-library
 (\filename{libefsl.a}) and create a new file called \filename{avrtest.c} containing:
 \lstset{numbers=left, stepnumber=1, numberstyle=\small, numbersep=5pt, tabsize=4}
 \begin{lstlisting}
@@ -101,13 +101,13 @@ $ $\newline
 Some extra information on the code above:
 \begin{itemize}
 	\item{Line 1: The header file for efsl is included here. When using the
-		basic efsl functions, \filename{efs.h} is the only header file on the 
+		basic efsl functions, \filename{efs.h} is the only header file on the
 		efsl library that needs to be included.}
 	\item{Line 7: The object efs is created, this object will contain
 		information about the hardware layer, the partition table and
 		the disc.}
-	\item{Line 8: The objects \code{file\_r} and \code{file\_w} are created, these objects 
-		will contain information about the files that we will open on the 
+	\item{Line 8: The objects \code{file\_r} and \code{file\_w} are created, these objects
+		will contain information about the files that we will open on the
 		efs-object.}
 	\item{Line 9: A buffer of 512 bytes is allocated. This buffer will be
 		used for reading and writing blocks of data.}
@@ -133,7 +133,7 @@ Some extra information on the code above:
 		\end{enumerate}
 		If this function returns 0, it means the file has successfully been
 		opened for reading / writing / appending.
-	 	If the file could not be opened (because for example a file already 
+	 	If the file could not be opened (because for example a file already
 		exists), a negative value is returned.}
 	\item{Line 24: Call of \code{file\_read()}, which will read a given value of
 		bytes (in this example 512) from a file and put it's content into
@@ -160,19 +160,19 @@ So now let's test the program:
 	\item
 	{	Compile the program:
 		\begin{itemize}
-			\item{On Linux (with avr-gcc): avr-gcc -I/home/user/efsl/inc/ 
-				-I/home/user/efsl/conf -ffreestanding -mmcu=atmega128 -Os -o 
+			\item{On Linux (with avr-gcc): avr-gcc -I/home/user/efsl/inc/
+				-I/home/user/efsl/conf -ffreestanding -mmcu=atmega128 -Os -o
 				avrtest.o avrtest.c -L./ -lefsl}
-			\item{On Windows (with WinAVR): avr-gcc 
+			\item{On Windows (with WinAVR): avr-gcc
 				-Ic:$\backslash$efsl$\backslash$inc
-				-Ic:$\backslash$efsl$\backslash$conf 
+				-Ic:$\backslash$efsl$\backslash$conf
 				-ffreestanding -mmcu=atmega128 -Os -o
 				avrtest.o avrtest.c -L.$\backslash$ -lefsl}
 		\end{itemize}
 	}
-	\item{Generate a hexfile 
+	\item{Generate a hexfile
 		(avr-objcopy -j .text -j .data -O ihex avrtest.o avrtest.hex)}
-	\item{Connect an SD-card to your Atmega128 with a file called 
+	\item{Connect an SD-card to your Atmega128 with a file called
 		\filename{orig.txt} on it.}
 	\item
 	{
@@ -185,6 +185,6 @@ So now let's test the program:
 	\item{Reset your $\mu C$ and wait some time (depending on how big
 		the file \filename{orig.txt} is).}
 	\item{Disconnect the SD-card, so you can put it in your card reader
-		and find out if the file \filename{orig.txt} is copied to 
+		and find out if the file \filename{orig.txt} is copied to
 		\filename{copy.txt}.}
 \end{enumerate}

@@ -48,20 +48,20 @@ int main(int argc, char** argv)
 	File *ein = NULL;
 	efsl_storage *storage_in       = NULL;
 	efsl_fs *filesystem_in = NULL;
-	
+
 	/* DESTINATION */
 	FILE *out  = NULL;
 	File *eout = NULL;
 	efsl_storage *storage_out       = NULL;
 	efsl_fs *filesystem_out = NULL;
-	
+
 	if(Init_EFSL(&storage_in,&storage_out,&filesystem_in,&filesystem_out,&ein,&eout,&in,&out,argc,argv)){
 		printf("Error in init\n");
 		return(-1);
 	}
-	
+
 	buffer = malloc(4096);
-	
+
 	while(data_left){
 		/* READ */
 		if(ein==NULL){
@@ -84,13 +84,13 @@ int main(int argc, char** argv)
 			}
 		}
 	}
-	
+
 	if(in!=NULL)fclose(in);
 	if(out!=NULL)fclose(out);
 	if(ein!=NULL)file_fclose(ein);
 	if(eout!=NULL)file_fclose(eout);
 	if(filesystem_in!=NULL)fs_umount(&(filesystem_in->filesystem));
 	if(filesystem_out!=NULL)fs_umount(&(filesystem_out->filesystem));
-	
+
 	return(0);
 }

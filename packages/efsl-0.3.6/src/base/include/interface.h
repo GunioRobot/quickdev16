@@ -46,7 +46,7 @@
 /* If no multiple interfaces are defined, check if the
    hw functions are defines */
 #ifndef MULTIPLE_INTERFACE_SUPPORT
- 
+
  #ifndef HWIFUNC_INIT
   #error "There is no HW_INIT function defined"
  #endif
@@ -78,7 +78,7 @@ esint8 if_init(Interface *iface, void* hwData,
                                               esint8 (*initInterface)(void*),
                                               esint8 (*readBuf) (void*, euint32,euint8*),
                                               esint8 (*writeBuf) (void*, euint32,euint8*),
-					      				      esint8 (*ioctl) (void*,euint16, void*)); 
+					      				      esint8 (*ioctl) (void*,euint16, void*));
 esint8 if_readBuf(Interface *iface, euint32 address, euint8* buf);
 esint8 if_writeBuf(Interface *iface, euint32 address, euint8* buf);
 

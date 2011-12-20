@@ -3,13 +3,13 @@
 
 #ifndef _FILE_H
 
-  #define _FILE_H 
- 
+  #define _FILE_H
+
   // **************************************************************************************************************************
   // funktionen
 
   extern inline unsigned char ffread(void);			// liest byte-weise aus der datei (puffert immer 512 bytes zwischen)
-  extern inline void 			ffwrite(unsigned char c);		// schreibt ein byte in die geöffnete datei  
+  extern inline void 			ffwrite(unsigned char c);		// schreibt ein byte in die geöffnete datei
   extern inline void 			ffwrites(const char *s );		// schreibt string auf karte
 
   extern unsigned char ffopen(char name[]);			// kann immer nur 1 datei bearbeiten.
@@ -23,11 +23,11 @@
   extern void 			ffmkdir(char name[]);			// legt ordner in aktuellem verzeichniss an.
   void 					lsRowsOfClust (unsigned long int start_sec);	// zeigt reihen eines clusters an, ab start_sec
   void 					fileUpdate(void);			// updatet datei eintrag auf karte
-  
+
   // **************************************************************************************************************************// #######################################################################################################################
-  
-	  
-  
+
+
+
 #endif
 
 

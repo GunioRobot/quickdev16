@@ -52,9 +52,9 @@ void ioman_reset(IOManager *ioman)
 {
 	ioman->sector=ioman->status=ioman->itptr=0;
 	ioman->stack.sector=ioman->stack.status=0;
-		
+
 	ioman_setError(ioman,IOMAN_NOERROR);
-		
+
 }
 /*****************************************************************************/
 
@@ -81,7 +81,7 @@ euint8* ioman_getSector(IOManager *ioman,euint32 address, euint8 mode)
 		if(mode==IOM_MODE_READWRITE)ioman_setWritable();
 		return(ioman->bufptr);
 	}
-	
+
 }
 
 esint8 ioman_readSector(IOManager *ioman,euint32 address,euint8* buf)
@@ -91,9 +91,9 @@ esint8 ioman_readSector(IOManager *ioman,euint32 address,euint8* buf)
 	if(buf==0){
 		return(-1);
 	}
-	
+
 	r=if_readBuf(ioman->iface,address,buf);
-	
+
 	if(r!=0){
 		ioman_setError(ioman,IOMAN_ERR_READFAIL);
 		return(-1);
@@ -107,7 +107,7 @@ esint8 ioman_writeSector(IOManager *ioman, euint32 address, euint8* buf)
 	esint8 r;
 
 	if(buf==0)return(-1);
-	
+
 	r=if_writeBuf(ioman->iface,address,buf);
 
 	if(r<=0){

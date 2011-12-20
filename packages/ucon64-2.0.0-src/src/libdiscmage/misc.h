@@ -494,7 +494,7 @@ extern int set_property (const char *filename, const char *propname, const char 
 
 /*
   Portability (conio.h, etc...)
-  
+
   init_conio()         init console I/O
   deinit_conio()       stop console I/O
   getch()

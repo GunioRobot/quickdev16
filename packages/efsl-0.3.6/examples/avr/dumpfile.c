@@ -12,24 +12,24 @@ void main(void)
 {
 	efsl_storage_conf storage_conf;
 	efsl_fs_conf fs_conf;
-	
+
 	efsl_storage storage;
 	efsl_fs fs;
 	File file_r;
 
 	atmegaSpiInterface spi_interface;
 	SdSpiProtocol sd_protocol;
-	
+
 	char buf[512];
 	unsigned short i,e;
-		
+
 	debug_init();
 
 	DBG((TXT("\nHello :-)\n")));
-	
+
 	/* Init */
 	spi_interface.pinSelect=0x01;
-	
+
 	sd_protocol.spiHwInterface=&spi_interface;
 	sd_protocol.spiHwInit=(void *)atmega_spi_init;
 	sd_protocol.spiSendByte=(void *)atmega_spi_send;
@@ -43,14 +43,14 @@ void main(void)
 
 	fs_conf.no_partitions=0;
 	fs_conf.storage=&storage;
-	
+
 	DBG((TXT("Let's go...\n")));
-	
+
 	if(efsl_initStorage(&storage,&storage_conf)){
 		DBG((TXT("Error initializing storage: %d")));
 		hang();
 	}
-	
+
 	if(efsl_initFs(&fs,&fs_conf)){
 		DBG((TXT("Unable to mount fs")));
 		hang();
@@ -69,7 +69,7 @@ void main(void)
 	}
 
 	DBG((TXT("Done :-)")));
-	
+
 	hang();
 }
 /*****************************************************************************/

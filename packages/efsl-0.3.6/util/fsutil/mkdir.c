@@ -45,12 +45,12 @@ int main(int argc, char **argv)
 	fprintf(stderr,"Argument error : mkdir <fs> <dirname>\n");
 	exit(-1);
     }
-    
+
     if(efs_init(&efs,argv[1])!=0){
 	printf("Could not open filesystem.\n");
 	return(-1);
     }
-    
+
     if(!mkdir(&(efs.myFs),argv[2])){
 	printf("Unable to make directory\n");
 	fs_umount(&(efs.myFs));

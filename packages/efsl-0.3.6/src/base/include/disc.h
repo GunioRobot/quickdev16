@@ -71,8 +71,8 @@ typedef struct _PartitionField  PartitionField;
 #define SIZE_PARTITION_FIELD 16
 
 /***************************************************************************************\
-              Disc     
-               --      
+              Disc
+               --
 * CompactFlash*	sourcedisc		Pointer to the hardwareobject that this disc is on.
 * PartitionField* partitions	Array of PartitionFields, containing the partition info
 \***************************************************************************************/

@@ -29,8 +29,8 @@
 *                        AT91 and LPC2000 Interfaces (c)2005 Martin Thomas    *
 \*****************************************************************************/
 
-#ifndef __ARM_SPI_H_ 
-#define __ARM_SPI_H_ 
+#ifndef __ARM_SPI_H_
+#define __ARM_SPI_H_
 
 #ifndef FALSE
 #define FALSE	0x00

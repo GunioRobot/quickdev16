@@ -45,7 +45,7 @@ static unsigned char psx_sign[] = {
   0x49, 0x4F, 0x4E, 0x20, 0x20, 0x20, 0x20, 0x20
 };
 #endif
-              
+
 static uint32_t header_start = 0; //, version = 0, position = 0;
 
 #if 0
@@ -83,7 +83,7 @@ dm_other_gc_init (dm_image_t *image)
       char company_long[64];
       char desc[128];
     } st_opening_bnr_t;
-  
+
   st_boot_bin_t boot_bin;
   st_opening_bnr_t opening_bnr;
   dm_track_t *track = (dm_track_t *) &image->track[0];
@@ -95,7 +95,7 @@ dm_other_gc_init (dm_image_t *image)
 
   image->header_start = header_start;
   image->header_len = sizeof (st_opening_bnr_t);
-  
+
   track->track_start = 0;
   track->track_len =
   track->total_len = q_fsize (image->fname);
@@ -122,10 +122,10 @@ dm_other_gc_init (dm_image_t *image)
   fflush (stdout);
 #endif
 
-  opening_bnr.name[sizeof (opening_bnr.name) - 1] = 
-  opening_bnr.company[sizeof (opening_bnr.company) - 1] = 
-  opening_bnr.name_long[sizeof (opening_bnr.name_long) - 1] = 
-  opening_bnr.company_long[sizeof (opening_bnr.company_long) - 1] = 
+  opening_bnr.name[sizeof (opening_bnr.name) - 1] =
+  opening_bnr.company[sizeof (opening_bnr.company) - 1] =
+  opening_bnr.name_long[sizeof (opening_bnr.name_long) - 1] =
+  opening_bnr.company_long[sizeof (opening_bnr.company_long) - 1] =
   opening_bnr.desc[sizeof (opening_bnr.desc) - 1] = 0;
 
   sprintf (image->misc, "Misc: %s\n      %s\n      %s\n      %s\n      %s",
@@ -137,7 +137,7 @@ dm_other_gc_init (dm_image_t *image)
 
   return image;
 }
-    
+
 
 int
 other_init (dm_image_t *image)
@@ -168,7 +168,7 @@ other_init (dm_image_t *image)
     if ((header_start = q_fncmp (image->fname,
                                  probe[x].start,
                                  probe[x].len,
-                                 probe[x].version_s, 
+                                 probe[x].version_s,
                                  strlen (probe[x].version_s),
                                  0)))
       {

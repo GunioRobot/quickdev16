@@ -29,15 +29,15 @@
 /*
  * The _WORD_ACCESS option defines which access method is used to the word / data in the FAT structure. / / 0: Byte-by-byte access. Always
  * compatible with all platforms. / 1: Word access. Do not choose this unless following condition is met. / / When the byte order on the
- * memory is big-endian or address miss-aligned / word access results incorrect behavior, the _WORD_ACCESS must be set to 0. / If it is not 
- * the case, the value can also be set to 1 to improve the / performance and code efficiency. 
+ * memory is big-endian or address miss-aligned / word access results incorrect behavior, the _WORD_ACCESS must be set to 0. / If it is not
+ * the case, the value can also be set to 1 to improve the / performance and code efficiency.
  */
 
 
 #define _FS_READONLY	0
 /*
  * Setting _FS_READONLY to 1 defines read only configuration. This removes / writing functions, f_write, f_sync, f_unlink, f_mkdir,
- * f_chmod, f_rename, / f_truncate and useless f_getfree. 
+ * f_chmod, f_rename, / f_truncate and useless f_getfree.
  */
 
 
@@ -45,54 +45,54 @@
 /*
  * The _FS_MINIMIZE option defines minimization level to remove some functions. / / 0: Full function. / 1: f_stat, f_getfree, f_unlink,
  * f_mkdir, f_chmod, f_truncate and f_rename / are removed. / 2: f_opendir and f_readdir are removed in addition to level 1. / 3: f_lseek
- * is removed in addition to level 2. 
+ * is removed in addition to level 2.
  */
 
 
 #define	_FS_TINY	0
 /*
  * When _FS_TINY is set to 1, FatFs uses the sector buffer in the file system / object instead of the sector buffer in the individual file
- * object for file / data transfer. This reduces memory consumption 512 bytes each file object. 
+ * object for file / data transfer. This reduces memory consumption 512 bytes each file object.
  */
 
 
 #define	_USE_STRFUNC	0
 /*
- * To enable string functions, set _USE_STRFUNC to 1 or 2. 
+ * To enable string functions, set _USE_STRFUNC to 1 or 2.
  */
 
 
 #define	_USE_MKFS	0
 /*
- * To enable f_mkfs function, set _USE_MKFS to 1 and set _FS_READONLY to 0 
+ * To enable f_mkfs function, set _USE_MKFS to 1 and set _FS_READONLY to 0
  */
 
 
 #define	_USE_FORWARD	0
 /*
- * To enable f_forward function, set _USE_FORWARD to 1 and set _FS_TINY to 1. 
+ * To enable f_forward function, set _USE_FORWARD to 1 and set _FS_TINY to 1.
  */
 
 
 #define _DRIVES		1
 /*
- * Number of volumes (logical drives) to be used. 
+ * Number of volumes (logical drives) to be used.
  */
 
 
 #define	_MAX_SS	512
 /*
- * Maximum sector size to be handled. (512/1024/2048/4096) 
+ * Maximum sector size to be handled. (512/1024/2048/4096)
  */
 /*
- * 512 for memroy card and hard disk, 1024 for floppy disk, 2048 for MO disk 
+ * 512 for memroy card and hard disk, 1024 for floppy disk, 2048 for MO disk
  */
 
 
 #define	_MULTI_PARTITION	0
 /*
  * When _MULTI_PARTITION is set to 0, each volume is bound to the same physical / drive number and can mount only first primaly partition.
- * When it is set to 1, / each volume is tied to the partitions listed in Drives[]. 
+ * When it is set to 1, / each volume is tied to the partitions listed in Drives[].
  */
 
 
@@ -102,7 +102,7 @@
  * between SBCS code / pages. When LFN is enabled, the code page must always be set correctly. / 437 - U.S. / 720 - Arabic / 737 - Greek /
  * 775 - Baltic / 850 - Multilingual Latin 1 / 852 - Latin 2 / 855 - Cyrillic / 857 - Turkish / 858 - Multilingual Latin 1 + Euro / 862 -
  * Hebrew / 866 - Russian / 874 - Thai / 932 - Japanese Shift-JIS (DBCS) / 936 - Simplified Chinese GBK (DBCS) / 949 - Korean (DBCS) / 950
- * - Traditional Chinese Big5 (DBCS) / 1258 - Vietnam 
+ * - Traditional Chinese Big5 (DBCS) / 1258 - Vietnam
  */
 
 
@@ -110,8 +110,8 @@
 #define	_MAX_LFN	255     /* Maximum LFN length to handle (max:255) */
 /*
  * The _USE_LFN option switches the LFN support. / / 0: Disable LFN. / 1: Enable LFN with static working buffer on the bss. NOT REENTRANT.
- * / 2: Enable LFN with dynamic working buffer on the caller's STACK. / / The working buffer occupies (_MAX_LFN + 1) * 2 bytes. When enable 
- * LFN, / a Unicode - OEM code conversion function ff_convert() must be added to / the project. 
+ * / 2: Enable LFN with dynamic working buffer on the caller's STACK. / / The working buffer occupies (_MAX_LFN + 1) * 2 bytes. When enable
+ * LFN, / a Unicode - OEM code conversion function ff_convert() must be added to / the project.
  */
 
 
@@ -119,24 +119,24 @@
 #define _TIMEOUT		1000    /* Timeout period in unit of time ticks */
 #define	_SYNC_t			HANDLE  /* Type of sync object used on the OS. */
                                                                 /*
-                                                                 * e.g. HANDLE, OS_EVENT*, ID and etc.. 
+                                                                 * e.g. HANDLE, OS_EVENT*, ID and etc..
                                                                  */
 /*
  * To make the FatFs module re-entrant, set _FS_REENTRANT to 1 and add user / provided synchronization handlers, ff_req_grant,
- * ff_rel_grant, / ff_del_syncobj and ff_cre_syncobj function to the project. 
+ * ff_rel_grant, / ff_del_syncobj and ff_cre_syncobj function to the project.
  */
 
 
 
 /*
- * End of configuration options. Do not change followings without care.  
+ * End of configuration options. Do not change followings without care.
  */
 /*--------------------------------------------------------------------------*/
 
 
 
 /*
- * Definitions corresponds to multiple sector size 
+ * Definitions corresponds to multiple sector size
  */
 
 #if _MAX_SS == 512
@@ -152,7 +152,7 @@
 
 
 /*
- * File system object structure 
+ * File system object structure
  */
 
 typedef struct _FATFS {
@@ -189,7 +189,7 @@ typedef struct _FATFS {
 
 
 /*
- * Directory object structure 
+ * Directory object structure
  */
 
 typedef struct _DIR {
@@ -210,7 +210,7 @@ typedef struct _DIR {
 
 
 /*
- * File object structure 
+ * File object structure
  */
 
 typedef struct _FIL {
@@ -235,7 +235,7 @@ typedef struct _FIL {
 
 
 /*
- * File status structure 
+ * File status structure
  */
 
 typedef struct _FILINFO {
@@ -253,7 +253,7 @@ typedef struct _FILINFO {
 
 
 /*
- * DBCS code ranges 
+ * DBCS code ranges
  */
 
 #if _CODE_PAGE == 932           /* CP932 (Japanese Shift-JIS) */
@@ -300,7 +300,7 @@ typedef struct _FILINFO {
 
 
 /*
- * Character code support macros 
+ * Character code support macros
  */
 
 #define IsUpper(c)	(((c)>='A')&&((c)<='Z'))
@@ -331,7 +331,7 @@ typedef struct _FILINFO {
 
 
 /*
- * Definitions corresponds to multi partition 
+ * Definitions corresponds to multi partition
  */
 
 #if _MULTI_PARTITION            /* Multiple partition configuration */
@@ -356,7 +356,7 @@ const PARTITION Drives[];       /* Logical drive# to physical location conversio
 
 
 /*
- * File function return code (FRESULT) 
+ * File function return code (FRESULT)
  */
 
 typedef enum {
@@ -382,7 +382,7 @@ typedef enum {
 
 /*--------------------------------------------------------------*/
 /*
- * FatFs module application interface 
+ * FatFs module application interface
  */
 
 FRESULT f_mount(BYTE, FATFS *); /* Mount/Unmount a logical drive */
@@ -421,28 +421,28 @@ char *f_gets(char *, int, FIL *);       /* Get a string from the file */
 
 /*--------------------------------------------------------------*/
 /*
- * User defined functions 
+ * User defined functions
  */
 
 /*
- * Real time clock 
+ * Real time clock
  */
 #if !_FS_READONLY
 DWORD get_fattime(void);        /* 31-25: Year(0-127 org.1980), 24-21: Month(1-12), 20-16: Day(1-31) */
                                                         /*
-                                                         * 15-11: Hour(0-23), 10-5: Minute(0-59), 4-0: Second(0-29 *2) 
+                                                         * 15-11: Hour(0-23), 10-5: Minute(0-59), 4-0: Second(0-29 *2)
                                                          */
 #endif
 
 /*
- * Unicode - OEM code conversion 
+ * Unicode - OEM code conversion
  */
 #if _USE_LFN
 WCHAR ff_convert(WCHAR, UINT);
 #endif
 
 /*
- * Sync functions 
+ * Sync functions
  */
 #if _FS_REENTRANT
 BOOL ff_cre_syncobj(BYTE, _SYNC_t *);
@@ -455,12 +455,12 @@ void ff_rel_grant(_SYNC_t);
 
 /*--------------------------------------------------------------*/
 /*
- * Flags and offset address 
+ * Flags and offset address
  */
 
 
 /*
- * File access control and file status flags (FIL.flag) 
+ * File access control and file status flags (FIL.flag)
  */
 
 #define	FA_READ				0x01
@@ -477,7 +477,7 @@ void ff_rel_grant(_SYNC_t);
 
 
 /*
- * FAT sub type (FATFS.fs_type) 
+ * FAT sub type (FATFS.fs_type)
  */
 
 #define FS_FAT12	1
@@ -486,7 +486,7 @@ void ff_rel_grant(_SYNC_t);
 
 
 /*
- * File attribute bits for directory entry 
+ * File attribute bits for directory entry
  */
 
 #define	AM_RDO	0x01            /* Read only */
@@ -501,7 +501,7 @@ void ff_rel_grant(_SYNC_t);
 
 /*
  * FatFs refers the members in the FAT structures with byte offset instead / of structure member because there are incompatibility of the
- * packing option / between various compilers. 
+ * packing option / between various compilers.
  */
 
 #define BS_jmpBoot			0
@@ -565,7 +565,7 @@ void ff_rel_grant(_SYNC_t);
 
 /*--------------------------------*/
 /*
- * Multi-byte word access macros 
+ * Multi-byte word access macros
  */
 
 #if _WORD_ACCESS == 1           /* Enable word access to the FAT structure */

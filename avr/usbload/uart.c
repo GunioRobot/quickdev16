@@ -52,7 +52,7 @@ void uart_init(void)
 }
 
 /*
- * ISR(USART0_RX_vect) { uint8_t c; c = UDR0; if (bit_is_clear(UCSR0A, FE0)) { rxbuff = c; intflags.rx_int = 1; } } 
+ * ISR(USART0_RX_vect) { uint8_t c; c = UDR0; if (bit_is_clear(UCSR0A, FE0)) { rxbuff = c; intflags.rx_int = 1; } }
  */
 
 void uart_putc(uint8_t c)

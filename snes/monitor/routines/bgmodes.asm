@@ -269,4 +269,4 @@ BgModeTable8:
 	.db %00000000			;23	WMS		$212e window main screen designation
 	.db %00000000			;24	WSS		$212f window sub screen designation		
 	
-.ends	
+.ends

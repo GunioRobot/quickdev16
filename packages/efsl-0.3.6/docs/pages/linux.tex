@@ -1,7 +1,7 @@
 Debugging efsl on embedded devices is a rather hard job, because
-you can't just printf debug strings or watch memory maps easily. 
-Because of that, core development has been performed under the 
-Linux operating system. Under Linux, efsl can be compiled as 
+you can't just printf debug strings or watch memory maps easily.
+Because of that, core development has been performed under the
+Linux operating system. Under Linux, efsl can be compiled as
 library and used as a userspace filesystem handler. On Unix-
 style operating system (like Linux), all devices (usb stick, disc, \ldots)
 can be seen as a file, and as such been opened by efsl.\newline
@@ -15,16 +15,16 @@ FAT kernel modules.
 \subsubsection{Download \& Compile}
 Let's get started:
 \begin{enumerate}
-	\item{Get the latest release of efsl on http://www.sf.net/projects/efsl/ 
+	\item{Get the latest release of efsl on http://www.sf.net/projects/efsl/
 		and put it in your homedir}
 	\item{Unpack the library (tar xvfj efsl-version.tar.bz2)}
 	\item{Get inside the directory (cd $\sim$/efsl)}
-	\item{Create a symlink from \filename{Makefile-LINUX} to \filename{Makefile} 
+	\item{Create a symlink from \filename{Makefile-LINUX} to \filename{Makefile}
 		(ln -s Makefile-LINUX Makefile)}
 	\item{Copy \filename{conf/config-sample-linux.h} to \filename{conf/config.h}
 		(cp conf/config-sample-linux.h conf/config.h)}
 	\item{Compile the library (make lib)}
-	\item{Find the compiled filesystem library (libefsl.a) in the current 
+	\item{Find the compiled filesystem library (libefsl.a) in the current
 		directory}
 \end{enumerate}
 If you got any errors with the steps above, please check that that you have
@@ -41,19 +41,19 @@ First, create a new directory in which you put the compiled efsl-library
 \begin{lstlisting}
 	#include <stdio.h>
 	#include <efs.h>
- 
+
 	int main(void)
 	{
 		EmbeddedFileSystem efs;
 		EmbeddedFile file;
 		unsigned short i,e;
 		char buf[512];
-	
+
 		if(efs_init(&efs,"/dev/sda")!=0){
 			printf("Could not open filesystem.\n");
 			return(-1);
 		}
-	
+
 		if(file_fopen(&file,&efs.myFs,"group",'r')!=0){
 			printf("Could not open file.\n");
 			return(-2);
@@ -63,17 +63,17 @@ First, create a new directory in which you put the compiled efsl-library
 			for(i=0;i<e;i++)
 			printf("\%c",buf[i]);
 		}
-	
+
 		return(0);
 	}
 \end{lstlisting}
 $ $\newline
 Some extra information on the code above:
 \begin{itemize}
-	\item{Line 1-2: The header files for stdio (used for printf) and efsl 
+	\item{Line 1-2: The header files for stdio (used for printf) and efsl
 		are included. When using the basic efsl functions, \filename{efs.h} is
 		the only header file of the efsl library that needs to be included.}
-	\item{Line 6: The object efs is created, this object will contain 
+	\item{Line 6: The object efs is created, this object will contain
 		information about the hardware layer, the partition table and
 		the disc.}
 	\item{Line 7: The object file is created, this object will contain
@@ -88,15 +88,15 @@ Some extra information on the code above:
 				file system (in this example, we select a device as file).}
 		\end{enumerate}
 		If this function returns 0, it means that a valid fat partition is
-		found on the device given. 
-		If no valid fat-filesystem is found, or the file does not exist, the 
+		found on the device given.
+		If no valid fat-filesystem is found, or the file does not exist, the
 		function returns a negative value. In this example we then print an
 		error message and quit.}
-	\item{Line 16-19: Call of \code{file\_fopen()}, which will initialize the 
+	\item{Line 16-19: Call of \code{file\_fopen()}, which will initialize the
 		file-object. To this function we pass:
 		\begin{enumerate}
 			\item{A pointer to the file-object.}
-			\item{A pointer to the filesystem-object.} 
+			\item{A pointer to the filesystem-object.}
 			\item{A pointer to the filename.}
 			\item{A char containing the the mode (read, write, append).}
 		\end{enumerate}
@@ -114,10 +114,10 @@ Some extra information on the code above:
 \subsubsection{Testing}
 So now let's test the program:
 \begin{enumerate}
-	\item{Compile the program 
-		(gcc -I/home/user/efsl/inc/ -I/home/user/efsl/conf -o linuxtest 
+	\item{Compile the program
+		(gcc -I/home/user/efsl/inc/ -I/home/user/efsl/conf -o linuxtest
 		linuxtest.c -L./ -lefsl).}
-	\item{Insert a usb-disc, floppy, mp3-stick, \ldots with a valid 
+	\item{Insert a usb-disc, floppy, mp3-stick, \ldots with a valid
 		fat-filesystem on it.}
 	\item{Mount the device, copy the file /etc/group on it's root dir \& umount
 		it.}

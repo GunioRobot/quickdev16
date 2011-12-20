@@ -40,7 +40,7 @@ void SPI_MasterTransmit(unsigned char cData)
 {
 	/* Start transmission */
 	SPDR = cData;
-	
+
 	/* Wait for transmission complete */
 	while(!(SPSR & (1<<SPIF)));
 }
@@ -51,15 +51,15 @@ uint8_t SRAM_Read(uint32_t addr)
 
 	DDRD=0x00;
 	PORTD=0xff;
-	
+
 	PORTB |= (1<<R_RD);
 	PORTB |= (1<<R_WR);
 
-	SPI_MasterTransmit((uint8_t)(addr>>16));	
+	SPI_MasterTransmit((uint8_t)(addr>>16));
 	SPI_MasterTransmit((uint8_t)(addr>>8));
 	SPI_MasterTransmit((uint8_t)(addr>>0));
 
-	PORTB |= (1<<S_LATCH);  
+	PORTB |= (1<<S_LATCH);
     	PORTB &= ~(1<<S_LATCH);
 
 	PORTB &= ~(1<<R_RD);
@@ -67,9 +67,9 @@ uint8_t SRAM_Read(uint32_t addr)
 	asm volatile ("nop");
 	asm volatile ("nop");
 	asm volatile ("nop");
-	
+
 	byte = PIND;
-	
+
 	PORTB |= (1<<R_RD);
 
 	DDRD=0x00;
@@ -85,20 +85,20 @@ void SRAM_Write(uint32_t addr, uint8_t data)
 	PORTB |= (1<<R_RD);
 	PORTB |= (1<<R_WR);
 
-	SPI_MasterTransmit((uint8_t)(addr>>16));	
+	SPI_MasterTransmit((uint8_t)(addr>>16));
 	SPI_MasterTransmit((uint8_t)(addr>>8));
 	SPI_MasterTransmit((uint8_t)(addr>>0));
 
-	PORTB |= (1<<S_LATCH);  
+	PORTB |= (1<<S_LATCH);
 	PORTB &= ~(1<<S_LATCH);
 
 	PORTB &= ~(1<<R_WR);
-	
+
 	PORTD=data;
 
 	PORTB |= (1<<R_WR);
 
-	DDRD=0x00;	
+	DDRD=0x00;
 	PORTD=0x00;
 }
 
@@ -109,23 +109,23 @@ int main(void)
 	uint8_t read, buf[10], i=0;
  	uint8_t Buffer[512];
     uint8_t rbuf[24];
-	uint16_t Clustervar;	
+	uint16_t Clustervar;
 
     uint8_t Dir_Attrib = 0;
-    uint32_t Size = 0;	
+    uint32_t Size = 0;
 
 
 	DDRD=0x00;
 	PORTD=0x00;
-	
-	DDRB |= ((1<<R_WR) | (1<<R_RD));    	
+
+	DDRB |= ((1<<R_WR) | (1<<R_RD));
 	PORTB |= (1<<R_RD);
 	PORTB |= (1<<R_WR);
 
 	DDRC |= (1<<D_LED0);
 
 	uart_init();
-	
+
 	SPI_MasterInit();
 	uart_puts("\n\r\n\rSPI_init!\n\r");
 
@@ -148,7 +148,7 @@ int main(void)
 	fat_init(Buffer);       //laden Cluster OFFSET und Size
 
         //Initialisierung der MMC/SD-Karte ENDE!
-        
+
 	mmc_read_csd (Buffer);
 
         for (uint16_t tmp = 0;tmp<16;tmp++)
@@ -156,7 +156,7 @@ int main(void)
                 itoa(Buffer[tmp],buf,16);
                 uart_puts(buf);
         }
-	
+
 	Clustervar = 0;//suche im Root Verzeichnis
         if (fat_search_file((unsigned char *)"rom.txt",&Clustervar,&Size,&Dir_Attrib,Buffer) == 1)
                 {
@@ -173,12 +173,12 @@ int main(void)
                         }
                	}
 	}
-	
+
 	for (uint16_t b=0;b<65535;b++)
 	{
-		
+
 		uart_puts("\r\n0x");
-		ltoa(b*24,buf,16);			
+		ltoa(b*24,buf,16);
 		uart_puts(buf);
         uart_putc(' ');
         uart_putc(' ');

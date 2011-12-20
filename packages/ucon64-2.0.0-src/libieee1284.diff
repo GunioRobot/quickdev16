@@ -3,14 +3,14 @@
 @@ -25,6 +25,11 @@
  #include "config.h"
  #endif
- 
+
 +#define USE_LIBIEEE1284
 +#if     defined USE_LIBIEEE1284 && defined USE_PPDEV
 +#undef  USE_PPDEV
 +#endif
 +
  #ifdef  USE_PARALLEL
- 
+
  #include <stdio.h>
 @@ -40,7 +45,9 @@
  #include <sys/time.h>
@@ -26,19 +26,19 @@
 @@ -78,8 +85,12 @@
  #include "getopt2.h"
  #include "ucon64.h"
- 
+
 +#if     defined USE_LIBIEEE1284 && defined USE_PPDEV
 +#undef  USE_PPDEV
 +#endif
 +
- 
+
 -#if     defined USE_PPDEV || defined __BEOS__ || defined __FreeBSD__ || defined AMIGA
 +#if     defined USE_PPDEV || defined __BEOS__ || defined __FreeBSD__ || defined AMIGA || defined USE_LIBIEEE1284
  static void close_io_port (void);
  #endif
  #if     defined __i386__ || defined __x86_64__  // GCC && x86
 @@ -92,8 +103,12 @@
- 
+
  #if     defined USE_PPDEV || defined __BEOS__ || defined __FreeBSD__
  static int parport_io_fd;
 -#ifdef  USE_PPDEV
@@ -53,21 +53,21 @@
  #endif
 @@ -113,7 +128,7 @@
  #endif
- 
- 
+
+
 -#if     defined _WIN32 || defined __CYGWIN__
 +#if     (defined _WIN32 || defined __CYGWIN__) && !defined USE_LIBIEEE1284
- 
+
  #define NODRIVER_MSG "ERROR: No (working) I/O port driver. Please see the FAQ, question 4\n"
- 
+
 @@ -172,7 +187,7 @@
  static void (*output_word) (unsigned short, unsigned short) = outpw_func;
- 
+
  #endif
 -#endif // _WIN32 || __CYGWIN__
 +#endif // (_WIN32 || __CYGWIN__) && !USE_LIBIEEE1284
- 
- 
+
+
  #if     defined __i386__ || defined __x86_64__  // GCC && x86
 @@ -275,6 +290,43 @@
        exit (1);
@@ -112,7 +112,7 @@
 +  return byte;
  #elif   defined __BEOS__
    st_ioport_t temp;
- 
+
 @@ -358,6 +410,26 @@
        exit (1);
      }
@@ -139,7 +139,7 @@
 +  return buf[0] | buf[1] << 8;                  // words are read in little endian format
  #elif   defined __BEOS__
    st_ioport_t temp;
- 
+
 @@ -434,6 +506,37 @@
                 port);
        exit (1);
@@ -177,7 +177,7 @@
 +    }
  #elif   defined __BEOS__
    st_ioport_t temp;
- 
+
 @@ -499,6 +602,28 @@
                 port);
        exit (1);
@@ -206,11 +206,11 @@
 +    }
  #elif   defined __BEOS__
    st_ioport_t temp;
- 
+
 @@ -529,7 +654,7 @@
  }
- 
- 
+
+
 -#if     (defined __i386__ || defined __x86_64__ || defined _WIN32) && !defined USE_PPDEV
 +#if     (defined __i386__ || defined __x86_64__ || defined _WIN32) && !defined USE_PPDEV && !defined USE_LIBIEEE1284
  #define DETECT_MAX_CNT 1000
@@ -218,8 +218,8 @@
  parport_probe (unsigned int port)
 @@ -557,6 +682,7 @@
  #endif
- 
- 
+
+
 +#ifndef USE_LIBIEEE1284
  #ifdef  _WIN32
  static LONG
@@ -229,11 +229,11 @@
  }
  #endif
 +#endif
- 
- 
+
+
  int
 @@ -637,6 +764,48 @@
- 
+
    parport_io_direction = FORWARD;               // set forward direction as default
    ioctl (parport_io_fd, PPDATADIR, &parport_io_direction);
 +#elif   defined USE_LIBIEEE1284
@@ -284,7 +284,7 @@
 @@ -710,16 +879,18 @@
      }
  #endif
- 
+
 -#if     defined USE_PPDEV || defined __BEOS__ || defined __FreeBSD__
 +#if     defined USE_PPDEV || defined __BEOS__ || defined __FreeBSD__ || defined USE_LIBIEEE1284
    if (register_func (close_io_port) == -1)
@@ -296,7 +296,7 @@
        exit(1);
      }
  #endif
- 
+
 -#if     defined __linux__ && (defined __i386__ || defined __x86_64__) && !defined USE_PPDEV
 +#if     defined __linux__ && (defined __i386__ || defined __x86_64__) && !defined USE_PPDEV && !defined USE_LIBIEEE1284
    /*
@@ -305,10 +305,10 @@
 @@ -751,7 +922,7 @@
      }
  #endif
- 
+
 -#if     (defined __i386__ || defined __x86_64__ || defined _WIN32) && !defined USE_PPDEV
 +#if     (defined __i386__ || defined __x86_64__ || defined _WIN32) && !defined USE_PPDEV && !defined USE_LIBIEEE1284
- 
+
  #if     defined _WIN32 || defined __CYGWIN__
    /*
 @@ -914,9 +1085,9 @@
@@ -317,7 +317,7 @@
      }
 -#endif // (__i386__ || __x86_64__ || _WIN32) && !USE_PPDEV
 +#endif // (__i386__ || __x86_64__ || _WIN32) && !USE_PPDEV && !USE_LIBIEEE1284
- 
+
 -#ifdef  USE_PPDEV
 +#if     defined USE_PPDEV || defined USE_LIBIEEE1284
    // the following two calls need a valid value for ucon64.parport
@@ -331,11 +331,11 @@
 +#if     defined USE_PPDEV || defined USE_LIBIEEE1284
    ucon64.parport = ucon64_parport;
  #endif
- 
+
 @@ -932,7 +1103,7 @@
  }
- 
- 
+
+
 -#if     defined USE_PPDEV || defined __BEOS__ || defined __FreeBSD__ || defined AMIGA
 +#if     defined USE_PPDEV || defined __BEOS__ || defined __FreeBSD__ || defined AMIGA || defined USE_LIBIEEE1284
  void

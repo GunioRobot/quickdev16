@@ -22,17 +22,17 @@ char debug_buffer[DEBUG_BUFFER_SIZE];
 
 void debug_init(void)
 {
-    
+
     memset(debug_map, 0, 0x800);
     memset(debug_buffer, 0,DEBUG_BUFFER_SIZE);
 
-#if 0    
+#if 0
     memset(screen_buffer, 0, DEBUG_BUFFER_SIZE);
     printfc("screen_buffer=%p\n",screen_buffer);
     printfc("debug_buffer=%p\n",debug_buffer);
     printfc("debug_map=%p\n",debug_map);
 #endif
-    
+
 }
 
 
@@ -86,7 +86,7 @@ void _print_char(word y, word x, char c)
 void _print_screen(word y, char *buffer)
 {
     char l;
-    unsigned int x; 
+    unsigned int x;
     x = y * 0x20;
     l = strlen(buffer);
     waitForVBlank();
@@ -181,7 +181,7 @@ void printc_packet(unsigned long addr, unsigned int len, byte * packet)
 }
 
 /*
- * keep the linker happy 
+ * keep the linker happy
  */
 int open(const char *_name, int _mode)
 {

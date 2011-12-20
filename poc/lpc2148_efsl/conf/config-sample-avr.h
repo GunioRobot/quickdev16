@@ -6,7 +6,7 @@
 
  * Here you will define for what hardware-endpoint EFSL should be compiled.
  * Look in interfaces.h to see what systems are supported, and add your own
- * there if you need to write your own driver. Then, define the name you 
+ * there if you need to write your own driver. Then, define the name you
  * selected for your hardware there here. Make sure that you only select one
  * device!
 */
@@ -18,7 +18,7 @@
 
 /* Memory configuration
    --------------------
- 
+
  * Here you must configure wheter your processor can access memory byte
  * oriented. All x86 processors can do it, AVR's can do it to. Some DSP
  * or other microcontrollers can't. If you have an 8 bit system you're safe.
@@ -30,9 +30,9 @@
 
 /* Cache configuration
    -------------------
-   
+
  * Here you must configure how much memory of cache you can/want to use.
- * The number you put at IOMAN_NUMBUFFER is multiplied by 512. So 1 means 
+ * The number you put at IOMAN_NUMBUFFER is multiplied by 512. So 1 means
  * 512 bytes cache, 4 means 2048 bytes cache. More is better.
  * The number after IOMAN_NUMITERATIONS should be untouched.
  * The last field (IOMAN_DO_MEMALLOC) is to tell ioman to allocate it's
@@ -44,15 +44,15 @@
 	#define IOMAN_NUMITERATIONS 3
 	#define IOMAN_DO_MEMALLOC
 
-/* Cluster pre-allocation 
+/* Cluster pre-allocation
    ----------------------
-   
+
  * When writing files, the function that performs the actual write has to
  * calculate how many clusters it will need for that request. It then allocates
- * that number of new clusters to the file. Since this involves some 
- * calculations and writing of the FAT, you might find it beneficial to limit 
- * the number of allocations, and allow fwrite to pre-allocate a number of 
- * clusters extra. This setting determines how many clusters will be extra 
+ * that number of new clusters to the file. Since this involves some
+ * calculations and writing of the FAT, you might find it beneficial to limit
+ * the number of allocations, and allow fwrite to pre-allocate a number of
+ * clusters extra. This setting determines how many clusters will be extra
  * allocated whenever this is required.
  * Take in carefull consideration how large your clustersize is, putting 10 here
  * with a clustersize of 32kb means you might waste 320 kb.
@@ -65,28 +65,28 @@
 
 /* Endianess configuration
    -----------------------
-   
+
  * Here you can configure wheter your architecture is little or big endian. This
- * is important since all FAT structures are stored in intel little endian 
- * order. So if you have a big endian system the library has to convert all 
+ * is important since all FAT structures are stored in intel little endian
+ * order. So if you have a big endian system the library has to convert all
  * figures to big endian in order to work.
  */
 	#define LITTLE_ENDIAN
-	
+
 
 /* Date and Time support
    ---------------------
-   
+
  * Here you can enable or disable date and time support. If you enable
  * it you will have to create 6 functions, that are described in the
  * EFSL manual. If the functions are not present when linking your
  * program with the library you will get unresolved dependencies.
  */
 	/* #define DATE_TIME_SUPPORT */
-	
+
 /* Error reporting support
    -----------------------
-   
+
  * When you receive an error in userland, it usually only gives limited
  * information (most likely, fail or success). If error detection and
  * reporting is important for you, you can enable more detailed error
@@ -106,9 +106,9 @@
 	#define FULL_ERROR_SUPPORT
 	/*#define BASE_ERROR_SUPPORT*/
 
-/* List options 
+/* List options
    ------------
-   
+
  * In this section you can configure what kind of data you will get from
  * directory listing requests. Please refer to the documentation for
  * more information
@@ -119,10 +119,10 @@
 
 /* Debugging configuration
    -----------------------
-   
+
  * Here you can configure the debugging behaviour. Debugging is different
- * on every platform (see debug.h for more information). 
- * If your hardware has no means of output (printf) dont define any anything, 
+ * on every platform (see debug.h for more information).
+ * If your hardware has no means of output (printf) dont define any anything,
  * and nothing will happen. For real world use debugging should be turned off.
 */
 
@@ -132,8 +132,8 @@
 /* Debugging configuration - AVR Specific: PORT
    --------------------------------------------
 
- * Here you can select which UART you want to use for debugging. 
- * If you did not define DEBUG, this setting has no effect. 
+ * Here you can select which UART you want to use for debugging.
+ * If you did not define DEBUG, this setting has no effect.
  * Note that it is not a good idea to use a port that you use in userspace.
 */
 
@@ -145,9 +145,9 @@
    --------------------------------------------
 
  * Here you can set UBRR, this value will select the serial clock speed.
- * This value depends on your baudrate and clockrate. U2X is by standard 0, 
+ * This value depends on your baudrate and clockrate. U2X is by standard 0,
  * if you would want this 1 for some reason, this can be done in debug.c.
-*/ 
+*/
 
 	#define DEBUG_UBRR 51 		/* 9600bps on 8Mhz */
 	/*#define DEBUG_UBRR 95*/ 	/* 9600bps on 14.7456Mhz */

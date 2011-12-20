@@ -39,13 +39,13 @@
 int main(int argc, char** argv)
 {
 	EmbeddedFileSystem efs;
-	EmbeddedFile file;	
+	EmbeddedFile file;
 	unsigned short e;
 	unsigned short bufsize;
 	signed short ret;
 	char *buf;
 	FILE *localfile;
-	
+
 	if(argc<4){
 		fprintf(stderr,"Argument error : cpi <fs> <local_read> <file_write> [bufsize]\n");
 		exit(-1);
@@ -56,12 +56,12 @@ int main(int argc, char** argv)
 	else
 		bufsize=4096;
 	buf=malloc(bufsize);
-	
+
 	if(efs_init(&efs,argv[1])!=0){
 		printf("Could not open filesystem.\n");
 		return(-1);
 	}
-	
+
 	ret=file_fopen(&file,&efs.myFs,argv[3],'a');
 	if((ret!=0)){
 		printf("Could not open file %s (return value: %d).\n",argv[3],ret);
@@ -72,7 +72,7 @@ int main(int argc, char** argv)
 		printf("Could not open local file.\n");
 		return(-3);
 	}
-	
+
 	while((e=fread(buf,1,bufsize,localfile))){
 		file_write(&file,e,buf);
 	}

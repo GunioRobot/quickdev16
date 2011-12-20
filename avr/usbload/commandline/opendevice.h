@@ -14,8 +14,8 @@
  *        Version:  1.0
  *        Created:  07/21/2009 03:32:16 PM
  *         Author:  david@optixx.org
- *       Based on:  custom-class, a basic USB example 
- *         Author:  Christian Starkjohann 
+ *       Based on:  custom-class, a basic USB example
+ *         Author:  Christian Starkjohann
  * =====================================================================================
  */
 

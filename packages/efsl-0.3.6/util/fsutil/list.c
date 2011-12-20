@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 {
 	EmbeddedFileSystem efs;
 	DirList *list;
-	
+
 	if(argc<3){
 		fprintf(stderr,"Argument error : list <fs> <directory>\n");
 		exit(-1);
@@ -51,7 +51,7 @@ int main(int argc, char** argv)
 		printf("Could not open filesystem.\n");
 		return(-1);
 	}
-	
+
 	list = malloc(sizeof(*list));
 
 	if((ls_openDir(list,&(efs.myFs),argv[2]))!=0){
@@ -62,7 +62,7 @@ int main(int argc, char** argv)
 	while(ls_getNext(list)==0){
 	    printf("%s\n",list->currentEntry.FileName);
 	}
-	
+
 	fs_umount(&(efs.myFs));
 
 	return(0);

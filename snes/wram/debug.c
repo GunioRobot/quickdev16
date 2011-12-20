@@ -78,7 +78,7 @@ void _print_char(word y, word x, char c)
 void _print_screen(word y, char *buffer)
 {
     char l;
-    unsigned int x; 
+    unsigned int x;
     x = y * 0x20;
     l = strlen(buffer);
     waitForVBlank();
@@ -141,7 +141,7 @@ void printc_packet(unsigned long addr, unsigned int len, byte * packet)
     unsigned int sum = 0;
     unsigned int last_sum = 0;
     unsigned int clear = 0;
-    
+
     for (i = 0; i < len; i += 16) {
 
         sum = 0;
@@ -152,12 +152,12 @@ void printc_packet(unsigned long addr, unsigned int len, byte * packet)
             clear = 1;
             continue;
         }
-        
+
         if (last_sum == sum) {
             clear = 1;
             continue;
         }
-        
+
         if (clear) {
             printfc("*\n");
             clear = 0;
@@ -178,7 +178,7 @@ void printc_packet(unsigned long addr, unsigned int len, byte * packet)
     }
 }
 /*
- * keep the linker happy 
+ * keep the linker happy
  */
 int open(const char *_name, int _mode)
 {

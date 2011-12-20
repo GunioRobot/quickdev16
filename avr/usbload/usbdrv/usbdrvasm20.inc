@@ -114,7 +114,7 @@ foundK:                         ;[-16]
     sbis    USBIN, USBMINUS     ;[-3] we want two bits K (sample 3 cycles too early)
     rjmp    haveTwoBitsK        ;[-2]
     pop     shift               ;[-1] undo the push from before
-    pop     bitcnt              ;[1] 
+    pop     bitcnt              ;[1]
     rjmp    waitForK            ;[3] this was not the end of sync, retry
 ; The entire loop from waitForK until rjmp waitForK above must not exceed two
 ; bit times (= 27 cycles).
@@ -132,7 +132,7 @@ haveTwoBitsK:
     push    cnt                 ;[10]
     ldi     cnt, USB_BUFSIZE    ;[12] [rx loop init]
     ldi     x2, 1<<USBPLUS      ;[13] current line state is K state. D+=="1", D-=="0"
-bit0:       
+bit0:
     in      x1, USBIN           ;[0] sample line state
     andi    x1, USBMASK         ;[1] filter only D+ and D- bits
     rjmp    handleBit           ;[2] make bit0 14 cycles long
@@ -220,12 +220,12 @@ handleBit:
 
 handle0:
     mov     x2, x1              ;[6] Set x2 to current line state
-    ldi     bitcnt, 6           ;[7] reset unstuff counter. 
+    ldi     bitcnt, 6           ;[7] reset unstuff counter.
     lsr     shift               ;[8] shift "0" into the data
     brcs    bit7                ;[9] When after shift C is set, next bit is bit7
     nop                         ;[10]
-    rjmp    bitloop             ;[11] 
-    
+    rjmp    bitloop             ;[11]
+
 ;----------------------------------------------------------------------------
 ; End of receive loop. Now start handling EOP
 ;----------------------------------------------------------------------------
@@ -264,7 +264,7 @@ bitstuffN:
     nop2                    ;[10]
     out     USBOUT, x1      ;[12] <-- out
     rjmp    didStuffN       ;[0]
-    
+
 bitstuff7:
     eor     x1, x4          ;[6]
     ldi     x2, 0           ;[7] Carry is zero due to brcc

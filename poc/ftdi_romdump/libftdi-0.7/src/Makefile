@@ -59,13 +59,13 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-host_alias = 
+host_alias =
 host_triplet = i386-apple-darwin9.6.0
 AS = @AS@
 CC = gcc
 DLLTOOL = @DLLTOOL@
 ECHO = echo
-EXEEXT = 
+EXEEXT =
 HAVELIBUSB = /opt/local/bin/libusb-config
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LN_S = ln -s
@@ -87,10 +87,10 @@ include_HEADERS = ftdi.h
 # Note:  If you specify a:b:c as the version in the next line,
 #  the library that is made has version (a-c).c.b.  In this
 #  example, the version is 2.1.2. (3:2:1)
-libftdi_la_LDFLAGS = -version-info 7:0:7 $(all_libraries) 
+libftdi_la_LDFLAGS = -version-info 7:0:7 $(all_libraries)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = ../config.h
-CONFIG_CLEAN_FILES = 
+CONFIG_CLEAN_FILES =
 LTLIBRARIES =  $(lib_LTLIBRARIES)
 
 
@@ -98,9 +98,9 @@ DEFS = -DHAVE_CONFIG_H -I. -I$(srcdir) -I..
 CPPFLAGS = -I/usr/local/include -I/opt/local/include
 LDFLAGS = -L/opt/local/lib
 LIBS =  -L/opt/local/lib -lusb -Wl,-framework -Wl,IOKit -Wl,-framework -Wl,CoreFoundation -Wl,-prebind
-libftdi_la_LIBADD = 
+libftdi_la_LIBADD =
 libftdi_la_OBJECTS =  ftdi.lo
-CFLAGS = -g -O2 
+CFLAGS = -g -O2
 COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
@@ -120,7 +120,7 @@ OBJECTS = $(libftdi_la_OBJECTS)
 all: all-redirect
 .SUFFIXES:
 .SUFFIXES: .S .c .lo .o .obj .s
-$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps src/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status

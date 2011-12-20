@@ -129,7 +129,7 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
     }
 
     usbMsgPtr = data_buffer;
-    return ret_len;             /* default for not implemented requests: return 
+    return ret_len;             /* default for not implemented requests: return
                                  * no data back to host */
 }
 
@@ -173,7 +173,7 @@ uint8_t usbFunctionRead(uint8_t * data, uint8_t len)
 }
 
 /*
- * ------------------------------------------------------------------------- 
+ * -------------------------------------------------------------------------
  */
 
 int main(void)
@@ -208,5 +208,5 @@ int main(void)
 }
 
 /*
- * ------------------------------------------------------------------------- 
+ * -------------------------------------------------------------------------
  */

@@ -105,12 +105,12 @@ euint32 ex_getb32(euint8* buf,euint32 offset)
 euint32 ex_getb32(euint8* buf,euint32 offset)
 {
 #ifdef BIG_ENDIAN
-	return 	((euint32)*(euint8*)(buf+offset)<<24UL) | 
+	return 	((euint32)*(euint8*)(buf+offset)<<24UL) |
 		    ((euint32)*(euint8*)(buf+offset+1)<<16UL) |
 	        ((euint16)*(euint8*)(buf+offset+2)<<8UL)  |
 			(*(euint8*)(buf+offset+3)) ;
 #else
-	return 	((euint32)*(euint8*)(buf+offset+3)<<24UL) | 
+	return 	((euint32)*(euint8*)(buf+offset+3)<<24UL) |
 		    ((euint32)*(euint8*)(buf+offset+2)<<16UL) |
 	        ((euint16)*(euint8*)(buf+offset+1)<<8UL)  |
 			(*(euint8*)(buf+offset)) ;
@@ -128,7 +128,7 @@ euint16 ex_getb16(euint8* buf,euint32 offset)
 #endif
 }
 
-#endif 
+#endif
 /* end mod mthomas */
 
 

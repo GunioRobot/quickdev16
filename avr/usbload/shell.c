@@ -177,7 +177,7 @@ ISR(USART0_RX_vect)
     uart_putc(recv_buf[recv_counter]);
     if (recv_buf[recv_counter] == 0x0d) {
         /*
-         * recv_buf[recv_counter] = 0; 
+         * recv_buf[recv_counter] = 0;
          */
         cr = 1;
         recv_buf[++recv_counter] = '\0';
@@ -369,8 +369,8 @@ void shell_run(void)
          * for ROM with save-RAM. # $ffd7 => ROM size byte. # $ffd8 => RAM size byte. # $ffd9 => Country code, which selects the video in
          * the emulator. Values $00, $01, $0d use NTSC. Values in range $02..$0c use PAL. Other values are invalid. # $ffda => Licensee
          * code. If this value is $33, then the ROM has an extended header with ID at $ffb2..$ffb5. # $ffdb => Version number, typically
-         * $00. # $ffdc..$ffdd => Checksum complement, which is the bitwise-xor of the checksum and $ffff. # $ffde..$ffdf => SNES checksum, 
-         * an unsigned 16-bit checksum of bytes. # $ffe0..$ffe3 => Unknown. 
+         * $00. # $ffdc..$ffdd => Checksum complement, which is the bitwise-xor of the checksum and $ffff. # $ffde..$ffdf => SNES checksum,
+         * an unsigned 16-bit checksum of bytes. # $ffe0..$ffe3 => Unknown.
          */
         info_P(PSTR("NAME	0x%04x "), (0xffc0 - offset));
         for (arg1 = (0xffc0 - offset); arg1 < (0xffc0 - offset + 21); arg1++) {

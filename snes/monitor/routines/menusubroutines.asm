@@ -171,4 +171,3 @@ MenuSubroutineLoadCredits:
 	sta.b CurrentEvent
 ;	stz.b ScreenBrightness
 	rts	
-	

@@ -2,7 +2,7 @@
 #include "startup.h"
 #include "console.h"
 
-#define BAUD_RATE 115200 
+#define BAUD_RATE 115200
 
 
 void delay_ms (int count){

@@ -6,9 +6,9 @@
 .INCLUDE "header.inc"
 
 
-.SECTION "MAIN" 
+.SECTION "MAIN"
 
-.define	dp					$0000 
+.define	dp					$0000
 
 .define	sineswap			$0002
 .define sine_offset			$0003
@@ -19,7 +19,7 @@
 
 
 .define	colbar_offset_table	$0010
-.define	colbar_color_table	$0020 
+.define	colbar_color_table	$0020
 .define	colbar_count		$0030
 .define	colbar_color		$0032
 .define	colbar_color_ptr	$0034
@@ -30,65 +30,65 @@
 
 .define hdma_table1			$0200
 .define	plane_0				$0800
-.define	plane_1 			$0c00 
-.define	char_data			$2000 
+.define	plane_1 			$0c00
+.define	char_data			$2000
 .define	logo_data			$2200
 
 
-init:   
+init:
 	sei         	;stop interrupts
 	phk             ;get the current bank and store on stack
 	plb             ;get value off stack and make it the current
 					;programming bank
 	clc             ;clear carry bit
-	xce             ;native 16 bit mode (no 6502 emulation!) 
+	xce             ;native 16 bit mode (no 6502 emulation!)
 
 
-	jsr		setup 
+	jsr		setup
 
 
 	rep     #$30    ; x,y,a fixed -> 16 bit mode
 	sep     #$20    ; accumulator ->  8 bit mode
 
-	lda		#(dp+0) ;load direct page 
-	tcd 			;store & and assign 
+	lda		#(dp+0) ;load direct page
+	tcd 			;store & and assign
 
-	
-	
+
+
 	lda     #(plane_0>>8)   ; screen map data @ vram location $1000
 	sta     $2107           ; plane 0 map location register
 	lda     #(plane_1>>8)  	; screen map data @ vram location $1000
 	sta     $2108           ; plane 1 map location register
-	
-	lda     #$22            ; plane 0 and plane 1 tile graphics @ $2000  
+
+	lda     #$22            ; plane 0 and plane 1 tile graphics @ $2000
 	sta     $210b           ; plane 0 tile graphics register
 	lda     #$00            ; mode 0 value / tile mode
 	sta     $2105           ; graphics mode register
-	
-	lda     #%00000011      ; 
+
+	lda     #%00000011      ;
 	sta     $212c           ; plane enable register
-	
-	
+
+
 	lda     #$01
 	sta     $4200           ; enable joypad read (bit one)
-	
-	lda		#$00 
+
+	lda		#$00
 	sta		$2121
-	ldx		#$0000		
-	
-	
+	ldx		#$0000
+
+
 col_loop:
 	lda		#$ff
 	sta		$2122
-	lda		#$7f 
-	sta		$2122 
+	lda		#$7f
+	sta		$2122
 	inx
 	cpx		#$00ff
-	bne 	col_loop 	
+	bne 	col_loop
 
-	
 
-	ldx.w	#char_data		; assign vram location 
+
+	ldx.w	#char_data		; assign vram location
 	stx     $2116           ; writing to $2118/9 will store data here!
 	ldx     #$0000
 
@@ -106,12 +106,12 @@ copychar:
 copy_logo:					; copy tile data to vram
 	lda.w	optixx_logo,x	; using continuos tile vram pointer
 	sta     $2118         	; charset @ $2000
-	stz     $2119           ; logo  @ $2200 
+	stz     $2119           ; logo  @ $2200
 	inx
-	cpx     #$0500           
+	cpx     #$0500
 	bne     copy_logo
 
-	
+
 
 
 
@@ -130,14 +130,14 @@ init_plane_0_loop:
 	inx
 	cpx     #$0400          ; transfer entire screen
 							; $20*$20=$0400  (1024 bytes)
-	bne    init_plane_0_loop 
+	bne    init_plane_0_loop
 
 
 init_plane_1:				; write optixx logo tiles
-	ldx.w   #plane_1          
+	ldx.w   #plane_1
 	stx     $2116
 	ldx     #$0000
-	lda		#$0040 	
+	lda		#$0040
 
 init_plane_1_clear_1:		; 0x0140 tiles clear
 	sta		$2118
@@ -146,17 +146,17 @@ init_plane_1_clear_1:		; 0x0140 tiles clear
 	cpx     #$0140
 	bne  	init_plane_1_clear_1
 	ldx     #$0000
-	
+
 init_plane_1_loop_1:
-	ina 						
+	ina
 	sta     $2118
-	stz     $2119           
+	stz     $2119
 	inx
 	cpx     #$00a0          ; 0x00a0 logo tiles
-	bne    	init_plane_1_loop_1 
+	bne    	init_plane_1_loop_1
 
 	ldx     #$0000
-	lda     #$0040 
+	lda     #$0040
 
 init_plane_1_clear_2:
 	sta		$2118
@@ -168,36 +168,36 @@ init_plane_1_clear_2:
 
 init_screen:
 	lda     #$0f            ; screen enabled, full brightness
-	sta     $2100           ; 
+	sta     $2100           ;
 	cli                     ; clear interrupt bit
 
 init_scroll:
 	lda		#$00
-	sta.w	scrollval		
+	sta.w	scrollval
 
 
 init_sineoffset:
 	lda		#$00
 	sta.w	sine_offset
 	lda		#$00
-	sta		sineswap 
+	sta		sineswap
 
 	ldx.w	#colbar_1_color_values
-	stx		colbar_color_table	
+	stx		colbar_color_table
 	ldx.w	#colbar_2_color_values
-	stx		colbar_color_table + $02 
+	stx		colbar_color_table + $02
 	ldx.w	#colbar_3_color_values
-	stx		colbar_color_table + $04 
+	stx		colbar_color_table + $04
 
 	ldx.w	#colbar_1_color_values
-	stx		colbar_color_table + $06	
+	stx		colbar_color_table + $06
 	ldx.w	#colbar_2_color_values
-	stx		colbar_color_table + $08 
+	stx		colbar_color_table + $08
 	ldx.w	#colbar_3_color_values
-	stx		colbar_color_table + $0a 
+	stx		colbar_color_table + $0a
 
 	lda		#$00
-	sta		colbar_offset_table	
+	sta		colbar_offset_table
 	lda		#$15
 	sta		colbar_offset_table + $01
 	lda		#$25
@@ -208,41 +208,41 @@ init_sineoffset:
 	sta		colbar_offset_table + $04
 	lda		#$55
 	sta		colbar_offset_table + $05
-				
+
 
 
 call_hmda_setup:
-	jsr 	init_hdma_table0 
-	jsr 	init_hdma_table1 
+	jsr 	init_hdma_table0
+	jsr 	init_hdma_table1
 
-	jmp  intro 
+	jmp  intro
 
 main:
 	jsr 	wait_vbl
-	jsr		sine_plane 
+	jsr		sine_plane
 	jsr		sine_colbar
 	jsr		scroll_plane
 	jsr		joypad
-	jmp 	main 
-
-	
+	jmp 	main
 
 
-; test vertical interrupt 
 
 
-wait_vbl: 
+; test vertical interrupt
+
+
+wait_vbl:
 	lda     $4210           ; check for vertical blank
 	and     #$80
-	beq   	wait_vbl 
+	beq   	wait_vbl
 	rts
 
-; joypad poll 
+; joypad poll
 
 joypad:
 	lda     $4212           ; is joypad ready to be read?
 	and     #$0001
-	bne     joypad          ; no? go back until it is! 
+	bne     joypad          ; no? go back until it is!
 	lda     $4219           ; read joypad high byte
 	and     #$10            ; leave only "start" bit
 	bne     reset           ; "start" pressed? go to reset
@@ -259,16 +259,16 @@ reset:
 
 ; gfx routine
 
-; intro stuff 
+; intro stuff
 
 intro:
 	rep		#$30
-	sep		#$20 
+	sep		#$20
 	ldx 	#$f2
 mosaic_l:
-	jsr		wait_vbl 
 	jsr		wait_vbl
-	txa		
+	jsr		wait_vbl
+	txa
 	sta 	$2106
 	sbc 	#$10
 	tax
@@ -282,43 +282,43 @@ fade_dark:
 	jsr		wait_vbl
 	tya
 	sta		$2100
-	dey		
+	dey
 	cpy		#$0000
 	bne		fade_dark
 
 	ldy		#$0000
 fade_light:
-	jsr		wait_vbl 
+	jsr		wait_vbl
 	tya
 	sta		$2100
-	iny		
+	iny
 	cpy		#$000f
-	bne		fade_light 
+	bne		fade_light
 
-	jmp 	main 
+	jmp 	main
 
-; scroll loop 
+; scroll loop
 
 scroll_plane:
 	lda.w	scrollval
-	sta    	$210e  
+	sta    	$210e
 	stz    	$210e
 
 	adc		#$01
-	
+
 	sta.w 	scrollval
 	cmp    	#$ff
-	beq    	restore_scroll	
+	beq    	restore_scroll
 	rts
 restore_scroll:
 	lda 	#$00
-	sta.w	scrollval 
-	rts 	 
+	sta.w	scrollval
+	rts
 
 sine_plane:
 	rep		#$10
 	sep		#$20
-	
+
 	lda		sine_offset
 	ina
 	sta		sine_offset
@@ -332,13 +332,13 @@ sine_plane:
 	cmp		#$04			; after 4 loop reset counter
 	bne		sine_plane_c
 	lda		#$00
-	sta		sineswap 
+	sta		sineswap
 
 sine_plane_c:
-	tay 	
-	ldx		#$0000 
-	
-sine_plane_l:	
+	tay
+	ldx		#$0000
+
+sine_plane_l:
 	iny
 	cpy		#$ff
 	bne		sine_plane_l_c
@@ -346,7 +346,7 @@ sine_plane_l:
 	tay
 
 sine_plane_l_c:
-	inx	
+	inx
 	lda.w	sineswap
 	cmp		#$02			; lower 2 use vsine 1
 	bmi		sine_load_vsine1
@@ -356,17 +356,17 @@ sine_load_vsine2:			; else use vsine 2
 sine_load_vsine1:
 	lda.w	vsine_1,y
 sine_load_done:
-	adc		#$c8			; shift logo left 	
-	sta		hdma_table0+3,x	
+	adc		#$c8			; shift logo left
+	sta		hdma_table0+3,x
 	inx
 	inx
 	cpx		#$00c0			; 64 hdma lines a 3 byte
-	bne		sine_plane_l 
-	
+	bne		sine_plane_l
+
 	rep		#$30
 	sep		#$20
-	rts 
-	
+	rts
+
 
 sine_colbar:
 	rep		#$10
@@ -385,19 +385,19 @@ sine_colbar_clear:
 
 	lda		#$00
 	sta		colbar_count
-	
+
 	ldy		#$0000
 	sty		colbar_color
-	
+
 
 sine_colbar_init:
-	
+
 	ldy		colbar_color
-	
+
 	ldx		colbar_color_table,y
 	stx		colbar_color_ptr
-	
-	lda.w	colbar_count	
+
+	lda.w	colbar_count
 	tay
 	lda		colbar_offset_table,y
 	ina
@@ -406,39 +406,39 @@ sine_colbar_init:
 	bne		sine_colbar_continue
 	lda		#$00			; reset table pointer
 	sta		colbar_offset_table,y
-	
+
 sine_colbar_continue:
 
 	tay
 	lda.w	colbarsine_1,y
-	tax	
+	tax
 	ldy		#$0000
 
 sine_colbar_loop:
-	lda		(colbar_color_ptr),y	
+	lda		(colbar_color_ptr),y
     ora     hdma_table1+1,x
 	and     #$ff
 	sta		hdma_table1+1,x
 	iny
 	lda		(colbar_color_ptr),y
 	ora		hdma_table1+2,x
-	and		#$ff 
-	sta		hdma_table1+2,x 
+	and		#$ff
+	sta		hdma_table1+2,x
 	inx
 	inx
 	inx
 	iny
-	;iny 
+	;iny
 	cpy		#$0040			; 32 colot lines a 2 byte
-	bne		sine_colbar_loop  
-	
+	bne		sine_colbar_loop
+
 	ldy		colbar_color
 	iny
-	iny	
-	sty		colbar_color 
-	
+	iny
+	sty		colbar_color
+
 	lda.w	colbar_count
-	ina		
+	ina
 	sta.w	colbar_count
 	cmp		#$06
 	bne 	sine_colbar_init
@@ -446,48 +446,48 @@ sine_colbar_loop:
 sine_colbar_end:
 	rep		#$30
 	sep		#$20
-	rts 
-	
-; init hdma list 
+	rts
+
+; init hdma list
 init_hdma_table0:
-	rep 	#$10    	
-	sep 	#$20    
-	ldy		#$0000			
+	rep 	#$10
+	sep 	#$20
+	ldy		#$0000
 	ldx		#$0000
 	;lda		#$00
 	;sta		sine_offset
-	lda		#$4c	
+	lda		#$4c
 	sta		hdma_table0,x
 	inx
-	lda 	#$00	
+	lda 	#$00
 	sta		hdma_table0,x
-	inx			
+	inx
 	sta		hdma_table0,x
 	inx
 
 init_hdma_table0_loop:
-	lda		#$01	
+	lda		#$01
 	sta		hdma_table0,x
 	inx
 	;lda		vsine_1,y
-	lda		#$00 
+	lda		#$00
 	sta		hdma_table0,x
 	inx
 	lda		#$00
 	sta		hdma_table0,x
-	inx	
-	iny 
+	inx
+	iny
 	;cpx		#$0183 ; (128 + 1) * 3 = 387 = 0x0183
 	cpx		#$00c3 ; (64 + 1) * 3 = 195 = 0x00c0
 	bne 	init_hdma_table0_loop
 	lda		#$4c
 	sta		hdma_table0,x
-	inx		
-	lda		#$00	
+	inx
+	lda		#$00
 	sta		hdma_table0,x
-	inx 
-	sta		hdma_table0,x 
-	inx	
+	inx
+	sta		hdma_table0,x
+	inx
 	sta		hdma_table0,x
 	inx
 	sta		hdma_table0,x
@@ -498,33 +498,33 @@ init_hdma_table0_loop:
 	ldx.w	#hdma_table0
 	;ldx.w  #test_hmda_table
 	stx     $4302
-	lda 	#$00	
+	lda 	#$00
 	sta     $4304
   ;lda 	#%00000001
 	;sta 	$420c
 	rep		#$30
-	sep		#$20 
-	rts	
+	sep		#$20
+	rts
 
 init_hdma_table1:
-	;rep 	#$10    	
-	;sep 	#$30    
+	;rep 	#$10
+	;sep 	#$30
 	ldx		#$0000
-	
+
 init_hdma_tabel1_copy:
-	ldy.w		backcolors_color_values,x	
-	tya 
+	ldy.w		backcolors_color_values,x
+	tya
 	sta			hdma_table1,x
 	inx
 	cpx			#$0295
-	bne			init_hdma_tabel1_copy 
+	bne			init_hdma_tabel1_copy
 	lda     #$00
 	sta     $4310
 	lda     #$21
 	sta     $4311
 	ldx.w  	#backcolors_color_list
 	stx     $4312
-	lda 		#$00	
+	lda 		#$00
 	sta     $4314
 
  	lda     #$02
@@ -534,19 +534,19 @@ init_hdma_tabel1_copy:
 	;ldx.w  	#backcolors_color_values
 	ldx.w		#hdma_table1
 	stx     $4322
-	lda 		#$00	
+	lda 		#$00
 	sta     $4324
   lda 		#%00000111
 	sta 		$420c
 	rep			#$30
-	sep			#$20 
-	rts	
+	sep			#$20
+	rts
 
 setup:
    	sep 	#$30     ; x,y,a are 8 bit numbers
    	lda 	#$8f     ; screen off, full brightness
-   	sta 	$2100    ; brightness + screen enable register 
-   	lda 	#$00     ; 
+   	sta 	$2100    ; brightness + screen enable register
+   	lda 	#$00     ;
    	sta 	$2101    ; sprite register (size + address in vram)
    	lda 	#$00
    	sta 	$2102    ; sprite registers (address of sprite memory [oam])
@@ -555,7 +555,7 @@ setup:
    	sta 	$2105    ; graphic mode register
    	lda 	#$00     ; no planes, no mosaic
    	sta 	$2106    ; mosaic register
-   	lda 	#$00     ; 
+   	lda 	#$00     ;
    	sta 	$2107    ; plane 0 map vram location
    	lda 	#$00
    	sta 	$2108    ; plane 1 map vram location
@@ -718,7 +718,7 @@ charset:
 	.db    $00,$00,$7e,$00,$7e,$00,$00,$00 ;'='
 	.db    $18,$18,$0c,$0c,$0c,$0c,$18,$18 ;'>'
 	.db    $00,$7c,$06,$0c,$18,$00,$18,$00 ;'?'
-	  
+
 		  ; 12345678901234567890123456789012
 text_0:
  	.db		"              _   _             "
@@ -762,25 +762,25 @@ text_0:
 
 .INCLUDE "backcolors.s"
 
-.INCLUDE "colbar_1.s" 
+.INCLUDE "colbar_1.s"
 
-.INCLUDE "colbar_2.s" 
+.INCLUDE "colbar_2.s"
 
-.INCLUDE "colbar_3.s" 
-
-
-
-.INCLUDE "optixx_logo.s" 
+.INCLUDE "colbar_3.s"
 
 
-.INCLUDE "colbarsine_1.s" 
+
+.INCLUDE "optixx_logo.s"
+
+
+.INCLUDE "colbarsine_1.s"
 .ends
 
 
 
 .bank 1
 
-.SECTION "GFX" 
+.SECTION "GFX"
 
 
 
@@ -795,23 +795,23 @@ text_0:
 ;long_label:
 	nop
 	nop
-	rts 
+	rts
 
 
 ;.BANK $01 SLOT 6
 ;.ORGA $8000
 ;.BASE $01
-;.INCLUDE "music.s" 
+;.INCLUDE "music.s"
 
 ;.BANK $02 SLOT 6
-;.ORG $0000 
+;.ORG $0000
 ;music_data_1:
 ;.INCBIN "music1.bin"
 
-;.BANk $03 SLOT 6 
-;.ORG $0000 
+;.BANk $03 SLOT 6
+;.ORG $0000
 ;music_data_2:
-;.INCBIN "music2.bin" 
+;.INCBIN "music2.bin"
 
 
 

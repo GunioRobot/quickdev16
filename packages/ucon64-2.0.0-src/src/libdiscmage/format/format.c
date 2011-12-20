@@ -296,7 +296,7 @@ dm_read (char *buffer, int track_num, int sector, const dm_image_t *image)
 {
   dm_track_t *track = (dm_track_t *) &image->track[track_num];
   FILE *fh;
-  
+
   if (!(fh = fopen (image->fname, "rb")))
     return 0;
 
@@ -305,7 +305,7 @@ dm_read (char *buffer, int track_num, int sector, const dm_image_t *image)
       fclose (fh);
       return 0;
     }
-  
+
   if (fread (buffer, track->sector_size, 1, fh) != track->sector_size)
     {
       fclose (fh);

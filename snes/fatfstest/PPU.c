@@ -53,12 +53,12 @@ void VRAMLoad(word src, word vramDst, word size)
     *(byte *) 0x2115 = 0x80;
     *(word *) 0x2116 = vramDst;
 
-    *(word *) 0x4300 = 0x1801;  // set DMA control register (1 word inc) 
+    *(word *) 0x4300 = 0x1801;  // set DMA control register (1 word inc)
     // and destination ($21xx xx -> 0x18)
-    *(word *) 0x4302 = src;     // DMA channel x source address offset 
+    *(word *) 0x4302 = src;     // DMA channel x source address offset
     // (low $4302 and high $4303 optimisation)
     *(byte *) 0x4304 = 0x01;    // DMA channel x source address bank
-    *(word *) 0x4305 = size;    // DMA channel x transfer size 
+    *(word *) 0x4305 = size;    // DMA channel x transfer size
     // (low $4305 and high $4306 optimisation)
 
     // Turn on DMA transfer for this channel
@@ -74,7 +74,7 @@ void CGRAMLoad(word src, byte cgramDst, word size)
     // set address in VRam for read or write + block size
     *(byte *) 0x2121 = cgramDst;
 
-    *(word *) 0x4300 = 0x2200;  // set DMA control register (1 byte inc) 
+    *(word *) 0x4300 = 0x2200;  // set DMA control register (1 byte inc)
     // and destination ($21xx xx -> 022)
     *(word *) 0x4302 = src;     // DMA channel x source address offset
     // (low $4302 and high $4303 optimisation)

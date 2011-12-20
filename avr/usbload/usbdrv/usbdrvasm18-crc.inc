@@ -218,10 +218,10 @@ haveTwoBitsK:
 	ldi		x3, 0xFE			;[11] x3 is the high order crc value
 
 
-bitloopPid:						
+bitloopPid:
 	in      x1, USBIN           ;[0] sample line state
    	andi    x1, USBMASK         ;[1] filter only D+ and D- bits
-    breq    nse0                ;[2] both lines are low so handle se0	
+    breq    nse0                ;[2] both lines are low so handle se0
 	eor		x2, x1				;[3] generate inverted of actual bit
 	sbrc	x2, USBMINUS		;[4] set the carry if we received a zero
 	sec							;[5]
@@ -251,11 +251,11 @@ rxDataStart:
     breq	unstuff0	      	;[7] then Z is set now and we branch to the unstuffing handler
 didunstuff0:
 	subi    cnt, 1         		;[8] cannot use dec because it doesn't affect the carry flag
-    brcs    nOverflow    		;[9] Too many bytes received. Ignore packet							
+    brcs    nOverflow    		;[9] Too many bytes received. Ignore packet
     st		Y+, x4				;[10] store the last received byte
 								;[11] st needs two cycles
 
-; bit1							
+; bit1
 	in		x2, USBIN			;[0] sample line state
     andi	x1, USBMASK			;[1] check for se0 during bit 0
     breq	nse0				;[2]
@@ -268,7 +268,7 @@ didunstuff0:
     andi	x1, 0xF3			;[9]
     breq	unstuff1			;[10]
 didunstuff1:
-	nop							;[11]	
+	nop							;[11]
 
 ; bit2
 	in      x1, USBIN           ;[0] sample line state
@@ -283,9 +283,9 @@ didunstuff1:
 didunstuff2:
 	nop2						;[9]
 								;[10]
-	nop							;[11]					
-					
-; bit3							
+	nop							;[11]
+
+; bit3
 	in		x2, USBIN			;[0] sample line state
     andi	x2, USBMASK			;[1] check for se0
     breq	nOverflow           ;[2]
@@ -298,11 +298,11 @@ didunstuff2:
 didunstuff3:
 	nop							;[9]
 	rjmp 	rxDataBit4			;[10]
-								;[11]				
+								;[11]
 
 ; the avr branch instructions allow an offset of +63 insturction only, so we need this
 ; 'local copy' of se0
-nse0:		
+nse0:
 	rjmp	se0					;[4]
 								;[5]
 ; the same same as for se0 is needed for overflow and StuffErr
@@ -322,7 +322,7 @@ unstuff0:						;[8] this is the branch delay of breq unstuffX
 	breq	stuffErr			;[4] if the stuff bit is a 1-bit something went wrong
 	mov 	x1, x2				;[5] the next bit expects the last state to be in x1
 	rjmp 	didunstuff0			;[6]
-								;[7] jump delay of rjmp didunstuffX	
+								;[7] jump delay of rjmp didunstuffX
 
 unstuff1:						;[11] this is the jump delay of breq unstuffX
 	in		x1, USBIN			;[0] we have some free cycles so we could check for bit stuffing errors
@@ -335,7 +335,7 @@ unstuff1:						;[11] this is the jump delay of breq unstuffX
 	nop2						;[7]
 								;[8]
 	rjmp 	didunstuff1			;[9]
-								;[10] jump delay of rjmp didunstuffX		
+								;[10] jump delay of rjmp didunstuffX
 
 unstuff2:						;[9] this is the jump delay of breq unstuffX
 	ori		shift, 0x04			;[10] invert the last received bit to prevent furhter unstuffing
@@ -348,7 +348,7 @@ unstuff2:						;[9] this is the jump delay of breq unstuffX
 	nop2						;[5]
 								;[6]
 	rjmp 	didunstuff2			;[7]
-								;[8] jump delay of rjmp didunstuffX	
+								;[8] jump delay of rjmp didunstuffX
 
 unstuff3:						;[9] this is the jump delay of breq unstuffX
 	ori		shift, 0x08			;[10] invert the last received bit to prevent furhter unstuffing
@@ -361,7 +361,7 @@ unstuff3:						;[9] this is the jump delay of breq unstuffX
 	nop2						;[5]
 								;[6]
 	rjmp 	didunstuff3			;[7]
-								;[8] jump delay of rjmp didunstuffX			
+								;[8] jump delay of rjmp didunstuffX
 
 
 
@@ -369,7 +369,7 @@ unstuff3:						;[9] this is the jump delay of breq unstuffX
 #define __USE_CRC__
 #include "asmcommon.inc"
 
-	
+
 
 ; USB spec says:
 ; idle = J
@@ -429,14 +429,14 @@ didStuffN:
 didStuff7:
     ror     shift           ;[11]
 	out     USBOUT, x1      ;[0] transfer bit 7 to the pins
-    ror     x2              ;[1] move the bit into the stuffing history	
+    ror     x2              ;[1] move the bit into the stuffing history
     cpi     x2, 0xfc        ;[2]
     brcc    bitstuff7       ;[3]
     ld      shift, y+       ;[4] get next byte to transmit
     dec     cnt             ;[5] decrement byte counter
     brne    txByteLoop      ;[7] if we have more bytes start next one
     						;[8] branch delay
-    						
+
 ;make SE0:
     cbr     x1, USBMASK     ;[8] 		prepare SE0 [spec says EOP may be 25 to 30 cycles]
     lds     x2, usbNewDeviceAddr;[9]
@@ -504,7 +504,7 @@ didunstuff4:
 	nop2						;[9][10]
 	nop							;[11]
 
-; bit5							
+; bit5
 	in		x2, USBIN			;[0] sample line state
     ldi		ZH, hi8(usbCrcTableHigh);[1] use the table for the higher byte
     eor		x1, x2				;[2]
@@ -516,10 +516,10 @@ didunstuff4:
 didunstuff5:
 	lpm		x4, Z				;[8] load the higher crc xor-byte and store it for later use
 								;[9] lpm needs 3 cycles
-								;[10]			
+								;[10]
 	ldi		ZH, hi8(usbCrcTableLow);[11] load the lower crc xor byte adress
 
-; bit6	    					
+; bit6
 	in      x1, USBIN           ;[0] sample line state
     eor		x2, x1              ;[1]
     bst		x2, USBMINUS		;[2]
@@ -533,8 +533,8 @@ didunstuff6:
 	    						;[9]
 	eor		ZL, x3				;[10] xor the old high crc byte with the low xor-byte
 	mov		x3, x4				;[11] move the new high order crc value from temp to its destination
-			
-; bit7							
+
+; bit7
 	in		x2, USBIN			;[0] sample line state
     eor		x1, x2				;[1]
     bst		x1, USBMINUS		;[2]
@@ -560,7 +560,7 @@ unstuff4:						;[9] this is the jump delay of rjmp unstuffX
 	nop2						;[5]
 								;[6]
 	rjmp 	didunstuff4			;[7]
-								;[8] jump delay of rjmp didunstuffX	
+								;[8] jump delay of rjmp didunstuffX
 
 unstuff5:						;[8] this is the jump delay of rjmp unstuffX
 	nop							;[9]
@@ -573,7 +573,7 @@ unstuff5:						;[8] this is the jump delay of rjmp unstuffX
 	mov 	x2, x1				;[4] the next bit expects the last state to be in x2
 	nop							;[5]
 	rjmp 	didunstuff5			;[6]
-								;[7] jump delay of rjmp didunstuffX													
+								;[7] jump delay of rjmp didunstuffX
 
 unstuff6:						;[7] this is the jump delay of rjmp unstuffX
 	nop2						;[8]
@@ -586,7 +586,7 @@ unstuff6:						;[7] this is the jump delay of rjmp unstuffX
 	breq	stuffErr2			;[3] if the stuff bit is a 1-bit something went wrong
 	mov 	x1, x2				;[4] the next bit expects the last state to be in x1
 	rjmp 	didunstuff6			;[5]
-								;[6] jump delay of rjmp didunstuffX	
+								;[6] jump delay of rjmp didunstuffX
 
 unstuff7:						;[7] this is the jump delay of rjmp unstuffX
 	nop							;[8]
@@ -636,7 +636,7 @@ ushort computeCrc(uchar *msg, uchar msgLen)
 */
 
 .balign 256
-usbCrcTableLow:	
+usbCrcTableLow:
 .byte 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41
 .byte 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40
 .byte 0x01, 0xC0, 0x80, 0x41, 0x00, 0xC1, 0x81, 0x40
@@ -703,5 +703,5 @@ usbCrcTableHigh:
 .byte 0x88, 0x48, 0x49, 0x89, 0x4B, 0x8B, 0x8A, 0x4A
 .byte 0x4E, 0x8E, 0x8F, 0x4F, 0x8D, 0x4D, 0x4C, 0x8C
 .byte 0x44, 0x84, 0x85, 0x45, 0x87, 0x47, 0x46, 0x86
-.byte 0x82, 0x42, 0x43, 0x83, 0x41, 0x81, 0x80, 0x40	
+.byte 0x82, 0x42, 0x43, 0x83, 0x41, 0x81, 0x80, 0x40
 

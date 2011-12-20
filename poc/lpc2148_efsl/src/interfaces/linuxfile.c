@@ -35,7 +35,7 @@
 #include "interfaces/linuxfile.h"
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * short if_initInterface(hwInterface* file, char* fileName)
  * Description: This function should bring the hardware described in file in a
  * ready state to receive and retrieve data.
@@ -52,11 +52,11 @@ esint8 if_initInterface(hwInterface* file, eint8* fileName)
 		file->sectorCount--;
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * short if_readBuf(hwInterface* file,unsigned long address,unsigned char* buf)
- * Description: This function should fill the characterpointer buf with 512 
+ * Description: This function should fill the characterpointer buf with 512
  * bytes, offset by address*512 bytes. Adress is thus a LBA address.
  * Return value: Return 0 on success and -1 on failure.
 */
@@ -68,9 +68,9 @@ esint8 if_readBuf(hwInterface* file,euint32 address,euint8* buf)
 	file->readCount++;
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * short if_writeBuf(hwInterface* file,unsigned long address,unsigned char* buf)
  * Description: This function writes 512 bytes from uchar* buf to the hardware
  * disc described in file. The write offset should be address sectors of 512 bytes.
@@ -88,9 +88,9 @@ esint8 if_writeBuf(hwInterface* file,euint32 address,euint8* buf)
 	file->writeCount++;
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * short if_setPos(hwInterface* file,unsigned long address)
  * Description: This function may or may not be required. It would set the write
  * or read buffer offset by 512*address bytes from the beginning of the disc.
@@ -108,5 +108,5 @@ esint8 if_setPos(hwInterface* file,euint32 address)
 	}
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/
 

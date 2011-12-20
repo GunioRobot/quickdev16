@@ -37,9 +37,9 @@
 void option_init(EFSL_cmd_options *opt)
 {
 	opt->type=0;
-	
+
 	opt->local_opt.filename=NULL;
-	
+
 	opt->lfi_opt.imagename=NULL;
 }
 
@@ -56,9 +56,9 @@ euint8 parse_cmd(EFSL_cmd_options *opt,char *cmd)
 		printf("Invalid type\n");
 		return(1);
 	}
-	
+
 	opt->type=type;
-	
+
 	switch(type){
 		case IFTYPE_LOCAL:
 			while((token=strtok(NULL,"="))!=NULL){
@@ -106,7 +106,7 @@ euint8 Init_EFSL(efsl_storage    **s_src ,efsl_storage    **s_dst,
 	euint8 *arg,do_dest=0;
 	EFSL_cmd_options *opt_src,*opt_dst;
 	void *rhwi;
-	
+
 	efsl_storage_conf *sconf;
 	efsl_fs_conf *fconf;
 
@@ -114,10 +114,10 @@ euint8 Init_EFSL(efsl_storage    **s_src ,efsl_storage    **s_dst,
 		printf("No arguments given\n");
 		return(1);
 	}
-	
+
 	sconf=malloc(sizeof(*sconf));
 	fconf=malloc(sizeof(*fconf));
-	
+
 	/* Parse source argument
 	 * from TYPE:opt1=val1,opt2=val2...
 	 */
@@ -128,7 +128,7 @@ euint8 Init_EFSL(efsl_storage    **s_src ,efsl_storage    **s_dst,
 	option_init(opt_src);
 	parse_cmd(opt_src,arg);
 	free(arg);
-		
+
 	if(argc>=3){
 		printf("Destination argument : %s\n",argv[2]);
 		arg=malloc(strlen(argv[2]+1));
@@ -139,10 +139,10 @@ euint8 Init_EFSL(efsl_storage    **s_src ,efsl_storage    **s_dst,
 		free(arg);
 		do_dest=1;
 	}
-	
+
 	/* Options parsed, action time */
 	/* Start off with source stuff */
-	
+
 	switch(opt_src->type){
 		case IFTYPE_LOCAL:
 				(*lf_src)=fopen(opt_src->local_opt.filename,"r");
@@ -180,9 +180,9 @@ euint8 Init_EFSL(efsl_storage    **s_src ,efsl_storage    **s_dst,
 				}
 			break;
 	}
-	
+
 	if(do_dest){
-		
+
 		switch(opt_dst->type){
 			case IFTYPE_LOCAL:
 					if(opt_src->type == opt_dst->type &&
@@ -233,8 +233,8 @@ euint8 Init_EFSL(efsl_storage    **s_src ,efsl_storage    **s_dst,
 					}
 				break;
 		}
-	}	
-	
+	}
+
 	return(0);
 }
 

@@ -78,7 +78,7 @@ void timer_start(void)
     TCNT1 = 0;                  // Timmer startet mit 0
     second = 0;
     prescaler = (uint16_t) DEBOUNCE;    // software teiler
-    TIMSK1 = 1 << OCIE1A;       // beim Vergleichswertes Compare Match 
+    TIMSK1 = 1 << OCIE1A;       // beim Vergleichswertes Compare Match
     // Interrupt (SIG_OUTPUT_COMPARE1A)
     sei();
 

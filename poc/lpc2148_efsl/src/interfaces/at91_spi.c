@@ -31,7 +31,7 @@
 \*****************************************************************************/
 
 /*
-TODO: 
+TODO:
 - Driver uses simple mode -> implement "DMA"
 - use 16-bit mode
 - check CPOL
@@ -54,7 +54,7 @@ TODO:
 	PA12 - MISO - AT91C_PA12_MISO  (1/0)
 	PA13 - MOSI - AT91C_PA13_MOSI  (1/0)
 	PA14 - SCK  - AT91C_PA14_SPCK  (1/0)
-	
+
 	Chip-Selects (available on different pins)
 	PA11 - NPCS0 - AT91C_PA11_NPCS0 (1/0)
 	PA31 - NPCS1 - AT91C_PA31_NPCS1 (1/0)
@@ -70,7 +70,7 @@ TODO:
 #define NCPS_PDR_BIT     AT91C_PA11_NPCS0
 #define NCPS_ASR_BIT     AT91C_PA11_NPCS0
 #define NPCS_BSR_BIT     0
-#define SPI_CSR_NUM      0          
+#define SPI_CSR_NUM      0
 
 /* PCS_0 for NPCS0, PCS_1 for NPCS1 ... */
 #define PCS_0 ((0<<0)|(1<<1)|(1<<2)|(1<<3))
@@ -104,32 +104,32 @@ TODO:
 esint8 if_initInterface(hwInterface* file, eint8* opts)
 {
 	euint32 sc;
-	
+
 	if_spiInit(file);
-	
+
 	if(sd_Init(file)<0)	{
 		DBG((TXT("Card failed to init, breaking up...\n")));
 		return(-1);
 	}
-	
+
 	if(sd_State(file)<0){
 		DBG((TXT("Card didn't return the ready state, breaking up...\n")));
 		return(-2);
 	}
-	
+
 	/* file->sectorCount=4; */ /* FIXME ASAP!! */
 	/* mthomas: - somehow done - see below  */
-	
+
 	sd_getDriveSize(file, &sc);
 	file->sectorCount = sc/512;
 	if( (sc%512) != 0) {
 		file->sectorCount--;
 	}
 	DBG((TXT("Card Capacity is %lu Bytes (%lu Sectors)\n"), sc, file->sectorCount));
-	
+
 	if_spiSetSpeed(SPI_SCBR_MIN);
 	// if_spiSetSpeed(100); /* debug - slower */
-	
+
 	return(0);
 }
 
@@ -140,7 +140,7 @@ esint8 if_initInterface(hwInterface* file, eint8* opts)
 void if_spiInit(hwInterface *iface)
 {
 	euint8 i;
-	
+
 	AT91PS_SPI pSPI      = AT91C_BASE_SPI;
 	AT91PS_PIO pPIOA     = AT91C_BASE_PIOA;
 	AT91PS_PMC pPMC      = AT91C_BASE_PMC;
@@ -152,18 +152,18 @@ void if_spiInit(hwInterface *iface)
 	// set pin-functions in PIO Controller
 	pPIOA->PIO_ASR = AT91C_PA12_MISO | AT91C_PA13_MOSI | AT91C_PA14_SPCK; /// not here: | NCPS_ASR_BIT;
 	/// not here: pPIOA->PIO_BSR = NPCS_BSR_BIT;
-	
+
 	// set chip-select as output high (unselect card)
 	pPIOA->PIO_PER  = NCPS_PDR_BIT; // enable GPIO of CS-pin
 	pPIOA->PIO_SODR = NCPS_PDR_BIT; // set high
 	pPIOA->PIO_OER  = NCPS_PDR_BIT; // output enable
-	
+
 	// enable peripheral clock for SPI ( PID Bit 5 )
 	pPMC->PMC_PCER = ( (euint32) 1 << AT91C_ID_SPI ); // n.b. IDs are just bit-numbers
-	
+
 	// SPI enable and reset
 	pSPI->SPI_CR = AT91C_SPI_SPIEN | AT91C_SPI_SWRST;
-	
+
 #ifdef FIXED_PERIPH
 	// SPI mode: master, fixed periph. sel., FDIV=0, fault detection disabled
 	pSPI->SPI_MR  = AT91C_SPI_MSTR | AT91C_SPI_PS_FIXED | AT91C_SPI_MODFDIS;
@@ -175,7 +175,7 @@ void if_spiInit(hwInterface *iface)
 	// Chip-Select-Decoder Mode (write state of CS-Lines in TDR)
 	pSPI->SPI_MR  = AT91C_SPI_MSTR | AT91C_SPI_MODFDIS | AT91C_SPI_PCSDEC ;
 #endif
-	
+
 	// set chip-select-register
 	// 8 bits per transfer, CPOL=1, ClockPhase=0, DLYBCT = 0
 	// TODO: Why has CPOL to be active here and non-active on LPC2000?
@@ -184,10 +184,10 @@ void if_spiInit(hwInterface *iface)
 	// not working pSPI->SPI_CSR[SPI_CSR_NUM] = AT91C_SPI_BITS_8 | AT91C_SPI_NCPHA;
 	pSPI->SPI_CSR[SPI_CSR_NUM] = AT91C_SPI_CPOL | AT91C_SPI_BITS_8;
 	// not working pSPI->SPI_CSR[SPI_CSR_NUM] = AT91C_SPI_BITS_8;
-	
+
 	// slow during init
-	if_spiSetSpeed(0xFE); 
-	
+	if_spiSetSpeed(0xFE);
+
 	// enable
 	pSPI->SPI_CR = AT91C_SPI_SPIEN;
 
@@ -234,9 +234,9 @@ void if_spiSetSpeed(euint8 speed)
 euint8 if_spiSend(hwInterface *iface, euint8 outgoing)
 {
 	euint8 incoming;
-	
+
 	AT91PS_SPI pSPI      = AT91C_BASE_SPI;
-	
+
 	while( !( pSPI->SPI_SR & AT91C_SPI_TDRE ) ); // transfer compl. wait
 #ifdef FIXED_PERIPH
 	pSPI->SPI_TDR = (euint16)( outgoing );
@@ -267,4 +267,4 @@ esint8 if_setPos(hwInterface* file,euint32 address)
 {
 	return(0);
 }
-/*****************************************************************************/ 
+/*****************************************************************************/

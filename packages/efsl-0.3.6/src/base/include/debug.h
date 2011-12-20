@@ -64,7 +64,7 @@
 	#ifdef HW_ENDPOINT_LINUX
 		#include <stdio.h>
 		#include <stdarg.h>
-	
+
 		#define TXT(x) x
 		#define DBG(x) debug x
 		#define FUNC_IN(x) debug_funcin(x)

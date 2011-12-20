@@ -56,17 +56,17 @@ void util_trim(uint8_t * s)
     uint8_t *p = s;
     uint8_t *q;
     /*
-     * skip leading whitespace 
+     * skip leading whitespace
      */
     while (*p == ' ' || *p == '\t' || *p == '\r' || *p == '\n')
         p++;
     /*
-     * now p points at the first non-whitespace uint8_tacter 
+     * now p points at the first non-whitespace uint8_tacter
      */
 
     if (*p == '\0') {
         /*
-         * only whitespace 
+         * only whitespace
          */
         *s = '\0';
         return;
@@ -74,25 +74,25 @@ void util_trim(uint8_t * s)
 
     q = s + strlen((char *) s);
     /*
-     * skip trailing whitespace 
+     * skip trailing whitespace
      */
     /*
-     * we have found p < q such that *p is non-whitespace, so this loop terminates with q >= p 
+     * we have found p < q such that *p is non-whitespace, so this loop terminates with q >= p
      */
     do
         q--;
     while (*q == ' ' || *q == '\t' || *q == '\r' || *q == '\n');
 
     /*
-     * now q points at the last non-whitespace uint8_tacter 
+     * now q points at the last non-whitespace uint8_tacter
      */
     /*
-     * cut off trailing whitespace 
+     * cut off trailing whitespace
      */
     *++q = '\0';
 
     /*
-     * move to string 
+     * move to string
      */
     memmove(s, p, q + 1 - p);
 }

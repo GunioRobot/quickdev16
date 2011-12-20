@@ -5,9 +5,9 @@ all: manual.tex
 	dvipdfm manual.dvi
 
 clean:
-	rm -f manual.aux 
-	rm -f manual.dvi 
-	rm -f manual.log 
-	rm -f manual.pdf 
-	rm -f manual.ps 
+	rm -f manual.aux
+	rm -f manual.dvi
+	rm -f manual.log
+	rm -f manual.pdf
+	rm -f manual.ps
 	rm -f manual.toc

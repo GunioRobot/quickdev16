@@ -36,7 +36,7 @@ void uart_init()
 
     cli();
 
-   
+
 
     // Mode #4 für Timer1
 
@@ -56,7 +56,7 @@ void uart_init()
 
     OCR1A = (uint16_t) ((uint32_t) F_CPU/BAUDRATE);
 
-   
+
 
     tifr |= (1 << OCF1A);
 
@@ -66,11 +66,11 @@ void uart_init()
 
     outframe = 0;
 
-   
+
 
     TIFR = tifr;
 
-   
+
 
     SREG = sreg;
 
@@ -88,7 +88,7 @@ void uart_putc (const char c)
 
     do
 
-    {   
+    {
 
         sei(); nop(); cli(); // yield();
 
@@ -100,13 +100,13 @@ void uart_putc (const char c)
 
     outframe = (3 << 9) | (((uint8_t) c) << 1);
 
-   
+
 
     TIMSK |= (1 << OCIE1A);
 
     TIFR   = (1 << OCF1A);
 
-   
+
 
     sei();
 
@@ -120,13 +120,13 @@ SIGNAL (SIG_OUTPUT_COMPARE1A)
 
     uint16_t data = outframe;
 
-   
+
 
     if (data & 1)      SUART_TXD_PORT |=  (1 << SUART_TXD_BIT);
 
     else               SUART_TXD_PORT &= ~(1 << SUART_TXD_BIT);
 
-   
+
 
     if (1 == data)
 
@@ -134,9 +134,9 @@ SIGNAL (SIG_OUTPUT_COMPARE1A)
 
         TIMSK &= ~(1 << OCIE1A);
 
-    }   
+    }
 
-   
+
 
     outframe = data >> 1;
 

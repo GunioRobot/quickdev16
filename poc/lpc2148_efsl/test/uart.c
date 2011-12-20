@@ -17,8 +17,8 @@
 #include "lpc214x.h"
 #include "uart.h"
 
-/* on LPC210x: UART0 TX-Pin=P0.2, RX-Pin=P0.1 
-   PINSEL0 has to be set to "UART-Function" = Function "01" 
+/* on LPC210x: UART0 TX-Pin=P0.2, RX-Pin=P0.1
+   PINSEL0 has to be set to "UART-Function" = Function "01"
    for Pin 0.0 and 0.1 */
 
 #define PINSEL_BITPIN0  0
@@ -39,20 +39,20 @@
 // Mask of Bits 16-19
 #define UART1_PINMASK      (0x000F0000) /* PINSEL0 Mask for UART1 */
 
-// U0_LCR devisor latch bit 
+// U0_LCR devisor latch bit
 #define UART0_LCR_DLAB  7
-// U1_LCR devisor latch bit 
+// U1_LCR devisor latch bit
 #define UART1_LCR_DLAB  7
 
 /*    baudrate divisor - use UART_BAUD macro
  *    mode - see typical modes (uart.h)
  *    fmode - see typical fmodes (uart.h)
- *    NOTE: uart0Init(UART_BAUD(9600), UART_8N1, UART_FIFO_8); 
+ *    NOTE: uart0Init(UART_BAUD(9600), UART_8N1, UART_FIFO_8);
  */
 void uart0Init(uint16_t baud, uint8_t mode, uint8_t fmode)
 {
 
-    // setup Pin Function Select Register (Pin Connect Block) 
+    // setup Pin Function Select Register (Pin Connect Block)
     // make sure old values of Bits 0-4 are masked out and
     // set them according to UART0-Pin-Selection
     PINSEL0 = (PINSEL0 & ~UART0_PINMASK) | UART0_PINSEL;
@@ -69,7 +69,7 @@ void uart0Init(uint16_t baud, uint8_t mode, uint8_t fmode)
     // user specified operating parameters
     // Databits, Parity, Stopbits - Settings in Line Control Register
     U0LCR = (mode & ~(1 << UART0_LCR_DLAB));    // clear DLAB "on-the-fly"
-    // setup FIFO Control Register (fifo-enabled + xx trig) 
+    // setup FIFO Control Register (fifo-enabled + xx trig)
     U0FCR = fmode;
 } int uart0Putch(int ch)
 {
@@ -109,12 +109,12 @@ int uart0Getch(void)
 /*    baudrate divisor - use UART_BAUD macro
  *    mode - see typical modes (uart.h)
  *    fmode - see typical fmodes (uart.h)
- *    NOTE: uart0Init(UART_BAUD(9600), UART_8N1, UART_FIFO_8); 
+ *    NOTE: uart0Init(UART_BAUD(9600), UART_8N1, UART_FIFO_8);
  */
 void uart1Init(uint16_t baud, uint8_t mode, uint8_t fmode)
 {
 
-    // setup Pin Function Select Register (Pin Connect Block) 
+    // setup Pin Function Select Register (Pin Connect Block)
     // make sure old values of Bits 0-4 are masked out and
     // set them according to UART0-Pin-Selection
     PINSEL0 = (PINSEL0 & ~UART1_PINMASK) | UART1_PINSEL;
@@ -131,7 +131,7 @@ void uart1Init(uint16_t baud, uint8_t mode, uint8_t fmode)
     // user specified operating parameters
     // Databits, Parity, Stopbits - Settings in Line Control Register
     U1LCR = (mode & ~(1 << UART1_LCR_DLAB));    // clear DLAB "on-the-fly"
-    // setup FIFO Control Register (fifo-enabled + xx trig) 
+    // setup FIFO Control Register (fifo-enabled + xx trig)
     U1FCR = fmode;
 } int uart1Putch(int ch)
 {

@@ -30,7 +30,7 @@ Recording began with EFSL-0.3.3
 * Created a new efs_configger, now supports every
   combination of partitions/disc
 * Implemented full support for little and big endian
-  machines, as well as for little and big endian 
+  machines, as well as for little and big endian
   filesystems
 * Created new build system, for multiple platforms,
   configurable from one file

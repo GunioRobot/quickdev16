@@ -1,10 +1,10 @@
-.define	debug_pointer			$080 
+.define	debug_pointer			$080
 
 .MACRO printdb
     ldy.w   #\1                 ; load addr of the marco arg string
     sty.w   debug_pointer       ; store address in defined mem area
     ldy     #0                  ; zero y index
-    jsr     do_printf           
+    jsr     do_printf
 .ENDM
 
 
@@ -13,7 +13,7 @@
     ldy.w   #++                ; load addr of the marco arg string
     sty.w   debug_pointer       ; store address in defined mem area
     ldy     #0                  ; zero y index
-    jsr     do_printf           
+    jsr     do_printf
     jmp     +++
 ++:
     .db     \1,10,0

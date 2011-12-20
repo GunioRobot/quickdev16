@@ -2424,7 +2424,7 @@ snes_testinterleaved (unsigned char *rom_buffer, int size, int banktype_score)
 
   if (size < 64 * 1024)                         // snes_deinterleave() reads blocks of 32 kB
     return 0;                                   // file cannot be interleaved
-    
+
   crc = crc32 (0, rom_buffer, 512);
   /*
     Special case hell
@@ -3102,7 +3102,7 @@ snes_set_hirom (unsigned char *rom_buffer, int size)
       snes_hirom_ok = 1;
       if (size < (int) (SNES_HEADER_START + SNES_HIROM + SNES_HEADER_LEN))
         snes_hirom = 0;
-    }                                           
+    }
 
   if (UCON64_ISSET (ucon64.snes_header_base))   // -erom switch was specified
     {

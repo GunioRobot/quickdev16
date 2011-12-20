@@ -237,7 +237,7 @@ bitstuffN:
     nop                     ;[9]
     out     USBOUT, x1      ;[10] <-- out
     rjmp    didStuffN       ;[0]
-    
+
 bitstuff6:
     eor     x1, x4          ;[5]
     ldi     x2, 0           ;[6] Carry is zero due to brcc

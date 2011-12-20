@@ -59,7 +59,7 @@ Perform the following steps:
 \end{lstlisting}
 
 	\item Select your endpoint in \filename{conf/config.h}
-	
+
 	\item Create your sourcefiles\\
 	Create a header file in \filename{inc/} and a sourcefile in \filename {src/interfaces}.
 	In this example I'm using \filename{pigeon.h} and \filename{pigeon.c}.
@@ -97,8 +97,8 @@ typedef struct hwInterface hwInterface;
 \end{lstlisting}
 
 \subsubsection{if\_initInterface}
-This function will be called one time, when the hardware object is initialized 
-by \code{efs\_init()}. This code should bring the hardware in a ready to use 
+This function will be called one time, when the hardware object is initialized
+by \code{efs\_init()}. This code should bring the hardware in a ready to use
 state.
 
 The function's prototype is\\

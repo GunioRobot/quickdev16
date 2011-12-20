@@ -1,6 +1,6 @@
 \label{ioman}
 The IOManager that is the second lowest layer of the embedded filesystems library is
-responsible for coordinating disk input and output, as well as managing a caching 
+responsible for coordinating disk input and output, as well as managing a caching
 system. This documentation describes the second implementation of IOMan, which includes
 features such as :
 \begin{itemize}
@@ -38,28 +38,28 @@ it has, or can get the sector you want. It follows a certain path to do this.\la
 		buffer cannot be found, ioman proceeds to step 2.
 	\item When an item is not in cache, it has to be fetched from the disc, the best place to
 		store it is in memory that does not contain anything useful yet. Ioman will search for
-		a place that is currently not occupied by anything. If it is found, the sector will be 
+		a place that is currently not occupied by anything. If it is found, the sector will be
 		placed on that spot and a pointer returned. Else, ioman proceeds to step 3.
 	\item Since there is no other choice than to overwrite an already existing cache, ioman will
 		try to find one that is the least interesting. First it will search for caches that
 		are marked not writable, and have no users. Ioman will then select the one that has the
 		least references. If there are none, it will search for caches that don't have users and
-		are writable. Once again the one with the least references is returned. Since it is 
+		are writable. Once again the one with the least references is returned. Since it is
 		writable ioman will flush it to disc first. After that the requested sector is put there
 		and a pointer returned. If it cannot find any caches that have no users it will go to
 		step 4.
 	\item Since every cache spot is in use ioman will have to select one for overallocation.
 		Since this selection is dependant on many factors and is rather complex, a points
 		system is used. The algorithm considers every cache place and allocated a certain number
-		of points to it, lower means that it is a better candidate for overallocation. Fifty 
+		of points to it, lower means that it is a better candidate for overallocation. Fifty
 		percent of the points goes to the cache being marked writable, since having to write
-		a sector is expensive. Another 35 percent goes to how many overallocations have 
+		a sector is expensive. Another 35 percent goes to how many overallocations have
 		already been done on that spot. It doesn't make sense to always overalloc the same buffer,
-		it is better to spread this. The remaining 15 percent is determined by the number of 
-		references to the sector. 
-		
+		it is better to spread this. The remaining 15 percent is determined by the number of
+		references to the sector.
+
 		After a function has selected the best candidate, ioman will overwrite that spot with
-		the new sector. It will also push the status and sectornumber onto that cache's 
+		the new sector. It will also push the status and sectornumber onto that cache's
 		retrieval stack, so that when the sector is released, the older sector can be retrieved.
 		If this fails go to step 5.
 	\item When ioman gets here it will return a (nil) pointer and flag an error.
@@ -68,7 +68,7 @@ it has, or can get the sector you want. It follows a certain path to do this.\la
 \subsubsection{Functions}
 
 \begin{longtable}{|p{0.35\textwidth}|p{0.65\textwidth}|}
-	
+
 	\hline
 	\multicolumn{2}{|c|}{
 		\textbf{I/O Manager Functions}
@@ -77,7 +77,7 @@ it has, or can get the sector you want. It follows a certain path to do this.\la
 	\hline
 	\hline
 	\endfirsthead
-	
+
 	\hline
 	\multicolumn{2}{|c|}{\textbf{I/O Manager Functions (continued)}} \\
 	\hline
@@ -85,8 +85,8 @@ it has, or can get the sector you want. It follows a certain path to do this.\la
 
 	\hline
 	\endfoot
-	
-	\hline 
+
+	\hline
 	\endlastfoot
 
 	\code{ioman\_init} & \code{esint8 (IOManager *ioman, hwInterface *iface, euint8* bufferarea)} \\
@@ -95,7 +95,7 @@ it has, or can get the sector you want. It follows a certain path to do this.\la
 		This function is called to initialize the internal state of the I/O manager. It should be the
 		first function you call on an ioman object. Failure to do so will result in undefined behavior.
 		The function clears all internal variables to a default safe state, and sets up it's memory region.
-		
+
 		There are two possibilities, if you supply a 0 pointer then a function will be called that contains
 		a static variable with a size of 512 * \code{IOMAN\_NUMBUFFERS}, else, it will be assumed that
 		you allocated that memory yourself and the pointer you provided will be used.
@@ -121,7 +121,7 @@ it has, or can get the sector you want. It follows a certain path to do this.\la
 	\code{ioman\_push} & \code{esint8 (IOManager *ioman,euint16 bufplace)} \\
 	\hline
 	\multicolumn{2}{|p{\textwidth}|}{
-		This function pushes the settings of cache \code{bufplace} onto that cache's stack. It does not 
+		This function pushes the settings of cache \code{bufplace} onto that cache's stack. It does not
 		destroy the data in the main registers. It will return 0 for a successful push, and -1 on error, or
 		when there is no more space to push a new element.
 	}\\
@@ -133,11 +133,11 @@ it has, or can get the sector you want. It follows a certain path to do this.\la
 		This function does the actual reading from the hardware, it is the one and only function that
 		calls \code{if\_readBuf()}, here a retry on failure policy could be implemented. This function
 		will correctly stream errors upwards. All calls made to this function in the iomanager are checked
-		for their return value, so errors propagate correctly upwards. 
-		
+		for their return value, so errors propagate correctly upwards.
+
 		The address it receives is relative to the beginning of the disc, no assumptions about \code{buf}
 		may be made, it can be withing ioman's cache memory range, but it could also be a buffer from userspace.
-		
+
 		The function will return 0 on success and -1 on failure.
 	}\\
 	\hline
@@ -148,11 +148,11 @@ it has, or can get the sector you want. It follows a certain path to do this.\la
 		This function does the actual writing to the hardware, it is the one and only function that
 		calls \code{if\_writeBuf()}, here a retry on failure policy could be implemented. This function
 		will correctly stream errors upwards. All calls made to this function in the iomanager are checked
-		for their return value, so errors propagate correctly upwards. 
-		
+		for their return value, so errors propagate correctly upwards.
+
 		The address it receives is relative to the beginning of the disc, no assumptions about \code{buf}
 		may be made, it can be withing ioman's cache memory range, but it could also be a buffer from userspace.
-		
+
 		The function will return 0 on success and -1 on failure.
 	}\\
 	\hline
@@ -170,8 +170,8 @@ it has, or can get the sector you want. It follows a certain path to do this.\la
 		You cannot combine this option with the \code{IOM\_MODE\_READWRITE} option.\\
 		\code{IOM\_MODE\_READWRITE} & This attribute says to ioman that it would like not only to read from
 		but also to write to that buffer. When you release the sector your changes will be written to disc.
-		This may not happen immediately though, if you want to force it take a look at the 
-		\code{ioman\_flushRange()} function. This option cannot be combined with the 
+		This may not happen immediately though, if you want to force it take a look at the
+		\code{ioman\_flushRange()} function. This option cannot be combined with the
 		\code{IOM\_MODE\_READONLY} option.\\
 		\code{IOM\_MODE\_EXP\_REQ} & This option tell the iomanager that the request is exceptional, for
 		example that the request is unlikely to happen again. The library adds this flags to the options
@@ -197,7 +197,7 @@ it has, or can get the sector you want. It follows a certain path to do this.\la
 		This is a variant of the normal getsector. Sometimes you need a sector from the disc, but all
 		you want to do with it is export it directly to userbuffers. It would be foolish to force a
 		caching of that sector if there is external space available for it.
-		
+
 		This function will fetch sector \code{address} from disc and place it in the memory pointed to
 		by \code{buf}. Should there be a free spot available the sector will be cached there, so that
 		it may be used in the future. If the sector was available from cache in the first place, it

@@ -260,7 +260,7 @@ psx_ack (int base, int conport)
 
 /*
  *
- * wait for delay * (psx_outportb() execution time) 
+ * wait for delay * (psx_outportb() execution time)
  *
  */
 void

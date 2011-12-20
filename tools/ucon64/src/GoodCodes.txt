@@ -168,6 +168,6 @@
 : All codes developed by Cowering for the       :\
 : Goodxxxx series ROM file renaming utilities.  :\
 :                                               :\
-: Visit #rareroms on NewNet in IRC!             :\ 
+: Visit #rareroms on NewNet in IRC!             :\
 :...............................................:\
  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

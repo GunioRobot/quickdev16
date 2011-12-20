@@ -18,7 +18,7 @@ The following list contains the endpoints that the library ships with.\\
 	testing and debugging. All development is done using this emulation.\\
 	\code{HW\_ENDPOINT\_ATMEGA128\_SD}& This endpoint is for the Atmel ATMega 128
 	with an SD card attached to the SPI pins of the device. Several settings
-	that are specific for this endpoint can be found in the AVR sample 
+	that are specific for this endpoint can be found in the AVR sample
 	configuration. A Makefile is also provided for compiling the EFSL library
 	using avr-gcc.\\
 	\code{HW\_ENDPOINT\_DSP\_TI6713\_SD}& This endpoint is for a TI DSP, it should
@@ -32,8 +32,8 @@ The following list contains the endpoints that the library ships with.\\
 This section only has one option, called \code{BYTE\_ALIGNMENT}. If you define
 this keyword the library will assume that your CPU is capable of accessing the
 memory in any way it sees fit. This is the case on AVR, because they are 8 bit
-processors, and it is also the case on Intel x86 hardware. Both architectures 
-can read and write words, or double words on any location in memory, be it 
+processors, and it is also the case on Intel x86 hardware. Both architectures
+can read and write words, or double words on any location in memory, be it
 word aligned or not.
 
 However, some CPU's, are not capable of doing this, and require that all double words
@@ -56,7 +56,7 @@ is performed by the IOMan object, see section \ref{ioman}.
 This number determines how much memory will be used for caching. Since this
 is sector based one \code{IOMAN\_NUMBUFFER} equals to 512 byes of memory, plus
 a small overhead in settings (approximately 8 bytes). This number is also affected
-by \code{IOMAN\_NUMITERATIONS}. 
+by \code{IOMAN\_NUMITERATIONS}.
 
 You should carefully consider how much memory you will dedicate to caching. A too
 low number will cause excessive data transfer to and from the disc, where a too high
@@ -76,7 +76,7 @@ It is perfectly possible to have multiple files op for reading and writing, on d
 filesystems, with listing etc and only using 1 buffer. It will be a tough blow on
 performance though.
 \subsubsection*{IOMAN\_NUMITERATION}
-This number controls how many stack places each cache place gets. Refer to the IOMan 
+This number controls how many stack places each cache place gets. Refer to the IOMan
 section for an explanation. In short, if you only have 1 buffer, leave it at 3. If you
 use more than 4 buffers try decreasing the number to 2 or 1 for a small memory gain.
 
@@ -84,9 +84,9 @@ If you get errors, it means you have set it too low (see error support). It is b
 to leave this at the default setting (do not increase it), unless you know what you
 are doing.
 \subsubsection*{IOMAN\_DOMEMALLOC}
-This configures how IOMan will get it's memory. If you leave it enable, the memory 
+This configures how IOMan will get it's memory. If you leave it enable, the memory
 will be allocated by IOMan itself. That means that when you declare the IOMan object
-it will have a member the size of $512 \cdot \mathrm{IOMAN\_NUMBUFFER}$. 
+it will have a member the size of $512 \cdot \mathrm{IOMAN\_NUMBUFFER}$.
 That also means that that huge lump of memory will reside on the stack. On a true embedded platform with no malloc, this is your best option.
 The last argument of \code{ioman\_init} will be ignored.
 
@@ -95,7 +95,7 @@ argument to \code{ioman\_init}. It will use the memory pointed to as cache.
 You will have to make sure it's reserved and of the correct size.
 This allows you to put the memory on the heap, or perform special tricks like
 deallocating it without having to umount your filesystem and open files.
-On systems with malloc, this is the recommended setting. 
+On systems with malloc, this is the recommended setting.
 
 If you use the efs wrapper object, please look at the \code{efs\_init} documentation
 on how to pass the ioman pointer.
@@ -104,14 +104,14 @@ on how to pass the ioman pointer.
 Our VFAT module supports the concept of pre-allocation. When writing files, for
 example log files, it is usually done with tiny bits a time. That is not the
 most efficient way, but it is usually the only solution that works on embedded
-systems. Every time you cross a cluster boundary with your write, the library 
+systems. Every time you cross a cluster boundary with your write, the library
 has to search a new cluster (reading the FAT), allocate it (write to the FAT).
 
 Clearly, this is a waste. The solution we came up with was preallocating. This means
 that when you write to a file, and fwrite sees that it needs to allocate more clusters,
 it will allocate too many of them. Since this is done in one operation, it requires
 usually only one read and one write to the FAT. This can save up to 50\% disc I/O
-in some applications. 
+in some applications.
 
 The drawback is that the allocation happens in larger chunks, if you do this with
 many files, you might end up with larger than normal amounts of slackspace.
@@ -124,7 +124,7 @@ then.
 This number determines the default value of extra clusters that will be allocated
 with every sizeincrease. For example, if fwrite calculates that it needs 7 clusters,
 and \code{CLUSTER\_PREALLOC\_FILE} is 30 then efsl will allocate 37 clusters.
-This means (assuming every write needs 7 clusters) that the next 4 writes won't 
+This means (assuming every write needs 7 clusters) that the next 4 writes won't
 require any write operation to the FAT (and due to the cluster cache the FAT will probably have to be read only once).
 
 The value you put here will be the default value, it can be changed per file

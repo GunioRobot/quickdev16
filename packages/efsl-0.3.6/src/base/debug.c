@@ -47,7 +47,7 @@
 #ifdef HW_ENDPOINT_LINUX_ALL
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void debug(const eint8 *format, ...)
  * Description: This function prints debug output to the screen (target dependant)
  * and if DO_FUNC_DEBUG is defined also to a localfile.
@@ -62,7 +62,7 @@ void debug(const eint8 *format, ...)
 	extern  FILE* debugfile;
 	extern volatile euint8 tw;
 	#endif
-	
+
 	va_start(ap, format);
 	vprintf(format,ap);
 	#ifdef DO_FUNC_DEBUG
@@ -76,7 +76,7 @@ void debug(const eint8 *format, ...)
 }
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void debug_funcin(const eint8 *format, ...)
  * Description: This function marks the entrance of a function, which
  * increments a tabfieldcounter. A tree like structure can the be found in the
@@ -91,24 +91,24 @@ void debug_funcin(const eint8 *format, ...)
 	va_list ap;
 	extern  FILE* debugfile;
 	extern volatile unsigned char tw;
-	
+
 	if(debugfile==NULL)return;
-	
+
 	for(c=0;c<tw;c++){
 		fprintf(debugfile,"  ");
 	}
-	
+
 	va_start(ap, format);
 	vfprintf(debugfile,format,ap);
 	va_end(ap);
 	fprintf(debugfile,"\n");
-	
+
 	tw++;
 	#endif
 }
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void debug_funcout(const eint8 *format, ...)
  * Description: Decrements the tabfieldcounter. This function is called everywhere
  * a function is left.
@@ -122,15 +122,15 @@ void debug_funcout(const eint8 *format, ...)
 	va_list ap;
 	extern  FILE* debugfile;
 	extern volatile euint8 tw;
-	
+
 	if(debugfile==NULL)return;
-	
+
 	if(tw>0)tw--;
-	
+
 	for(c=0;c<tw;c++){
 		fprintf(debugfile,"  ");
 	}
-	
+
 	va_start(ap, format);
 	vfprintf(debugfile,format,ap);
 	va_end(ap);
@@ -139,7 +139,7 @@ void debug_funcout(const eint8 *format, ...)
 }
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void debug_init()
  * Description: This function optionally opens the debugfile, or does any other
  * initialisation to enable debugoutput.
@@ -153,13 +153,13 @@ void debug_init()
 
 	debugfile=NULL;
 	tw=0;
-	
+
 	debugfile=fopen("DBG.OUT","w");
 	#endif
 }
 /*****************************************************************************/
 
-/* ****************************************************************************  
+/* ****************************************************************************
  * void debug_end()
  * Description: This function closes the debugfile.
  * Return value: void
@@ -168,7 +168,7 @@ void debug_end()
 {
 	#ifdef DO_FUNC_DEBUG
 	extern  FILE* debugfile;
-	
+
 	fflush(debugfile);
 	fclose(debugfile);
 	#endif
@@ -192,15 +192,15 @@ void debug(const eint8 *format, ...)
 	va_list ap;
 	euint8 i=0;
 	eint8 c;
-	
+
 	va_start(ap, format);
 	vsprintf_P(dbgstring, format, ap);
 	va_end(ap);
-	
-	
+
+
 	while (( (c=dbgstring[i++]) && (i<90) ))
 		debug_sendByte(c);
-		
+
 	if(i>=90)
 		debug(PSTR("<BREAK>\n"));
 }
@@ -209,16 +209,16 @@ void debug(const eint8 *format, ...)
 void debug_init(void)
 {
 	unsigned short ubrr;
-	
+
 	ubrr = ((unsigned short)DEBUG_UBRR);
-	
+
 	switch(DEBUG_PORT){
 		case 0:
 			UBRR0H = (euint8) (ubrr>>8);
 			UBRR0L = (euint8) (ubrr);
 			UCSR0B = ( (1<<RXEN) | (1<<TXEN) );
 			break;
-		case 1:	
+		case 1:
 			UBRR1H = (euint8) (ubrr>>8);
 			UBRR1L = (euint8) (ubrr);
 			UCSR1B = ( (1<<RXEN) | (1<<TXEN) );
@@ -249,7 +249,7 @@ void debug_sendByte(euint8 data)
 			UDR0 = data;    /* Start transmittion */
 			break;
 		case 1:
-			while ( !(UCSR1A & (1<<UDRE1)) ) 
+			while ( !(UCSR1A & (1<<UDRE1)) )
 				_NOP(); 	/* Wait for empty transmit buffer */
 			UDR1 = data;	/* Start transmittion */
 			break;

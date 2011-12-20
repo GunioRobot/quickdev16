@@ -1,10 +1,10 @@
 /******************************************************************************
- 
+
  efsl Demo-Application for Philips LPC2138 ARM7TDMI-S
- 
+
  Copyright (c) 2005
  Martin Thomas, Kaiserslautern, Germany <mthomas@rhrk.uni-kl.de>
- 
+
  *****************************************************************************/
 
 #include <string.h>
@@ -56,25 +56,25 @@ unsigned short e;
 unsigned char buf[513];
 
 void cleanup_name(uint8_t * filename,uint8_t *sfn){
-	
+
 	while(*filename != '\0');
-	
-	
+
+
 }
 
 void list_roms(){
-	uint8_t cnt = 0;	
+	uint8_t cnt = 0;
     rprintf("Directory of 'root':\n");
     ls_openDir(&list, &(efs.myFs), "/");
 	while (ls_getNext(&list) == 0) {
 		cnt++;
         list.currentEntry.FileName[LIST_MAXLENFILENAME - 1] = '\0';
         rprintf("[%li] %s ( %li bytes )\n",cnt, list.currentEntry.FileName, list.currentEntry.FileSize);
-	}	
+	}
 }
 
 uint8_t * get_filename(uint8_t idx){
-	uint8_t cnt = 0;	
+	uint8_t cnt = 0;
     if (idx<1 || idx>9)
 		return NULL;
 	ls_openDir(&list, &(efs.myFs), "/");
@@ -84,7 +84,7 @@ uint8_t * get_filename(uint8_t idx){
         if (cnt==idx)
 			return list.currentEntry.FileName;
 	}
-	return NULL;	
+	return NULL;
 }
 
 void dump_packet(uint32_t addr,uint32_t len,uint8_t *packet){
@@ -109,7 +109,7 @@ void dump_packet(uint32_t addr,uint32_t len,uint8_t *packet){
 				DBG((TXT(".")));
 		}
 		DBG((TXT("|\n")));
-		
+
 	}
 }
 
@@ -120,7 +120,7 @@ void dump_filename(uint8_t * filename){
         while ((e = file_read(&filer, 512, buf)) != 0) {
 			dump_packet(cnt,e,buf);
 			cnt+=e;
-        } 
+        }
 		DBG((TXT("Len %08x(%li)\n"), cnt,cnt));
 		rprintf("\n");
         file_fclose(&filer);
@@ -159,7 +159,7 @@ int main(void)
             uart0Putch(ch);
             uart0Puts("\r\n");
 			if (ch >='1' && ch <='9'){
-				
+
 				filename = get_filename(ch - 48);
 				file_normalToFatName(filename,fatfilename);
 				rprintf("Filename: '%s'\n",filename);
@@ -174,7 +174,7 @@ int main(void)
 				dump_filename(fatfilename);
 				dump_filename(rom_filename);
 			}
-			  
+
             ledToggle();
         }
     }

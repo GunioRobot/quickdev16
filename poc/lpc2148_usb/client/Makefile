@@ -17,6 +17,6 @@ uploader: uploader.o
 	$(CC) -o $@ $< $(LIBS)
 
 clean:
-	$(RM) custom_client uploader  *.o 
-	
-	
+	$(RM) custom_client uploader  *.o
+
+

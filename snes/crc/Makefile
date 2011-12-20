@@ -5,13 +5,13 @@ PLATFORM=mac
 
 ifeq ($(PLATFORM),linux)
 
-    # Linux Wine 
+    # Linux Wine
     SDK=/home/david/.wine/drive_c/65xx_FreeSDK
     WINE=wine
     EMU=zsnes
-    EMU_DEBUG=/home/david/Devel/arch/snes/tools/zsnes_linux_debug151/src/zsnesd -d 
+    EMU_DEBUG=/home/david/Devel/arch/snes/tools/zsnes_linux_debug151/src/zsnesd -d
 else
-    # Mac Wine 
+    # Mac Wine
     SDK=/Users/david/.wine/drive_c/65xx_FreeSDK
     WINE=wine
     EMU=zsnes
@@ -36,15 +36,15 @@ GFX=kungfu debugfont
 
 all:  $(APP)
 
-run:  
+run:
 	$(EMU) $(APP)
 
-debugger:  
+debugger:
 	$(EMU_DEBUG) $(APP)
-	
-check:	
+
+check:
 	ucon64 -chk $(APP)
-	
+
 
 upload:
 	ucon64 -chk $(APP)
@@ -53,17 +53,17 @@ upload:
 	diskutil unmount /Volumes/SNES
 
 rand:
-	dd if=/dev/urandom of=tmp.rand bs=32k count=6 
+	dd if=/dev/urandom of=tmp.rand bs=32k count=6
 	dd if=$(APP) of=tmp.app bs=32k count=2
 	cat tmp.app tmp.rand > $(APP)
-	rm tmp.rand tmp.app   
+	rm tmp.rand tmp.app
 	ucon64 -chk $(APP)
 
 rand16:
-	dd if=/dev/urandom of=tmp.rand bs=32k count=14 
+	dd if=/dev/urandom of=tmp.rand bs=32k count=14
 	dd if=$(APP) of=tmp.app bs=32k count=2
 	cat tmp.app tmp.rand > $(APP)
-	rm tmp.rand tmp.app   
+	rm tmp.rand tmp.app
 	ucon64 -chk $(APP)
 
 crc:

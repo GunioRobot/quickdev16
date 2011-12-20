@@ -1,4 +1,4 @@
-Since debugging on every device is completely different, a DBG macro is 
+Since debugging on every device is completely different, a DBG macro is
 implemented. On Linux for example, this macro will print the string given
 to the screen (using printf). On AVR, it will send debug strings through the
 UART. For compatibility with other devices, it is necessary that you always use
@@ -8,7 +8,7 @@ Because AVR-GCC puts strings in sram memory by default, every string should be
 surrounded by the TXT-macro. On AVR, this macro will put the string in program
 memory (flash), on any other device, this macro will be ignored.\newline
 \newline
-Example of a debug string:\\ 
+Example of a debug string:\\
 \code{DBG((TXT("This is test nr \%d of \%d.$\backslash$n"),id,total));}
 
 \subsubsection{Debugging on Linux}

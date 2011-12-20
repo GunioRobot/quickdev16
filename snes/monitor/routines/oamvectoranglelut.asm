@@ -2051,4 +2051,3 @@ VectorAngleCodeLUT:
 	dey
 
 .ends
-				

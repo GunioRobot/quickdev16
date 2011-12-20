@@ -18,7 +18,7 @@ SPCOFILES  = $(SPCSFILES:.asm=.o)
 SPCFILE = $(SPCSFILES:.asm=.bin)
 
 
-all: spc $(OFILES) 
+all: spc $(OFILES)
 	$(LD) $(LDFLAGS) linkfile $(ROMFILE)
 
 $(OFILES): $(SFILES)

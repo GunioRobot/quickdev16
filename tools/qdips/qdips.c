@@ -260,7 +260,7 @@ void qd16_finish(void)
       cnt = usb_control_msg(handle,
         USB_TYPE_VENDOR | USB_RECIP_DEVICE |
         USB_ENDPOINT_OUT, USB_SET_LOADER, 1, 1, NULL,
-        0, 5000); 
+        0, 5000);
 
     cnt = usb_control_msg(handle,
         USB_TYPE_VENDOR | USB_RECIP_DEVICE |
@@ -287,7 +287,7 @@ int qd16_init(void)
     cnt = usb_control_msg(handle,
         USB_TYPE_VENDOR | USB_RECIP_DEVICE |
         USB_ENDPOINT_OUT, USB_SET_LOADER, 0, 0, NULL,
-        0, 5000); 
+        0, 5000);
 
     if (cnt<0) {
         printf("USB_SET_LOADER failed: %s\n",usb_strerror());
@@ -296,7 +296,7 @@ int qd16_init(void)
     cnt = usb_control_msg(handle,
             USB_TYPE_VENDOR | USB_RECIP_DEVICE |
             USB_ENDPOINT_OUT, USB_MODE_AVR, 0, 0, NULL,
-            0, 5000);  
+            0, 5000);
 
     if (cnt<0) {
         printf("USB_MODE_AVR failed: %s\n",usb_strerror());
@@ -306,10 +306,10 @@ int qd16_init(void)
 
     cnt = usb_control_msg(handle,
         USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_OUT,
-        USB_BULK_UPLOAD_INIT, 
-        (hirom ? HIROM_BANK_SIZE_SHIFT : LOROM_BANK_SIZE_SHIFT) , 
+        USB_BULK_UPLOAD_INIT,
+        (hirom ? HIROM_BANK_SIZE_SHIFT : LOROM_BANK_SIZE_SHIFT) ,
         /*(hirom ? HIROM_BANK_COUNT_SHIFT : LOROM_BANK_COUNT_SHIFT), */ // ???
-        5,                                                            
+        5,
         NULL, 0, 5000);
 
     if (cnt<0) {

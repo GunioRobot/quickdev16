@@ -359,4 +359,3 @@ WaitBrightnessLoop:
 	
 	plp
 	rts
-		

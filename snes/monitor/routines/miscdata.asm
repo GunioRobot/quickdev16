@@ -527,4 +527,4 @@ PlayerSelectScrollCounterTable:
 	.dw 2
 	.dw 2
 	.dw 2
-.ends	
+.ends

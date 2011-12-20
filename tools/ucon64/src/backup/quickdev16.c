@@ -25,7 +25,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <usb.h>                
+#include <usb.h>
 #include "misc/misc.h"
 #include "misc/itypes.h"
 #ifdef  USE_ZLIB
@@ -94,7 +94,7 @@ quickdev16_write_rom (const char *filename)
   uint8_t byte = 0;
   st_rominfo_t rominfo;
 
-  
+
   usb_init();
   vid = rawVid[1] * 256 + rawVid[0];
   pid = rawPid[1] * 256 + rawPid[0];
@@ -117,7 +117,7 @@ quickdev16_write_rom (const char *filename)
       fprintf (stderr, ucon64_msg[FILE_BUFFER_ERROR], READ_BUFFER_SIZE);
       exit (1);
     }
-    
+
     snes_init (&rominfo);
     printf(rominfo.misc);
     printf("\n");
@@ -150,16 +150,16 @@ quickdev16_write_rom (const char *filename)
   bytessend = 0;
   printf ("Press q to abort\n\n");
   starttime = time (NULL);
-  
+
   cnt = usb_control_msg(handle,
                       USB_TYPE_VENDOR | USB_RECIP_DEVICE |
                       USB_ENDPOINT_OUT, USB_MODE_AVR, 0, 0, NULL,
                       0, 5000);
-  
+
   /* wait for the loader to depack */
   usleep(500000);
-  
- 
+
+
   cnt = usb_control_msg(handle,
         USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_OUT,
         USB_BULK_UPLOAD_INIT, bank_shift , bank_cnt, NULL, 0, 5000);

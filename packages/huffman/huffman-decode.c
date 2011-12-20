@@ -25,7 +25,7 @@
 #define V_NODE (-2)
 #define V_EOF  (-1)
 
-#define PREFIX_SIZE_B 32 
+#define PREFIX_SIZE_B 32
 
 #define ALLOC_ERROR {fprintf(stderr,"failed to alloc memory in %s @ %d !\n",__FILE__, __LINE__); exit(-1);}
 
@@ -52,9 +52,9 @@ void prefix_increment(uint8_t* prefix){
 void prefix_shiftleft(uint8_t* prefix){
 	uint8_t i;
 	uint8_t c[2]={0,0};
-	uint8_t ci=0;	
+	uint8_t ci=0;
 	for(i=0; i<PREFIX_SIZE_B; ++i){
-		c[ci] = (prefix[i])>>7;				
+		c[ci] = (prefix[i])>>7;
 		prefix[i]<<=1;
 		ci ^= 1;
 		prefix[i]|=c[ci];
@@ -63,7 +63,7 @@ void prefix_shiftleft(uint8_t* prefix){
 
 uint8_t append_tree(int16_t value, uint16_t depth){
 	static uint8_t prefix[PREFIX_SIZE_B];
-	static uint8_t cdepth=0;	
+	static uint8_t cdepth=0;
 	node_t* current=tree;
 	int8_t i,t;
 	for(;cdepth<depth;++cdepth){
@@ -133,7 +133,7 @@ void build_tree(FILE* f){
 		}
 		v = fgetc(f);
 		--count;
-	}while(!append_tree(v, depth));		
+	}while(!append_tree(v, depth));
 	set_last_to_eof();
 }
 
@@ -190,7 +190,7 @@ void decompress(void){
 		t=decompress_byte();
 		if(t==(uint16_t)EOF)
 			return;
-		write_char(t);	
+		write_char(t);
 	}
 }
 

@@ -61,27 +61,27 @@ int counter_init(struct ftdi_context *ftdic){
  	unsigned  char buf[1];
 	printf("Init\n");
 	buf[0] = 0;
-	
+
 	/* clk hi */
 	buf[0] = 1 << CLK;
 	put(ftdic,buf);
 	usleep(DELAY);
-	
-	
-	buf[0] = 1 << CLK | 1 <<  RST ; 
+
+
+	buf[0] = 1 << CLK | 1 <<  RST ;
 	put(ftdic,buf);
 	usleep(DELAY);
-	
+
 	buf[0] = 1 << CLK;
 	put(ftdic,buf);
 	usleep(DELAY);
-	
+
 }
 
 int counter_clock(struct ftdi_context *ftdic){
  	unsigned  char buf[1];
 	//printf("Start clock\n");
-	buf[0] = 0; 
+	buf[0] = 0;
 	put(ftdic,buf);
 	usleep(DELAY);
 	buf[0] = 1 << CLK ;
@@ -109,11 +109,11 @@ int main(int argc, char **argv)
 
   	ftdi_init(&ftdica);
   	ftdi_init(&ftdicb);
-	
+
 	// Open A
 	r = ftdi_set_interface(&ftdica, INTERFACE_A);
 	printf("A: set interface A: %d\n",r);
- 	f = ftdi_usb_open(&ftdica, 0x0403, 0x6010); 
+ 	f = ftdi_usb_open(&ftdica, 0x0403, 0x6010);
 	if(f < 0 && f != -5) {
     	fprintf(stderr, "A: unable to open ftdi device: %d\n",f);
     	exit(-1);
@@ -125,7 +125,7 @@ int main(int argc, char **argv)
 	// Open B
 	r = ftdi_set_interface(&ftdicb, INTERFACE_B);
 	printf("B: set interface B: %d\n",r);
-	f = ftdi_usb_open(&ftdicb, 0x0403, 0x6010); 
+	f = ftdi_usb_open(&ftdicb, 0x0403, 0x6010);
   	if(f < 0 && f != -5) {
     	fprintf(stderr, "B: unable to open ftdi device: %d\n",f);
     	exit(-1);
@@ -134,17 +134,17 @@ int main(int argc, char **argv)
   	r= ftdi_enable_bitbang(&ftdicb, 0xFF);
   	printf("B: enabling bitbang mode: %d\n",r);
 
-	
+
 	/*
 	for ( addr = 0; addr<=0xfffff; addr+=1){
 		counter_clock(&ftdicb);
 		//byte = data_read(&ftdica);
 		if (addr%0xff==0)
 			printf("0x%08x:\n",addr);
-	} 
+	}
 	exit(0);
 	*/
-	
+
 	counter_init(&ftdicb);
 	unsigned int addr = 0;
 	unsigned char byte;
@@ -161,14 +161,14 @@ int main(int argc, char **argv)
 		buffer[addr] = byte;
 		usleep(1);
 		counter_clock(&ftdicb);
-	} 
+	}
 	dump_packet(0x000,ROMSIZE,buffer);
-	
+
 	FILE *fp;
 	fp=fopen("dump.rom", "wb");
-	fwrite(buffer, ROMSIZE, 1, fp);		
+	fwrite(buffer, ROMSIZE, 1, fp);
 	fclose(fp);
- 
+
 	ftdi_disable_bitbang(&ftdica);
   	ftdi_usb_close(&ftdica);
   	ftdi_deinit(&ftdica);

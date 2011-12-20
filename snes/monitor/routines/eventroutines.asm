@@ -87,4 +87,3 @@ EventRoutine3:
 	ldx.w #31
 	jsr LoadTextString	
 	rts
-		

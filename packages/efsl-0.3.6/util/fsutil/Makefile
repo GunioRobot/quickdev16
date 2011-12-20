@@ -18,7 +18,7 @@ init : init.o
 cp: init cp.o
 	gcc -o cp $(CFLAGS) cp.o init.o $(LFLAGS)
 
-cpi : init cpi.o 
+cpi : init cpi.o
 	gcc -o cpi $(CFLAGS) cpi.o init.o $(LFLAGS)
 
 cpo : init cpo.o

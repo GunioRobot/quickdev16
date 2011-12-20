@@ -1,11 +1,11 @@
 /* System Config */
 
-/* 
+/*
 	PLL
-	
+
    - Main clock F_OSC=12,0MHz @ Keil MCB2130) [limits: 10 MHz to 25 MHz]
    - System should run at max. Frequency (60MHz) [limit: max 60 MHz]
-   - Choose multiplier M=5 
+   - Choose multiplier M=5
      so cclk = M * F_OSC= 5 * 12000000 = 60000000 Hz
    - MSEL-Bit in PLLCFG (bits 0-4) MSEL = M-1
    - F_CCO must be inbetween the limits 156 MHz to 320 MHz
@@ -44,7 +44,7 @@
 */
 #define VPBDIV_VAL	1
 
-/* 
+/*
 	SCB
 */
 #define MEMMAP_BOOT_LOADER_MODE   0     // Interrupt vectors are re-mapped to Boot Block.

@@ -1,6 +1,6 @@
 \label{dateandtime}
 The EFSL library supports setting and updating all date and time fields
-supported by the filesystem. In order to do this the library must 
+supported by the filesystem. In order to do this the library must
 know the current time and date at all times. Since it has to run everywhere,
 there is no standard mechanism to get the date/time, and some systems do
 not have a clock.
@@ -23,12 +23,12 @@ or write operations depending on your hardware.
 
 The six functions are:
 \begin{itemize}
-    \item\code{euint16 efsl\_getYear(void)} 
-    \item\code{euint8 efsl\_getMonth(void)} 
-    \item\code{euint8 efsl\_getDay(void)} 
-    \item\code{euint8 efsl\_getHour(void)} 
-    \item\code{euint8 efsl\_getMinute(void)} 
+    \item\code{euint16 efsl\_getYear(void)}
+    \item\code{euint8 efsl\_getMonth(void)}
+    \item\code{euint8 efsl\_getDay(void)}
+    \item\code{euint8 efsl\_getHour(void)}
+    \item\code{euint8 efsl\_getMinute(void)}
     \item\code{euint8 efsl\_getSecond(void)}
 \end{itemize}
 Internally the library will recalculate these numbers to match the
-filesystem that is currently in use. 
+filesystem that is currently in use.
